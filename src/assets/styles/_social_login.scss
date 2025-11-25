@@ -1,0 +1,56 @@
+.social-login {
+    margin-top: 25px;
+    text-align: center;
+
+
+    p {
+        color: $text-color;
+        margin-bottom: 12px;
+        font-size: 14px;
+    }
+
+    .social-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        .social-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px;
+            border: 2px solid $primary-color;
+            border-radius: $border-radius;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            color: $primary-color;
+            background: transparent;
+            transition: all 0.3s ease;
+
+            svg {
+                width: 20px;
+                height: 18px;
+            }
+
+            &.google:hover {
+                background: #db4437;
+                color: white;
+                border-color: #db4437;
+            }
+
+            &.apple:hover {
+                background: #000000;
+                color: white;
+                border-color: #000000;
+            }
+
+            &.facebook:hover {
+                background: #1877f2;
+                color: white;
+                border-color: #1877f2;
+            }
+        }
+    }
+}

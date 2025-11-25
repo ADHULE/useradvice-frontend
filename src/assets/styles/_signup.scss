@@ -1,0 +1,142 @@
+@import "./seting";
+@import "./social_login";
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+.signup-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: $bg-color;
+    height: 100vh;
+    padding: 20px;
+}
+
+.signup-card {
+    background: $card-bg;
+    width: 420px;
+    max-width: 100%;
+    padding: 32px;
+    border-radius: $border-radius;
+    box-shadow: $shadow-light;
+    text-align: center;
+
+    h2 {
+        font-size: 1.7rem;
+        color: $primary-color;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .card-subtitle {
+        color: $text-color;
+        opacity: 0.8;
+        margin-bottom: 25px;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .input-group {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background: #f1f4f8;
+        padding: 12px;
+        border-radius: $border-radius;
+        margin-bottom: 18px;
+
+        svg {
+            width: 22px;
+            height: 22px;
+            color: $primary-color;
+        }
+
+        input,
+        select {
+            flex: 1;
+            border: none;
+            background: transparent;
+            outline: none;
+            font-size: 15px;
+            color: $text-color;
+        }
+    }
+
+    .date-group {
+        display: flex;
+        gap: 10px;
+        justify-content: space-between;
+        margin-bottom: 18px;
+
+        .input-group {
+            flex: 1;
+
+            select {
+                width: 100%;
+            }
+        }
+    }
+
+    .toggle-password {
+        background: none;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        color: $primary-color;
+
+        svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        &:hover {
+            opacity: 0.8;
+        }
+    }
+
+    .signup-button {
+        width: 100%;
+        padding: 12px 0;
+        background: $primary-color;
+        color: white;
+        border: none;
+        border-radius: $border-radius;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background 0.3s ease;
+
+        &:hover {
+            background: darken($primary-color, 10%);
+        }
+    }
+
+    .login-link {
+        margin-top: 18px;
+        color: $text-color;
+        font-size: 14px;
+
+        a {
+            color: $primary-color;
+            font-weight: bold;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+
+}
