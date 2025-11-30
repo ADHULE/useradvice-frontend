@@ -1,12 +1,12 @@
 import React from "react";
 import { FaGoogle, FaApple, FaFacebook } from "react-icons/fa";
 
-export default function SocialLogin({
+const SocialLogin = ({
   onGoogle,
   onApple,
   onFacebook,
-  text = "Continuer avec", // tu peux changer le texte selon la page
-}) {
+  text = "Continuer avec",
+}) => {
   return (
     <div className="social-login">
       <p>Ou {text} :</p>
@@ -23,4 +23,6 @@ export default function SocialLogin({
       </div>
     </div>
   );
-}
+};
+
+export default SocialLogin;

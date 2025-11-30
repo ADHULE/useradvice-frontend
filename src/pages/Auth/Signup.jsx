@@ -11,7 +11,7 @@ import {
 import { motion } from "framer-motion";
 import SocialLogin from "./SocialLogin"; // <-- composant réutilisable
 
-export default function SignupPage() {
+const Signup = () => {
   const [nom, setNom] = useState("");
   const [postnom, setPostnom] = useState("");
   const [jour, setJour] = useState("");
@@ -240,4 +240,6 @@ Email : ${email}`
       </motion.div>
     </div>
   );
-}
+};
+
+export default Signup;

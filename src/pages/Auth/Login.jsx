@@ -3,7 +3,7 @@ import { Mail, Lock, Eye, EyeOff } from "lucide-react";
 import { motion } from "framer-motion";
 import SocialLogin from "./SocialLogin"; // <-- composant réutilisable
 
-export default function LoginPage() {
+const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -89,4 +89,6 @@ export default function LoginPage() {
       </motion.div>
     </div>
   );
-}
+};
+
+export default Login;
