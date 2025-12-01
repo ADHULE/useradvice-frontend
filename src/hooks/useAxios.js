@@ -7,10 +7,10 @@ import axios from "axios";
  * - Configure les headers par défaut
  * - Permet d'ajouter des interceptors si besoin
  */
-const axiosConfig = () => {
+const useAxios = () => {
   // Crée une instance Axios
   const instance = axios.create({
-    baseURL: "https://localhost:9191/api", // <-- à remplacer par ton API
+    baseURL: "https://localhost:9191/api", // à remplacer par  API (Back-end)
     headers: {
       "Content-Type": "application/json",
       // "Authorization": `Bearer ${token}` // si tu veux ajouter le token
@@ -47,4 +47,4 @@ const axiosConfig = () => {
   return instance;
 };
 
-export default axiosConfig;
+export default useAxios;
