@@ -1,9 +1,9 @@
 import React from "react";
-import { FaGoogle, FaApple, FaFacebook } from "react-icons/fa";
+import { FaGoogle, FaFacebook, FaGithub } from "react-icons/fa";
 
 const SocialLogin = ({
   onGoogle,
-  onApple,
+  onGithub,
   onFacebook,
   text = "Continuer avec",
 }) => {
@@ -14,8 +14,8 @@ const SocialLogin = ({
         <button onClick={onGoogle} className="social-btn google">
           <FaGoogle /> Google
         </button>
-        <button onClick={onApple} className="social-btn apple">
-          <FaApple /> Apple
+        <button onClick={onGithub} className="social-btn apple">
+          <FaGithub /> Github
         </button>
         <button onClick={onFacebook} className="social-btn facebook">
           <FaFacebook /> Facebook

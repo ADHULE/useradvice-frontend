@@ -1,0 +1,142 @@
+/* src/styles/Header.scss */
+
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1rem;
+    background-color: #fff;
+    border-bottom: 1px solid #e5e7eb;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: background-color 0.3s ease, color 0.3s ease;
+
+    &.dark {
+        background-color: #111827;
+        border-color: #1f2937;
+    }
+}
+
+.header-logo {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #2563eb;
+    cursor: pointer;
+    transition: color 0.3s ease;
+
+    &:hover {
+        color: #1e40af;
+    }
+
+    &.dark {
+        color: #60a5fa;
+
+        &:hover {
+            color: #3b82f6;
+        }
+    }
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.theme-toggle {
+    padding: 0.5rem;
+    border-radius: 50%;
+    background-color: #f3f4f6;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+    &:hover {
+        transform: scale(1.1);
+        box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.3);
+    }
+
+    &.dark {
+        background-color: #374151;
+    }
+}
+
+.auth-buttons {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    font-weight: 600;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+
+    svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    &:hover {
+        transform: translateY(-2px);
+    }
+}
+
+.btn-login {
+    background: transparent;
+    border: 1px solid #2563eb;
+    color: #2563eb;
+
+    &:hover {
+        background-color: #eff6ff;
+    }
+
+    &.dark {
+        border-color: #60a5fa;
+        color: #60a5fa;
+
+        &:hover {
+            background-color: #1f2937;
+        }
+    }
+}
+
+.btn-register {
+    background-color: #2563eb;
+    color: #fff;
+
+    &:hover {
+        background-color: #1e40af;
+    }
+
+    &.dark {
+        background-color: #3b82f6;
+
+        &:hover {
+            background-color: #2563eb;
+        }
+    }
+}
+
+.btn-submit {
+    background-color: #22c55e;
+    color: #fff;
+
+    &:hover {
+        background-color: #16a34a;
+    }
+}
+
+.btn-logout {
+    background-color: #ef4444;
+    color: #fff;
+
+    &:hover {
+        background-color: #dc2626;
+    }
+}

@@ -1,161 +1,116 @@
-import React, { Component } from "react";
-import { FaUserPlus, FaSignInAlt, FaStar, FaBuilding } from "react-icons/fa";
-import { goToPath } from "../../components/navigation/goToPath";
-import ButtonGoTo from "../../components/ui/Button";
+import React, { useState, useEffect } from "react";
+import { UserCheck, Star, Building2, UserPlus } from "lucide-react";
+import Header from "../../components/common/Header";
+import Footer from "../../components/common/Footer";
 
-class Home extends Component {
-  constructor(props) {
-    super(props);
+const navigate = (path) => {
+  console.log(`Navigation vers: ${path}`);
+};
 
-    // État local : savoir si l'utilisateur est connecté
-    this.state = {
-      isLoggedIn: false,
-    };
-  }
+const ButtonGoTo = ({ label, className, icon: Icon, onClick }) => (
+  <button
+    className={`px-4 py-2 font-semibold text-sm rounded-lg shadow-md transition-all duration-300 flex items-center justify-center space-x-2 ${className}`}
+    onClick={onClick}
+  >
+    {Icon && <Icon size={18} />}
+    <span>{label}</span>
+  </button>
+);
 
-  /**
-   * Méthode pour gérer la connexion ou l'inscription
-   * @param {string} action - "Connexion" ou "Inscription"
-   */
-  handleAuthClick = (action) => {
-    if (action === "Connexion") {
-      goToPath("/login");
-    } else if (action === "Inscription") {
-      goToPath("/signup");
+const Home = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [theme, setTheme] = useState(() => {
+    if (typeof localStorage !== "undefined") {
+      return localStorage.getItem("theme") || "light";
     }
-  };
+    return "light";
+  });
 
-  /**
-   * Méthode de déconnexion
-   */
-  handleLogout = () => {
-    this.setState({ isLoggedIn: false });
-    alert("Vous êtes déconnecté.");
-    goToPath("/login");
-  };
+  useEffect(() => {
+    const root = document.documentElement;
+    if (theme === "dark") {
+      root.classList.add("dark");
+      root.classList.remove("light");
+    } else {
+      root.classList.add("light");
+      root.classList.remove("dark");
+    }
+    localStorage.setItem("theme", theme);
+  }, [theme]);
 
-  render() {
-    const { isLoggedIn } = this.state;
+  const toggleTheme = () => setTheme(theme === "light" ? "dark" : "light");
 
-    return (
-      <div className="home-container">
-        <main className="main-content-presentation">
-          {/* ===================== */}
-          {/* Boutons Connexion / Inscription ou Logout */}
-          {/* ===================== */}
-          <div className="auth-buttons-placeholder">
-            {isLoggedIn ? (
-              <>
-                {/* Bouton pour envoyer un avis */}
-                <ButtonGoTo
-                  label="Envoyer un Avis"
-                  className="auth-button auth-button-submit"
-                  type="button"
-                  path="/avis"
-                  isLoggedIn={isLoggedIn}
-                  onAuthClick={this.handleAuthClick}
-                />
+  const heroImage =
+    "https://placehold.co/1000x400/3B82F6/FFFFFF/png?text=SYSTEME+ADHULE";
 
-                {/* Bouton de déconnexion */}
-                <ButtonGoTo
-                  label="Déconnexion"
-                  className="auth-button auth-button-logout"
-                  type="button"
-                  path="/login"
-                  isLoggedIn={isLoggedIn}
-                  onAuthClick={this.handleAuthClick}
-                  // Ici on redéfinit le clic pour la déconnexion
-                  onClick={this.handleLogout}
-                />
-              </>
-            ) : (
-              <>
-                {/* Bouton de connexion */}
-                <ButtonGoTo
-                  label="Connexion"
-                  className="auth-button auth-button-login"
-                  type="button"
-                  path="/login"
-                  isLoggedIn={isLoggedIn}
-                  onAuthClick={this.handleAuthClick}
-                />
+  return (
+    <div className="home-container">
+      <Header
+        isLoggedIn={isLoggedIn}
+        setIsLoggedIn={setIsLoggedIn}
+        theme={theme}
+        toggleTheme={toggleTheme}
+        navigate={navigate}
+      />
 
-                {/* Bouton d'inscription */}
-                <ButtonGoTo
-                  label="Inscription"
-                  className="auth-button auth-button-register"
-                  type="button"
-                  path="/signup"
-                  isLoggedIn={isLoggedIn}
-                  onAuthClick={this.handleAuthClick}
-                />
-              </>
-            )}
+      <main className="main-content-presentation">
+        <section
+          className="hero-section"
+          style={{
+            backgroundImage: `url(${heroImage})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            minHeight: "300px",
+          }}
+        >
+          <h1 className="text-4xl md:text-5xl font-extrabold mb-4 dark:text-white">
+            Bienvenue sur la plateforme d'avis
+          </h1>
+          <p className="hero-tagline">
+            Partagez votre expérience et aidez-nous à bâtir l'excellence.
+          </p>
+          <ButtonGoTo
+            label="Accéder à mon espace Avis"
+            className="cta-button"
+            icon={UserCheck}
+            onClick={() => navigate("/avis-espace")}
+          />
+        </section>
+
+        <section className="info-section">
+          <div className="info-card">
+            <Star className="info-icon" />
+            <h3>Notre Engagement</h3>
+            <p>
+              Nous valorisons la transparence et l'honnêteté. Chaque avis est
+              une chance de mieux vous servir.
+            </p>
           </div>
 
-          {/* ===================== */}
-          {/* Section HERO */}
-          {/* ===================== */}
-          <section className="hero-section">
-            <h1>Bienvenue sur la plateforme d'avis de SYSTEME ADHULE</h1>
-            <p className="hero-tagline">
-              Partagez votre expérience et aidez-nous à bâtir l'excellence.
+          <div className="info-card">
+            <Building2 className="info-icon" />
+            <h3>À Propos de SYSTEME ADHULE</h3>
+            <p>
+              Leader dans notre domaine, SYSTEME ADHULE s'engage à fournir des
+              solutions de haute qualité.
             </p>
+          </div>
 
-            {/* Bouton principal d'accès à l'espace avis */}
-            <ButtonGoTo
-              label="Accéder à mon espace Avis"
-              className="cta-button"
-              type="button"
-              path="/avis-espace"
-              isLoggedIn={isLoggedIn}
-              onAuthClick={this.handleAuthClick}
-            />
-          </section>
+          <div className="info-card">
+            <UserPlus className="info-icon" />
+            <h3>Pourquoi créer un compte ?</h3>
+            <p>
+              Créer un compte vous permet de soumettre des avis vérifiés, suivre
+              vos contributions et contacter le support.
+            </p>
+          </div>
+        </section>
+      </main>
 
-          {/* ===================== */}
-          {/* Section d'information */}
-          {/* ===================== */}
-          <section className="info-section">
-            <div className="info-card">
-              <FaStar className="info-icon" />
-              <h3>Notre Engagement</h3>
-              <p>
-                Nous valorisons la transparence et l'honnêteté. Chaque avis est
-                une chance de mieux vous servir.
-              </p>
-            </div>
-
-            <div className="info-card">
-              <FaBuilding className="info-icon" />
-              <h3>À Propos de SYSTEME ADHULE</h3>
-              <p>
-                Leader dans notre domaine, SYSTEME ADHULE s'engage à fournir des
-                solutions de haute qualité.
-              </p>
-            </div>
-
-            <div className="info-card">
-              <FaUserPlus className="info-icon" />
-              <h3>Pourquoi créer un compte ?</h3>
-              <p>
-                Créer un compte vous permet de soumettre des avis vérifiés,
-                suivre vos contributions et contacter le support.
-              </p>
-            </div>
-          </section>
-        </main>
-
-        {/* ===================== */}
-        {/* Footer */}
-        {/* ===================== */}
-        <footer className="home-footer">
-          &copy; {new Date().getFullYear()} SYSTEME ADHULE. Tous droits
-          réservés.
-        </footer>
-      </div>
-    );
-  }
-}
+      {/* Footer séparé */}
+      <Footer />
+    </div>
+  );
+};
 
 export default Home;

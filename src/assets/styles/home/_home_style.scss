@@ -1,98 +1,52 @@
-/* Home.scss */
-
-$primary-color: #007bff; // Bleu pour l'entreprise
-$secondary-color: #28a745; // Vert pour les CTAs positifs
-$danger-color: #dc3545; // Rouge pour la déconnexion
+// 🎨 Variables essentielles pour la home page
+$primary-color: #007bff;
+$secondary-color: #28a745;
 $bg-light: #f8f9fa;
 $bg-white: #fff;
 $text-dark: #333;
+$border-radius: 0.5rem;
+$shadow-light: 0 4px 10px rgba(0, 0, 0, 0.1);
 
+// ----------------------------
+// CONTAINER PRINCIPAL
+// ----------------------------
 .home-container {
     font-family: 'Arial, sans-serif';
     background-color: $bg-light;
     min-height: 100vh;
 }
 
-/* --- PlaceHolder pour les boutons de Connexion/Inscription --- */
-// Ces styles sont destinés à être appliqués aux boutons dans votre Navbar Bootstrap
-.auth-buttons-placeholder {
+// ----------------------------
+// HEADER
+// ----------------------------
+.home-header {
     display: flex;
-    justify-content: flex-end;
-    /* Aligner à droite */
+    justify-content: space-between;
+    align-items: center;
     padding: 15px 50px;
-    gap: 10px;
     background-color: $bg-white;
     border-bottom: 1px solid #ddd;
 }
 
-.auth-button {
-    padding: 8px 15px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: background-color 0.3s;
-
-    svg {
-        margin-right: 5px;
-    }
-}
-
-.auth-button-login {
-    background-color: transparent;
+.home-logo {
+    font-weight: bold;
+    font-size: 1.5rem;
     color: $primary-color;
-    border: 1px solid $primary-color;
-
-    &:hover {
-        background-color: $primary-color;
-        color: $bg-white;
-    }
 }
 
-.auth-button-register,
-.auth-button-submit {
-    background-color: $secondary-color;
-    color: $bg-white;
-
-    &:hover {
-        background-color: darken($secondary-color, 10%);
-    }
-}
-
-.auth-button-logout {
-    background-color: $danger-color;
-    color: $bg-white;
-
-    &:hover {
-        background-color: darken($danger-color, 10%);
-    }
-}
-
-/* --- Fin du PlaceHolder --- */
-
-/* --- Contenu Principal (Présentation) --- */
-.main-content-presentation {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-}
-
+// ----------------------------
+// SECTION HERO
+// ----------------------------
 .hero-section {
     text-align: center;
-    padding: 60px 20px;
-    background-color: $bg-white;
-    border-radius: 8px;
     margin-top: 30px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-
-    h1 {
-        color: $primary-color;
-        font-size: 3em;
-        margin-bottom: 15px;
-    }
+    border-radius: 8px;
+    padding: 60px 20px;
+    box-shadow: $shadow-light;
+    background-color: $bg-white;
 
     .hero-tagline {
-        font-size: 1.5em;
+        font-size: 1.2em;
         color: #6c757d;
         margin-bottom: 30px;
     }
@@ -115,6 +69,9 @@ $text-dark: #333;
     }
 }
 
+// ----------------------------
+// SECTION INFO
+// ----------------------------
 .info-section {
     display: flex;
     justify-content: space-around;
@@ -144,13 +101,4 @@ $text-dark: #333;
             margin-bottom: 10px;
         }
     }
-}
-
-/* --- Pied de Page --- */
-.home-footer {
-    text-align: center;
-    padding: 20px 0;
-    margin-top: 50px;
-    border-top: 1px solid #ccc;
-    color: #777;
 }

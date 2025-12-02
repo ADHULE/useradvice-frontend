@@ -35,7 +35,7 @@
             }
 
             &.google:hover {
-                background: #db4437;
+                background: lighten(#db4437, 0%);
                 color: white;
                 border-color: #db4437;
             }
@@ -53,4 +53,6 @@
             }
         }
     }
+
+
 }

@@ -1,12 +1,18 @@
+// src/pages/Login.jsx
 import React, { useState } from "react";
-import { Mail, Lock, Eye, EyeOff } from "lucide-react";
+import { Mail, Lock, Eye, EyeOff, LogIn } from "lucide-react";
 import { motion } from "framer-motion";
-import SocialLogin from "./SocialLogin"; // <-- composant réutilisable
+import Input from "../../components/ui/Input";
+import SocialLogin from "./SocialLogin";
+import ButtonGoTo from "../../components/ui/Button";
+import Footer from "../../components/common/Footer";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+
+  const isLoggedIn = false; // à remplacer par ton vrai état d'authentification
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -14,80 +20,98 @@ const Login = () => {
   };
 
   // Fonctions de connexion externe
-  const handleGoogleLogin = () =>
-    alert("Connexion avec Google (à implémenter)");
-  const handleAppleLogin = () => alert("Connexion avec Apple (à implémenter)");
-  const handleFacebookLogin = () =>
-    alert("Connexion avec Facebook (à implémenter)");
+  const handleGoogleLogin = () => alert("Connexion Google (à implémenter)");
+  const handleAppleLogin = () => alert("Connexion Apple (à implémenter)");
+  const handleFacebookLogin = () => alert("Connexion Facebook (à implémenter)");
 
   return (
-    <div className="login-page">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="login-card"
-      >
-        <h2>Bienvenue </h2>
-        <p className="card-subtitle">Connectez-vous à votre compte</p>
+    <>
+      <div className="login-page">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="login-card"
+        >
+          <h2>
+            <LogIn /> Bienvenue
+          </h2>
+          <p className="card-subtitle">Connectez-vous à votre compte</p>
 
-        <form onSubmit={handleSubmit}>
-          <div className="input-group">
-            <Mail />
-            <input
-              type="email"
-              placeholder="Adresse e-mail"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </div>
+          <form onSubmit={handleSubmit}>
+            {/* Champ email */}
+            <div className="input-group with-icon">
+              <Mail className="input-icon" />
+              <Input
+                type="email"
+                placeholder="Adresse e-mail"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="flex-1"
+                required
+              />
+            </div>
 
-          <div className="input-group">
-            <Lock />
-            <input
-              type={showPassword ? "text" : "password"}
-              placeholder="Mot de passe"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-            <button
-              type="button"
-              className="toggle-password"
-              onClick={() => setShowPassword((s) => !s)}
-              aria-label="Afficher / Masquer le mot de passe"
-            >
-              {showPassword ? <EyeOff /> : <Eye />}
+            {/* Champ mot de passe */}
+            <div className="input-group with-icon">
+              <Lock className="input-icon" />
+              <Input
+                type={showPassword ? "text" : "password"}
+                placeholder="Mot de passe"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="flex-1"
+                required
+              />
+              <button
+                type="button"
+                className="toggle-password"
+                onClick={() => setShowPassword((s) => !s)}
+                aria-label="Afficher / Masquer le mot de passe"
+              >
+                {showPassword ? <EyeOff /> : <Eye />}
+              </button>
+            </div>
+
+            {/* Options */}
+            <div className="options-row">
+              <label className="checkbox-group">
+                <input type="checkbox" /> <span>Se souvenir de moi</span>
+              </label>
+              <a className="forgot-password" href="#">
+                Mot de passe oublié ?
+              </a>
+            </div>
+
+            {/* Bouton de connexion */}
+            <button type="submit" className="login-button">
+              Se connecter
             </button>
-          </div>
+          </form>
 
-          <div className="options-row">
-            <label className="checkbox-group">
-              <input type="checkbox" /> <span>Se souvenir de moi</span>
-            </label>
-            <a className="forgot-password" href="#">
-              Mot de passe oublié ?
-            </a>
-          </div>
+          {/* Connexions sociales */}
+          <SocialLogin
+            onGoogle={handleGoogleLogin}
+            onApple={handleAppleLogin}
+            onFacebook={handleFacebookLogin}
+            text="Continuez avec"
+          />
 
-          <button type="submit" className="login-button">
-            Se connecter
-          </button>
-        </form>
-
-        {/* --- Bloc SocialLogin réutilisable --- */}
-        <SocialLogin
-          onGoogle={handleGoogleLogin}
-          onApple={handleAppleLogin}
-          onFacebook={handleFacebookLogin}
-          text="continuez avec"
-        />
-
+          {/* Lien vers inscription avec ButtonGoTo
         <div className="signup-link">
-          Pas encore de compte ? <a href="/signup">S'inscrire</a>
-        </div>
-      </motion.div>
-    </div>
+          <ButtonGoTo
+          label="Créer un compte"
+          className="login-button secondary"
+          path="/signup"
+          isLoggedIn={isLoggedIn}
+            onAuthClick={() =>
+              alert("Veuillez vous connecter pour créer un compte")
+              }
+              />
+        </div> */}
+        </motion.div>
+      </div>
+      <Footer />
+    </>
   );
 };
 
