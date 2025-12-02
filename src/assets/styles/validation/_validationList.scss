@@ -1,0 +1,49 @@
+// src/pages/Validation/ValidationList.scss
+
+$primary: #007bff;
+$light-bg: #f5f5f5;
+$card-bg: #fff;
+$shadow: rgba(0, 0, 0, 0.1);
+
+.validation-list-container {
+    padding: 20px;
+
+    h2 {
+        margin-bottom: 20px;
+        color: $primary;
+    }
+}
+
+.validation-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: $card-bg;
+    box-shadow: 0 2px 4px $shadow;
+
+    th,
+    td {
+        padding: 12px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background: $primary;
+        color: white;
+    }
+
+    tr:hover {
+        background: $light-bg;
+    }
+
+    .btn-detail {
+        padding: 6px 10px;
+        background: $primary;
+        color: white;
+        border-radius: 4px;
+        text-decoration: none;
+
+        &:hover {
+            background: darken($primary, 10%);
+        }
+    }
+}

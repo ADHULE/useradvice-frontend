@@ -107,7 +107,7 @@ Email : ${email}`
             <label className="text-sm font-medium block">
               Date de naissance
             </label>
-            <div className="flex gap-2">
+            <div className="flex-gap-2">
               <select
                 value={jour}
                 onChange={(e) => setJour(e.target.value)}

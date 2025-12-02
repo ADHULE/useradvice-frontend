@@ -15,7 +15,7 @@
     border-radius: 1rem;
     padding: 2rem;
     width: 100%;
-    max-width: 500px;
+    max-width: 100%;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 
@@ -96,6 +96,7 @@
 
         /* Date et genre */
         select {
+
             border-radius: $border-radius;
             border: 1px solid $input-border;
             background-color: $card-background;
@@ -107,6 +108,21 @@
                 border-color: $input-focus;
                 box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
                 outline: none;
+            }
+
+
+        }
+
+        .flex-gap-2 {
+            // border: 1px solid red;
+            justify-content: center;
+            display: flex;
+            justify-items: center;
+            justify-content: space-between;
+
+            select {
+                width: 100%;
+                margin: 5px;
             }
         }
 

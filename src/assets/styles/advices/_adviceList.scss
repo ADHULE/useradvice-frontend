@@ -1,0 +1,154 @@
+// src/styles/AdviceList.scss
+
+.advice-list-container {
+    max-width: 1100px;
+    margin: 2rem auto;
+    padding: 1.5rem;
+    background: #f8f9fa;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+.header-list {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+
+    h2 {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: #007bff;
+    }
+
+    .btn-create {
+        text-decoration: none;
+        background: #28a745;
+        color: #fff;
+        font-weight: 600;
+        padding: 10px 18px;
+        border-radius: 8px;
+        transition: background 0.3s ease, transform 0.2s ease;
+
+        &:hover {
+            background: darken(#28a745, 8%);
+            transform: translateY(-2px);
+        }
+    }
+}
+
+.advice-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+
+    th,
+    td {
+        padding: 14px;
+        text-align: left;
+        border-bottom: 1px solid #eee;
+        font-size: 0.95rem;
+    }
+
+    th {
+        background: #f1f3f5;
+        font-weight: 700;
+        color: #333;
+    }
+
+    tr:hover {
+        background: #f9fafb;
+    }
+
+    .btn-detail {
+        text-decoration: none;
+        background: #007bff;
+        color: #fff;
+        padding: 6px 12px;
+        border-radius: 6px;
+        font-weight: 600;
+        transition: background 0.3s ease, transform 0.2s ease;
+
+        &:hover {
+            background: darken(#007bff, 8%);
+            transform: translateY(-2px);
+        }
+    }
+}
+
+/* Badges de statut */
+.status-badge {
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #fff;
+
+    &.status-en-attente {
+        background: #ffc107; // jaune
+        color: #333;
+    }
+
+    &.status-traité {
+        background: #28a745; // vert
+    }
+
+    &.status-rejeté {
+        background: #dc3545; // rouge
+    }
+}
+
+/* Loader */
+.loading-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 3rem;
+    color: #555;
+
+    .loader {
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid #007bff;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 1s linear infinite;
+        margin-bottom: 1rem;
+    }
+
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .advice-table {
+        font-size: 0.85rem;
+
+        th,
+        td {
+            padding: 10px;
+        }
+    }
+
+    .header-list {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .btn-create {
+        width: 100%;
+        text-align: center;
+    }
+}

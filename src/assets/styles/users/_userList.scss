@@ -1,0 +1,224 @@
+/* ========================================================= */
+/* VARIABLES (Réutilisées de UserDetail) */
+/* ========================================================= */
+$primary: #0091d4; // Bleu vif
+$primary-hover: #2563eb;
+$text: #1f2937; // Texte principal sombre
+$text-light: #6b7280; // Texte secondaire gris
+$bg: #f5f7fa; // Arrière-plan clair
+$white: #fff;
+$radius: 10px; // Rayon légèrement réduit pour la table
+$shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+
+/* Couleurs de Statut */
+$status-active-bg: #dcfce7;
+$status-active-text: #16a34a;
+$status-inactive-bg: #fee2e2;
+$status-inactive-text: #dc2626;
+
+/* Couleurs de Rôle */
+$role-admin-bg: #f3e8ff;
+$role-admin-text: #7c3aed;
+$role-user-bg: #e0f2fe;
+$role-user-text: #0ea5e9;
+$role-moderator-bg: #fef9c3; // Jaune clair pour MODERATOR
+$role-moderator-text: #ca8a04; // Jaune foncé pour MODERATOR
+
+/* ========================================================= */
+/* 1. LAYOUT GÉNÉRAL ET TITRE */
+/* ========================================================= */
+
+.user-list-container {
+    padding: 2rem;
+    background: $bg;
+    min-height: 100vh;
+}
+
+.page-title-icon {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 2rem;
+    color: $text;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+}
+
+.header-icon {
+    color: $primary;
+}
+
+/* Gère l'absence de données */
+.no-data {
+    text-align: center;
+    padding: 2rem;
+    color: $text-light;
+    font-size: 1.1rem;
+}
+
+/* ========================================================= */
+/* 2. STYLE DE LA TABLE */
+/* ========================================================= */
+
+.table-wrapper {
+    overflow-x: auto;
+    /* Permet le scroll horizontal sur petit écran */
+    box-shadow: $shadow;
+    border-radius: $radius;
+    background: $white;
+}
+
+.user-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 600px;
+    /* Assure que la table n'est pas trop compressée */
+    text-align: left;
+}
+
+/* En-tête de table */
+thead {
+    background-color: #f9fafb;
+    border-bottom: 1px solid #e5e7eb;
+
+    th {
+        padding: 1rem;
+        font-weight: 600;
+        color: $text;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+    }
+}
+
+/* Corps de table */
+tbody {
+    tr {
+        border-bottom: 1px solid #f3f4f6;
+        transition: background-color 0.2s;
+
+        &:last-child {
+            border-bottom: none;
+        }
+
+        &:hover {
+            background-color: #f5f7fa;
+        }
+
+        td {
+            padding: 1rem;
+            color: $text;
+            font-size: 0.95rem;
+
+            /* Gère les cellules spécifiques */
+            &:first-child {
+                font-weight: 600;
+            }
+
+            &:nth-child(2) {
+                color: $text-light;
+            }
+        }
+    }
+}
+
+/* ========================================================= */
+/* 3. BADGES (Statut et Rôle) */
+/* ========================================================= */
+
+/* Mixin de base pour les badges */
+@mixin badge-style($bg-color, $text-color) {
+    padding: 4px 10px;
+    border-radius: 16px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background-color: $bg-color;
+    color: $text-color;
+}
+
+/* Statut */
+.status-badge {
+    &.status-active {
+        @include badge-style($status-active-bg, $status-active-text);
+    }
+
+    &.status-inactive {
+        @include badge-style($status-inactive-bg, $status-inactive-text);
+    }
+
+    .status-icon {
+        font-size: 0.9em;
+    }
+}
+
+/* Rôle */
+.role-badge {
+    &.role-admin {
+        @include badge-style($role-admin-bg, $role-admin-text);
+    }
+
+    &.role-user {
+        @include badge-style($role-user-bg, $role-user-text);
+    }
+
+    &.role-moderator {
+        @include badge-style($role-moderator-bg, $role-moderator-text);
+    }
+}
+
+/* ========================================================= */
+/* 4. BOUTON D'ACTION (Voir détails) */
+/* ========================================================= */
+
+.btn-detail {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background-color: $primary;
+    color: $white;
+    transition: background-color 0.2s, transform 0.2s, box-shadow 0.2s;
+    text-decoration: none;
+
+    &:hover {
+        background-color: $primary-hover;
+        transform: scale(1.05);
+        box-shadow: 0 4px 8px rgba(59, 130, 246, 0.4);
+    }
+}
+
+/* Centre le contenu de la colonne Actions */
+td:last-child {
+    text-align: center;
+}
+
+/* ========================================================= */
+/* 5. RESPONSIVE */
+/* ========================================================= */
+
+@media (max-width: 768px) {
+    .user-list-container {
+        padding: 1rem;
+    }
+
+    .page-title-icon {
+        font-size: 1.6rem;
+    }
+
+    /* Rendre les colonnes importantes visibles en premier */
+    .user-table {
+        /* Permet aux utilisateurs de faire défiler si la largeur est trop petite */
+    }
+
+    /* Cache les colonnes moins importantes sur mobile pour optimiser l'espace */
+    /*
+    thead th:nth-child(2), 
+    tbody td:nth-child(2) {
+        display: none; // Cache l'Email pour économiser l'espace
+    }
+    */
+}

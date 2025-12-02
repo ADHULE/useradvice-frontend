@@ -1,0 +1,317 @@
+/* ========================================================= */
+/* VARIABLES */
+/* ========================================================= */
+$primary: #3b82f6; // Bleu vif
+$primary-hover: #2563eb;
+$text: #1f2937; // Texte principal sombre
+$text-light: #6b7280; // Texte secondaire gris
+$bg: #f5f7fa; // Arrière-plan clair
+$white: #fff;
+$radius: 14px;
+$shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+
+/* Couleurs de Statut */
+$status-active-bg: #dcfce7;
+$status-active-text: #16a34a;
+$status-inactive-bg: #fee2e2;
+$status-inactive-text: #dc2626;
+
+/* Couleurs de Rôle */
+$role-admin-bg: #f3e8ff;
+$role-admin-text: #7c3aed;
+$role-user-bg: #e0f2fe;
+$role-user-text: #0ea5e9;
+
+/* Couleurs des actions */
+$btn-edit-bg: #10b981; // Vert Éditer
+$btn-delete-bg: #ef4444; // Rouge Supprimer
+
+/* ========================================================= */
+/* 1. MISE EN PAGE ET ANIMATION */
+/* ========================================================= */
+
+.user-detail-container {
+    padding: 2rem;
+    background: $bg;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.detail-card {
+    background: $white;
+    width: 100%;
+    padding: 2rem;
+    border-radius: $radius;
+    box-shadow: $shadow;
+    text-align: center;
+    animation: fadeIn 0.4s ease;
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+}
+
+/* ========================================================= */
+/* 2. HEADER ET AVATAR */
+/* ========================================================= */
+
+.avatar {
+    width: 90px;
+    height: 90px;
+    background: $primary;
+    color: $white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem auto;
+    font-size: 2rem;
+    border-radius: 50%;
+    font-weight: 700;
+    box-shadow: 0 6px 12px rgba(59, 130, 246, 0.25);
+    user-select: none;
+}
+
+.header {
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #eee;
+
+    h2 {
+        font-size: 1.6rem;
+        color: $text;
+        margin-bottom: 0.5rem;
+        font-weight: 700;
+    }
+}
+
+/* ========================================================= */
+/* 3. BADGES (STATUT ET RÔLE) */
+/* ========================================================= */
+
+.status-badge {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 0.8rem;
+    margin-right: 10px;
+
+    &.status-active {
+        background: $status-active-bg;
+        color: $status-active-text;
+    }
+
+    &.status-inactive {
+        background: $status-inactive-bg;
+        color: $status-inactive-text;
+    }
+
+    .status-icon {
+        font-size: 1em;
+    }
+}
+
+.role-badge {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    &.role-admin {
+        background: $role-admin-bg;
+        color: $role-admin-text;
+    }
+
+    &.role-user {
+        background: $role-user-bg;
+        color: $role-user-text;
+    }
+}
+
+/* ========================================================= */
+/* 4. INFORMATIONS ET LABELS (CORRECTION OVERFLOW) */
+/* ========================================================= */
+
+.section-title {
+    font-size: 1.2rem;
+    color: $text;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    .title-icon {
+        color: $primary;
+        font-size: 1.1em;
+    }
+}
+
+.info-section {
+    text-align: left;
+}
+
+.detail-row {
+    background: #f9fafb;
+    padding: 0.9rem 1rem;
+    border-radius: 8px;
+    margin-bottom: 0.8rem;
+    display: flex;
+    flex-wrap: wrap;
+    /* Permet le retour à la ligne si l'écran est petit */
+    justify-content: space-between;
+    align-items: center;
+    transition: background 0.2s;
+    width: 100%;
+
+    &:hover {
+        background: #f0f4f7;
+    }
+
+    .label {
+        color: $text-light;
+        font-size: 0.9rem;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-shrink: 0;
+        /* Important: Empêche le label de rétrécir */
+        max-width: 40%;
+        /* Limite l'espace pris par le label */
+
+        svg {
+            color: $primary-hover;
+            font-size: 1.1em;
+        }
+    }
+
+    .value {
+        font-weight: 600;
+        color: $text;
+        text-align: right;
+        max-width: 60%;
+        /* Laisse 60% pour la valeur */
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        /* Tente de garder sur une seule ligne par défaut */
+
+        /* Gère la coupure des mots longs (emails, identifiants) */
+        word-break: break-all;
+        overflow-wrap: break-word;
+
+        /* Ajustements pour les écrans très petits (mobile) */
+        @media (max-width: 400px) {
+            max-width: 100%;
+            text-align: left;
+            white-space: normal;
+            /* Permet le retour à la ligne */
+            margin-top: 5px;
+        }
+    }
+}
+
+/* ========================================================= */
+/* 5. BOUTONS ET ACTIONS */
+/* ========================================================= */
+
+/* Mixin pour les boutons d'action */
+@mixin action-button($bg-color, $hover-color) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 0.7rem 1.2rem;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: background 0.2s ease, transform 0.2s ease;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    color: $white;
+    background: $bg-color;
+
+    &:hover {
+        background: $hover-color;
+        transform: translateY(-2px);
+    }
+}
+
+/* Bouton Retour en bas */
+.btn-back {
+    margin-top: 1.5rem;
+    @include action-button($primary, $primary-hover);
+}
+
+/* Bouton Retour en haut (Style léger) */
+.btn-back-header {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background-color: transparent;
+    border: 1px solid #ddd;
+    color: $text-light;
+    padding: 8px 15px;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+
+    &:hover {
+        background-color: #f0f0f0;
+        color: $text;
+    }
+}
+
+/* Section Modifier/Supprimer */
+.actions-section {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.btn-edit {
+    @include action-button($btn-edit-bg, darken($btn-edit-bg, 10%));
+}
+
+.btn-delete {
+    @include action-button($btn-delete-bg, darken($btn-delete-bg, 10%));
+}
+
+/* ========================================================= */
+/* 6. RESPONSIVE */
+/* ========================================================= */
+
+@media (max-width: 700px) {
+    .detail-card {
+        padding: 1.5rem;
+    }
+
+    .avatar {
+        width: 70px;
+        height: 70px;
+        font-size: 1.4rem;
+    }
+
+    .header h2 {
+        font-size: 1.4rem;
+    }
+}

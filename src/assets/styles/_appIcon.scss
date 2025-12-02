@@ -1,0 +1,252 @@
+/* ========================================================= */
+/* 1. MISE EN PAGE GÉNÉRALE (LISTE & CRÉATION) */
+/* ========================================================= */
+
+.advice-page-layout {
+    /* Utilisé dans AdviceCreate.jsx */
+    display: flex;
+    gap: 30px;
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 20px;
+}
+
+@media (max-width: 768px) {
+    .advice-page-layout {
+        flex-direction: column;
+        gap: 20px;
+    }
+}
+
+/* Colonne principale (Formulaire/Liste) */
+.advice-main-content,
+.advice-list-container,
+.advice-detail-container {
+    flex: 3;
+    min-width: 300px;
+}
+
+/* Carte de détail (AdviceDetail.jsx) */
+.advice-detail-container {
+    max-width: 800px;
+    /* Limite la largeur pour les détails */
+}
+
+.advice-card {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Sidebar (AdviceCreate.jsx) */
+.advice-sidebar {
+    flex: 1;
+    background-color: #f4f4f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* ========================================================= */
+/* 2. STYLES DES ICÔNES ET DES LABELS */
+/* ========================================================= */
+
+/* Icône de titre principal (AdviceCreate/AdviceDetail) */
+.page-title-icon,
+.advice-detail-header h2 {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    color: #007bff;
+}
+
+.page-title-icon .header-icon {
+    font-size: 1.5em;
+}
+
+/* Titres de section dans les détails/sidebar */
+.section-title,
+.advice-sidebar h3,
+.advice-sidebar h4 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.section-title {
+    color: #333;
+    padding-bottom: 5px;
+    border-bottom: 1px dashed #ddd;
+}
+
+.section-title .title-icon {
+    color: #007bff;
+    font-size: 1.2em;
+}
+
+/* Labels de formulaire (AdviceCreate.jsx) */
+.form-group label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-group .label-icon {
+    color: #6c757d;
+    font-size: 1.1em;
+}
+
+/* Lignes de détail (AdviceDetail.jsx) */
+.detail-row {
+    display: flex;
+    margin-bottom: 10px;
+    padding: 5px 0;
+    align-items: flex-start;
+}
+
+.detail-row .label {
+    font-weight: bold;
+    color: #555;
+    min-width: 150px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.detail-row .label>svg {
+    color: #007bff;
+}
+
+.message-content {
+    /* Style pour le long message dans AdviceDetail */
+    white-space: pre-wrap;
+    background-color: #f8f9fa;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 0;
+    flex-grow: 1;
+}
+
+/* ========================================================= */
+/* 3. BOUTONS ET ACTIONS */
+/* ========================================================= */
+
+/* Pour les boutons contenant une icône (Créer, Enregistrer, Retour) */
+.btn-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Centrer le contenu si c'est le seul élément */
+    gap: 10px;
+    text-decoration: none;
+}
+
+/* Bouton d'action "Voir" dans AdviceList (icône seule) */
+.btn-icon-only {
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: #007bff;
+    color: white;
+    transition: background-color 0.3s;
+}
+
+.btn-icon-only:hover {
+    background-color: #0056b3;
+}
+
+/* ========================================================= */
+/* 4. STATUTS ET BADGES */
+/* ========================================================= */
+
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-weight: bold;
+    color: white;
+    /* Texte en blanc par défaut */
+    font-size: 0.9em;
+}
+
+.status-badge .status-icon {
+    font-size: 1em;
+}
+
+/* Couleurs spécifiques pour les statuts */
+.status-traité,
+.status-resolved {
+    background-color: #28a745;
+    /* Vert pour Traité */
+}
+
+.status-en-attente,
+.status-pending {
+    background-color: #ffc107;
+    /* Jaune/Orange pour En attente */
+    color: #333;
+    /* Texte plus foncé pour meilleure lisibilité sur fond clair */
+}
+
+.status-en-cours {
+    background-color: #007bff;
+    /* Bleu pour En cours */
+}
+
+/* ========================================================= */
+/* 5. ÉLÉMENTS UTILITAIRES ET CHARGEMENT */
+/* ========================================================= */
+
+.loading-list,
+.loading-detail {
+    text-align: center;
+    padding: 50px;
+}
+
+.loader-icon {
+    animation: spin 1s linear infinite;
+    color: #007bff;
+    margin-bottom: 10px;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.no-data {
+    text-align: center;
+    padding: 20px;
+    font-style: italic;
+    color: #888;
+}
+
+/* Sidebar - Styles spécifiques au contenu */
+.advice-sidebar ul {
+    list-style-type: '👉 ';
+    padding-left: 20px;
+}
+
+.example-block {
+    border-left: 4px solid #ffc107;
+    padding: 10px 15px;
+    margin: 15px 0;
+    background-color: #fffbe6;
+    font-style: italic;
+    color: #6a6a6a;
+}
