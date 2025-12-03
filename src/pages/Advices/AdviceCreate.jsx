@@ -2,24 +2,24 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Footer from "../../components/common/Footer";
 
-// IMPORTER LES ICÔNES REACT
+// Icônes React
 import {
-  FaPaperPlane, // Pour le titre ou l'action principale
-  FaCommentDots, // Pour le champ message
-  FaRegClock, // Pour le champ statut
-  FaSave, // Pour le bouton Enregistrer
-  FaLightbulb, // Pour le titre de la sidebar
-  FaListUl, // Pour les règles
-  FaQuoteRight, // Pour la citation
-  FaQuestionCircle, // Pour l'aide
+  FaPaperPlane,
+  FaCommentDots,
+  FaRegClock,
+  FaSave,
+  FaLightbulb,
+  FaListUl,
+  FaQuoteRight,
+  FaQuestionCircle,
 } from "react-icons/fa";
 
-// Simulation API (remplace avec ton axios ou instance réelle)
+// Simulation API (remplace avec axios ou ton instance réelle)
 const api = {
   post: (url, data) => {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       console.log(`POST to ${url}:`, data);
-      setTimeout(resolve, 500);
+      setTimeout(() => resolve({ status: 200 }), 500);
     });
   },
 };
@@ -32,32 +32,32 @@ const AdviceCreate = () => {
     status: "",
   });
 
-  const handleSubmit = (e) => {
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validation simple pour s'assurer que le message n'est pas vide
     if (!advice.message.trim()) {
       alert("Veuillez saisir un message pour l'avis.");
       return;
     }
 
-    // Ajouter la date de création automatiquement
     const adviceWithDate = {
       ...advice,
       createdAt: new Date().toISOString(),
-      // Assigner l'utilisateur si nécessaire (dépend de votre structure d'API/auth)
-      // userId: currentUserId,
     };
 
-    api
-      .post("/advices", adviceWithDate)
-      .then(() => {
-        alert("Avis soumis avec succès !");
-        navigate("/advices");
-      })
-      .catch((err) =>
-        console.error("Erreur lors de la soumission de l'avis:", err)
-      );
+    try {
+      setLoading(true);
+      await api.post("/advices", adviceWithDate);
+      alert("Avis soumis avec succès !");
+      navigate("/advices");
+    } catch (err) {
+      console.error("Erreur lors de la soumission de l'avis:", err);
+      alert("Une erreur est survenue. Veuillez réessayer.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -65,7 +65,6 @@ const AdviceCreate = () => {
       <div className="advice-page-layout">
         {/* --- FORMULAIRE --- */}
         <div className="advice-main-content">
-          {/* Titre avec Icône */}
           <h2 className="page-title-icon">
             <FaPaperPlane className="header-icon" /> Créer un avis
           </h2>
@@ -73,7 +72,6 @@ const AdviceCreate = () => {
           <form className="advice-form" onSubmit={handleSubmit}>
             {/* Champ Message */}
             <div className="form-group">
-              {/* Label avec Icône */}
               <label htmlFor="message">
                 <FaCommentDots className="label-icon" /> Message de l'avis *
               </label>
@@ -92,7 +90,6 @@ const AdviceCreate = () => {
 
             {/* Champ Statut */}
             <div className="form-group">
-              {/* Label avec Icône */}
               <label htmlFor="status">
                 <FaRegClock className="label-icon" /> Statut (optionnel)
               </label>
@@ -107,33 +104,36 @@ const AdviceCreate = () => {
               />
             </div>
 
-            {/* Bouton de soumission avec Icône */}
-            <button className="btn-save btn-icon" type="submit">
-              <FaSave /> Enregistrer l'avis
+            {/* Bouton de soumission */}
+            <button
+              className="btn-save btn-icon"
+              type="submit"
+              disabled={loading}
+            >
+              <FaSave /> {loading ? "Envoi en cours..." : "Enregistrer l'avis"}
             </button>
           </form>
         </div>
 
         {/* --- SIDEBAR --- */}
         <aside className="advice-sidebar">
-          {/* Titre de la Sidebar avec Icône */}
           <h3>
             <FaLightbulb /> Guide de création
           </h3>
           <p>Rédigez un avis clair, utile et orienté vers une amélioration.</p>
 
-          {/* Règles à suivre avec Icône */}
           <h4>
             <FaListUl /> Règles à suivre
           </h4>
           <ul>
-            <li>Le message est **obligatoire**.</li>
+            <li>
+              Le message est <strong>obligatoire</strong>.
+            </li>
             <li>Évitez les informations personnelles.</li>
             <li>Utilisez un ton professionnel.</li>
             <li>Le statut est modifiable plus tard.</li>
           </ul>
 
-          {/* Exemple avec Icône */}
           <h4>
             <FaQuoteRight /> Exemple :
           </h4>
@@ -142,7 +142,6 @@ const AdviceCreate = () => {
             l’optimisation."
           </blockquote>
 
-          {/* Aide et contact avec Icône */}
           <p className="contact-help">
             <FaQuestionCircle /> Besoin d'aide ? Contactez le support.
           </p>

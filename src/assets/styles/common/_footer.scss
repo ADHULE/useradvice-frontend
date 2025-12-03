@@ -1,8 +1,116 @@
-.home-footer {
-    text-align: center;
-    padding: 20px 0;
-    margin-top: 50px;
-    border-top: 1px solid #ccc;
-    color: #777;
+// Définition de variables pour une meilleure maintenance
+// -----------------------------
+$color-primary: #0077b6; // Bleu Confiance : Professionnel et stable
+$color-secondary: #ff6b6b; // Rose/Corail Amour : Chaleur et passion (utilisé pour le hover)
+$color-background: #f0f4f8; // Fond très clair : Clarté et modernité
+$color-text-dark: #334e68; // Texte principal sombre : Lisibilité et travail
+$color-text-light: #708090; // Texte secondaire/gris : Douceur
 
+// -----------------------------
+// 🎬 Animations globales
+// -----------------------------
+@keyframes fadeSlideUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes iconPop {
+    0% {
+        transform: scale(0.7);
+        opacity: 0;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+// -----------------------------
+// 🎨 Footer Modernisé et Thématique
+// -----------------------------
+.home-footer {
+    width: 100%;
+    padding: 30px 0;
+    margin-top: 80px;
+    background: $color-background;
+    border-top: 1px solid #dbe6ee;
+    color: $color-text-light;
+    font-size: 0.95rem;
+    text-align: center;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+
+    // Animation d’entrée du footer
+    animation: fadeSlideUp 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+
+    // Icônes de Réseaux Sociaux (Connexion et Amour)
+    .footer-icons {
+        display: flex;
+        gap: 22px;
+        font-size: 1.5rem;
+
+        a {
+            color: $color-text-light;
+            opacity: 0;
+            animation: iconPop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            transition: color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+
+            // **Mise à jour pour 5 icônes**
+            @for $i from 1 through 5 {
+                &:nth-child(#{$i}) {
+                    animation-delay: 0.1s + ($i * 0.15s);
+                }
+            }
+
+            &:hover {
+                color: $color-primary;
+                transform: translateY(-4px) scale(1.15);
+                box-shadow: 0 5px 15px rgba($color-primary, 0.3);
+                border-radius: 50%;
+            }
+        }
+    }
+
+    .footer-text {
+        font-size: 0.95rem;
+        color: $color-text-dark;
+        font-weight: 500;
+        animation: fadeSlideUp 1.1s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+        animation-delay: 0.6s;
+
+        strong {
+            color: $color-primary;
+            font-weight: 700;
+        }
+    }
+}
+
+// -----------------------------
+// 📱 Responsive
+// -----------------------------
+@media (max-width: 600px) {
+    .home-footer {
+        padding: 25px 15px;
+        margin-top: 50px;
+
+        .footer-icons {
+            font-size: 1.4rem;
+            gap: 15px;
+        }
+
+        .footer-text {
+            font-size: 0.85rem;
+        }
+    }
 }

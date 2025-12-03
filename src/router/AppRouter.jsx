@@ -12,6 +12,7 @@ import ValidationDetail from "../pages/Validations/ValidationDetail";
 import AdviceCreate from "../pages/Advices/AdviceCreate";
 import AdviceList from "../pages/Advices/AdviceList";
 import AdviceDetail from "../pages/Advices/AdviceDetail";
+import ActivateAccount from "../pages/Auth/ActivateAccount";
 const AppRouter = () => {
   return (
     <BrowserRouter>
@@ -21,6 +22,7 @@ const AppRouter = () => {
       {/* declaration de path de chaque page  */}
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/activateAccount" element={<ActivateAccount />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/userList" element={<UserList />} />

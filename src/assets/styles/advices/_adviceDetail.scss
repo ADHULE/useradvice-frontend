@@ -1,41 +1,60 @@
 // src/styles/AdviceDetail.scss
 
+// 🎨 Variables
+$primary: #007bff;
+$success: #28a745;
+$danger: #dc3545;
+$warning: #ffc107;
+$light-bg: #f8f9fa;
+$text-dark: #333;
+$text-muted: #555;
+$radius: 12px;
+$transition: 0.3s ease;
+
+// 🧩 Container principal
 .advice-detail-container {
-    max-width: 800px;
     margin: 2rem auto;
-    padding: 1.5rem;
-    background: #f8f9fa;
-    border-radius: 12px;
+    padding: 2rem;
+    background: $light-bg;
+    border-radius: $radius;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
     font-family: 'Segoe UI', Arial, sans-serif;
+    height: 100vh;
+    width: 100%;
+    box-sizing: border-box;
 }
 
+// 🏷️ Header
 .advice-detail-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap; // responsive
     margin-bottom: 1.5rem;
 
+
     h2 {
-        font-size: 1.8rem;
+        font-size: clamp(1.5rem, 2vw, 1.8rem);
         font-weight: 700;
-        color: #007bff;
+        color: $primary;
+        margin-bottom: 0.5rem;
     }
 
     .btn-back-light {
         text-decoration: none;
-        color: #007bff;
+        color: $primary;
         font-weight: 600;
         padding: 6px 12px;
         border-radius: 6px;
-        transition: background 0.3s ease;
+        transition: background $transition;
 
         &:hover {
-            background: rgba(0, 123, 255, 0.1);
+            background: rgba($primary, 0.1);
         }
     }
 }
 
+// 📦 Card de détail
 .advice-card {
     background: #fff;
     border-radius: 10px;
@@ -46,7 +65,7 @@
         font-size: 1.2rem;
         font-weight: 600;
         margin: 1rem 0;
-        color: #333;
+        color: $text-dark;
         border-bottom: 1px solid #eee;
         padding-bottom: 0.5rem;
     }
@@ -54,41 +73,45 @@
     p {
         margin: 0.5rem 0;
         font-size: 0.95rem;
-        color: #444;
+        color: $text-muted;
 
         .label {
             font-weight: 600;
-            color: #222;
+            color: $text-dark;
             margin-right: 0.5rem;
         }
     }
 }
 
-/* Badges de statut */
+// 🟢 Badges de statut
 .status-badge {
-    padding: 4px 10px;
+    padding: 4px 12px;
     border-radius: 20px;
     font-size: 0.85rem;
     font-weight: 600;
-    color: #fff;
+    display: inline-block;
+    text-align: center;
 
-    &.status-en attente {
-        background: #ffc107; // jaune
-        color: #333;
+    &.status-en-attente {
+        background: $warning;
+        color: $text-dark;
     }
 
     &.status-valide {
-        background: #28a745; // vert
+        background: $success;
+        color: #fff;
     }
 
     &.status-rejete {
-        background: #dc3545; // rouge
+        background: $danger;
+        color: #fff;
     }
 }
 
-/* Actions */
+// ⚡ Actions
 .actions {
     display: flex;
+    flex-wrap: wrap;
     gap: 1rem;
     margin-top: 1.5rem;
 
@@ -98,42 +121,44 @@
         padding: 10px 18px;
         border-radius: 8px;
         font-weight: 600;
-        transition: all 0.3s ease;
+        transition: all $transition;
         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        flex: 1 1 auto; // responsive
+        text-align: center;
     }
 
     .btn-update {
-        background: #28a745;
+        background: $success;
         color: #fff;
 
         &:hover {
-            background: darken(#28a745, 8%);
+            background: darken($success, 8%);
             transform: translateY(-2px);
         }
     }
 
     .btn-back {
-        background: #007bff;
+        background: $primary;
         color: #fff;
 
         &:hover {
-            background: darken(#007bff, 8%);
+            background: darken($primary, 8%);
             transform: translateY(-2px);
         }
     }
 }
 
-/* Loader */
+// ⏳ Loader
 .loading-detail {
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-top: 3rem;
-    color: #555;
+    color: $text-muted;
 
     .loader {
         border: 4px solid #f3f3f3;
-        border-top: 4px solid #007bff;
+        border-top: 4px solid $primary;
         border-radius: 50%;
         width: 40px;
         height: 40px;
@@ -148,6 +173,23 @@
 
         100% {
             transform: rotate(360deg);
+        }
+    }
+}
+
+// 📱 Responsive
+@media (max-width: 768px) {
+    .advice-detail-container {
+        padding: 1.5rem;
+    }
+
+    .actions {
+        flex-direction: column;
+        gap: 0.8rem;
+
+        .btn-update,
+        .btn-back {
+            width: 100%;
         }
     }
 }

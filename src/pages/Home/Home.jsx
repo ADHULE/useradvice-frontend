@@ -44,72 +44,73 @@ const Home = () => {
     "https://placehold.co/1000x400/3B82F6/FFFFFF/png?text=SYSTEME+ADHULE";
 
   return (
-    <div className="home-container">
-      <Header
-        isLoggedIn={isLoggedIn}
-        setIsLoggedIn={setIsLoggedIn}
-        theme={theme}
-        toggleTheme={toggleTheme}
-        navigate={navigate}
-      />
+    <>
+      <div className="home-container">
+        <Header
+          isLoggedIn={isLoggedIn}
+          setIsLoggedIn={setIsLoggedIn}
+          theme={theme}
+          toggleTheme={toggleTheme}
+          navigate={navigate}
+        />
 
-      <main className="main-content-presentation">
-        <section
-          className="hero-section"
-          style={{
-            backgroundImage: `url(${heroImage})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            minHeight: "300px",
-          }}
-        >
-          <h1 className="text-4xl md:text-5xl font-extrabold mb-4 dark:text-white">
-            Bienvenue sur la plateforme d'avis
-          </h1>
-          <p className="hero-tagline">
-            Partagez votre expérience et aidez-nous à bâtir l'excellence.
-          </p>
-          <ButtonGoTo
-            label="Accéder à mon espace Avis"
-            className="cta-button"
-            icon={UserCheck}
-            onClick={() => navigate("/avis-espace")}
-          />
-        </section>
-
-        <section className="info-section">
-          <div className="info-card">
-            <Star className="info-icon" />
-            <h3>Notre Engagement</h3>
-            <p>
-              Nous valorisons la transparence et l'honnêteté. Chaque avis est
-              une chance de mieux vous servir.
+        <main className="main-content-presentation">
+          <section
+            className="hero-section"
+            style={{
+              backgroundImage: `url(${heroImage})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              minHeight: "300px",
+            }}
+          >
+            <h1 className="text-4xl md:text-5xl font-extrabold mb-4 dark:text-white">
+              Bienvenue sur la plateforme d'avis
+            </h1>
+            <p className="hero-tagline">
+              Partagez votre expérience et aidez-nous à bâtir l'excellence.
             </p>
-          </div>
+            <ButtonGoTo
+              label="Accéder à mon espace Avis"
+              className="cta-button"
+              icon={UserCheck}
+              onClick={() => navigate("/avis-espace")}
+            />
+          </section>
 
-          <div className="info-card">
-            <Building2 className="info-icon" />
-            <h3>À Propos de SYSTEME ADHULE</h3>
-            <p>
-              Leader dans notre domaine, SYSTEME ADHULE s'engage à fournir des
-              solutions de haute qualité.
-            </p>
-          </div>
+          <section className="info-section">
+            <div className="info-card">
+              <Star className="info-icon" />
+              <h3>Notre Engagement</h3>
+              <p>
+                Nous valorisons la transparence et l'honnêteté. Chaque avis est
+                une chance de mieux vous servir.
+              </p>
+            </div>
 
-          <div className="info-card">
-            <UserPlus className="info-icon" />
-            <h3>Pourquoi créer un compte ?</h3>
-            <p>
-              Créer un compte vous permet de soumettre des avis vérifiés, suivre
-              vos contributions et contacter le support.
-            </p>
-          </div>
-        </section>
-      </main>
+            <div className="info-card">
+              <Building2 className="info-icon" />
+              <h3>À Propos de SYSTEME ADHULE</h3>
+              <p>
+                Leader dans notre domaine, SYSTEME ADHULE s'engage à fournir des
+                solutions de haute qualité.
+              </p>
+            </div>
 
+            <div className="info-card">
+              <UserPlus className="info-icon" />
+              <h3>Pourquoi créer un compte ?</h3>
+              <p>
+                Créer un compte vous permet de soumettre des avis vérifiés,
+                suivre vos contributions et contacter le support.
+              </p>
+            </div>
+          </section>
+        </main>
+      </div>
       {/* Footer séparé */}
       <Footer />
-    </div>
+    </>
   );
 };
 

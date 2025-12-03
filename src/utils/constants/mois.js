@@ -13,7 +13,7 @@ const monthNames = [
   "Décembre",
 ];
 
-export const MOIS = monthNames.map((name, index) => {
-  const value = String(index + 1).padStart(2, "0"); // "01", "02", ...
-  return { value, label: name };
-});
+export const MOIS = monthNames.map((name, index) => ({
+  value: String(index + 1).padStart(2, "0"),
+  label: name,
+}));

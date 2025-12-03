@@ -1,0 +1,90 @@
+.activate-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    background: linear-gradient(135deg, #6b73ff 0%, #000dff 100%);
+    padding: 2rem;
+
+    .activate-card {
+        background: #fff;
+        border-radius: 16px;
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+        padding: 2rem 2.5rem;
+        width: 100%;
+        max-width: 400px;
+        text-align: center;
+
+        .activate-title {
+            margin-bottom: 2rem;
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .alert {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+
+            &.success {
+                background-color: #e6f4ea;
+                color: #2a8f54;
+            }
+
+            &.error {
+                background-color: #fdecea;
+                color: #d93025;
+            }
+        }
+
+        .otp-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+
+            .otp-input {
+                width: 45px;
+                height: 55px;
+                text-align: center;
+                font-size: 1.5rem;
+                border: 2px solid #ccc;
+                border-radius: 10px;
+                transition: all 0.3s;
+
+                &:focus {
+                    border-color: #6b73ff;
+                    box-shadow: 0 0 8px rgba(107, 115, 255, 0.5);
+                    outline: none;
+                }
+            }
+        }
+
+        .loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+
+            .spin {
+                animation: spin 1s linear infinite;
+            }
+        }
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}

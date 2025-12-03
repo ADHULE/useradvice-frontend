@@ -1,51 +1,55 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Footer from "../../components/common/Footer";
-// IMPORTER LES ICÔNES REACT
+
+// ICONES
 import {
-  FaUsers, // Pour le titre général
-  FaUserCircle, // Pour les détails utilisateur
-  FaCheckCircle, // Statut actif
-  FaTimesCircle, // Statut inactif
-  FaShieldAlt, // Rôle ADMIN
-  FaUser, // Rôle USER (ou standard)
-  FaEye, // Bouton Voir détails
+  FaUsers,
+  FaUserCircle,
+  FaCheckCircle,
+  FaTimesCircle,
+  FaShieldAlt,
+  FaUser,
+  FaEye,
 } from "react-icons/fa";
+
+import { getAllUsers } from "../../api/userApi";
 
 const UserList = () => {
   const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Exemple fictif — à remplacer par API
-    setUsers([
-      {
-        id: 1,
-        firstname: "Jean",
-        lastname: "Dupont",
-        email: "jean.dupont@example.com",
-        actif: true,
-        roleDto: { name: "ADMIN" },
-      },
-      {
-        id: 2,
-        firstname: "Marie",
-        lastname: "Durand",
-        email: "marie.durand@example.com",
-        actif: false,
-        roleDto: { name: "USER" },
-      },
-      {
-        id: 3,
-        firstname: "Alain",
-        lastname: "Lambert",
-        email: "alain.lambert@example.com",
-        actif: true,
-        roleDto: { name: "MODERATOR" }, // Exemple de rôle supplémentaire
-      },
-    ]);
+    const fetchUsers = async () => {
+      try {
+        const response = await getAllUsers();
+
+        console.log("Réponse API:", response.data);
+
+        // Vérifie différentes structures possibles
+        const data = Array.isArray(response.data)
+          ? response.data
+          : response.data.users || [];
+
+        setUsers(data);
+      } catch (err) {
+        console.error("Erreur API:", err);
+
+        if (err.response?.status === 403) {
+          setError("Accès refusé : réservé aux administrateurs.");
+        } else {
+          setError("Impossible de récupérer la liste des utilisateurs.");
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUsers();
   }, []);
 
-  // Composant pour afficher le statut (Actif/Inactif)
+  // Affichage du statut
   const ActiveStatus = ({ actif }) => (
     <span className={`status-badge status-${actif ? "active" : "inactive"}`}>
       {actif ? (
@@ -57,7 +61,7 @@ const UserList = () => {
     </span>
   );
 
-  // Composant pour afficher le rôle
+  // Affichage du rôle
   const RoleDisplay = ({ roleName }) => {
     let Icon = FaUser;
     let className = "role-user";
@@ -80,58 +84,58 @@ const UserList = () => {
   return (
     <>
       <div className="user-list-container">
-        {/* Titre avec Icône */}
         <h2 className="title page-title-icon">
           <FaUsers className="header-icon" /> Liste des utilisateurs
         </h2>
 
-        <div className="table-wrapper">
-          <table className="user-table">
-            <thead>
-              <tr>
-                <th>Nom complet</th>
-                <th>Email</th>
-                <th>Statut</th>
-                <th>Rôle</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
+        {loading && <p>Chargement des utilisateurs...</p>}
+        {error && <p className="error-message">{error}</p>}
 
-            <tbody>
-              {users.map((u) => (
-                <tr key={u.id}>
-                  <td>
-                    {u.firstname} {u.lastname}
-                  </td>
-                  <td>{u.email}</td>
-                  {/* Utilisation du composant Status */}
-                  <td>
-                    <ActiveStatus actif={u.actif} />
-                  </td>
-                  {/* Utilisation du composant Role */}
-                  <td>
-                    <RoleDisplay roleName={u.roleDto?.name} />
-                  </td>
-
-                  {/* Bouton de détail avec Icône */}
-                  <td>
-                    <Link
-                      to={`/users/${u.id}`}
-                      className="btn-detail btn-icon-only"
-                      title="Voir les détails de l'utilisateur"
-                    >
-                      <FaEye size={18} />
-                    </Link>
-                  </td>
+        {!loading && !error && (
+          <div className="table-wrapper">
+            <table className="user-table">
+              <thead>
+                <tr>
+                  <th>Nom complet</th>
+                  <th>Email</th>
+                  <th>Statut</th>
+                  <th>Rôle</th>
+                  <th>Actions</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
 
-          {users.length === 0 && (
-            <p className="no-data">Aucun utilisateur trouvé.</p>
-          )}
-        </div>
+              <tbody>
+                {users.map((u) => (
+                  <tr key={u.id}>
+                    <td>
+                      {u.firstname} {u.lastname}
+                    </td>
+                    <td>{u.email}</td>
+                    <td>
+                      <ActiveStatus actif={u.actif} />
+                    </td>
+                    <td>
+                      <RoleDisplay roleName={u.roleDto?.name} />
+                    </td>
+                    <td>
+                      <Link
+                        to={`/users/${u.id}`}
+                        className="btn-detail btn-icon-only"
+                        title="Voir les détails"
+                      >
+                        <FaEye size={18} />
+                      </Link>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+
+            {users.length === 0 && (
+              <p className="no-data">Aucun utilisateur trouvé.</p>
+            )}
+          </div>
+        )}
       </div>
       <Footer />
     </>

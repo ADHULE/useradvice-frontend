@@ -1,5 +1,5 @@
 export const GENRES = [
-  { value: "Homme", label: "Homme" },
+  { value: "Home", label: "Homme" }, // EXACTEMENT ce que ton backend attend
   { value: "Femme", label: "Femme" },
   { value: "Autre", label: "Autre" },
 ];
