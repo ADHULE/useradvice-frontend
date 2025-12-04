@@ -1,48 +1,39 @@
-// Import de l'instance Axios centralisée
-import useAxios from "./useAxios";
+// src/api/userApi.js
 
-// On utilise directement l'instance
-const api = useAxios;
+import api from "./useAxios"; // directement utiliser l'instance
 
 // --------------------- AUTHENTIFICATION ---------------------
 
-// Inscription
-export const register = (data) => api.post("/inscription", data);
-
-// Activation du compte
-export const activate = (activationData) =>
-  api.post("/activation", activationData);
-
-// Login
 export const login = (credentials) => api.post("/login", credentials);
 
-// Logout
-export const logout = (token) =>
-  api.post("/logout", null, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+// Si refresh token est en cookie HttpOnly
+export const refreshToken = () =>
+  api.post("/refresh-token", {}, { withCredentials: true });
 
-// Refresh token
-export const refreshToken = (data) => api.post("/refresh-token", data);
+// Déconnexion (le token est géré par l’intercepteur)
+export const logout = () => api.post("/logout");
 
-// Demande de changement de mot de passe
+export const register = (data) => api.post("/inscription", data);
+export const activate = (activationData) =>
+  api.post("/activation", activationData);
+export const requestNewCode = (data) => api.post("/generate-new-code", data);
+
+// --------------------- MOT DE PASSE ---------------------
+
 export const changePassword = (data) => api.post("/change-password", data);
-
-// Définir un nouveau mot de passe
 export const newPassword = (data) => api.post("/new-password", data);
 
 // --------------------- UTILISATEUR CONNECTÉ ---------------------
 
-// Récupérer mes infos
 export const getMe = () => api.get("/users/me");
-
-// Mettre à jour mes infos
 export const updateMe = (data) => api.put("/users/me", data);
-
-// Supprimer mon compte
 export const deleteMe = () => api.delete("/users/me");
 
-// --------------------- PARTIE ADMIN ---------------------
+// --------------------- AVIS ---------------------
 
-// Récupérer la liste des utilisateurs (ADMIN uniquement)
+export const createReview = (data) => api.post("/avis", data);
+export const getMyReviews = () => api.get("/avis/me");
+
+// --------------------- ADMIN ---------------------
+
 export const getAllUsers = () => api.get("/users");

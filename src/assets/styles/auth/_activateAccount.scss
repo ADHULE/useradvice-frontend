@@ -77,6 +77,58 @@
             }
         }
     }
+
+    // SCSS pour le lien "Demander un nouveau code"
+    .link-button {
+        display: inline-block;
+        background: none;
+        border: none;
+        color: #007bff; // bleu classique
+        font-size: 0.95rem;
+        font-weight: 500;
+        text-decoration: underline;
+        cursor: pointer;
+        transition: color 0.3s ease, text-decoration-color 0.3s ease;
+
+        &:hover {
+            color: #0056b3; // bleu plus foncé au survol
+            text-decoration-color: #0056b3;
+        }
+
+        &:focus {
+            outline: none;
+            color: #004085;
+            text-decoration: underline;
+        }
+
+        &:active {
+            color: #003366;
+        }
+    }
+
+    // Variante si tu veux un style plus "bouton"
+    .link-button--solid {
+        background-color: #007bff;
+        color: #fff;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+            background-color: #0056b3;
+        }
+
+        &:focus {
+            outline: 2px solid #004085;
+            outline-offset: 2px;
+        }
+
+        &:active {
+            background-color: #003366;
+        }
+    }
+
 }
 
 @keyframes spin {

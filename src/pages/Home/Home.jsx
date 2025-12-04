@@ -2,11 +2,9 @@ import React, { useState, useEffect } from "react";
 import { UserCheck, Star, Building2, UserPlus } from "lucide-react";
 import Header from "../../components/common/Header";
 import Footer from "../../components/common/Footer";
+import { goToPath } from "../../components/navigation/goToPath";
 
-const navigate = (path) => {
-  console.log(`Navigation vers: ${path}`);
-};
-
+// Bouton réutilisable
 const ButtonGoTo = ({ label, className, icon: Icon, onClick }) => (
   <button
     className={`px-4 py-2 font-semibold text-sm rounded-lg shadow-md transition-all duration-300 flex items-center justify-center space-x-2 ${className}`}
@@ -26,6 +24,17 @@ const Home = () => {
     return "light";
   });
 
+  // Vérification du token au montage
+  useEffect(() => {
+    const token = localStorage.getItem("accessToken");
+    if (token) {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+    }
+  }, []);
+
+  // Gestion du thème
   useEffect(() => {
     const root = document.documentElement;
     if (theme === "dark") {
@@ -43,6 +52,15 @@ const Home = () => {
   const heroImage =
     "https://placehold.co/1000x400/3B82F6/FFFFFF/png?text=SYSTEME+ADHULE";
 
+  // Fonction de navigation sécurisée
+  const handleGoToReview = () => {
+    if (isLoggedIn) {
+      goToPath("/createReviewPage"); // ✅ utilisateur connecté → page avis
+    } else {
+      goToPath("/login"); // ✅ sinon → page login/inscription
+    }
+  };
+
   return (
     <>
       <div className="home-container">
@@ -51,7 +69,6 @@ const Home = () => {
           setIsLoggedIn={setIsLoggedIn}
           theme={theme}
           toggleTheme={toggleTheme}
-          navigate={navigate}
         />
 
         <main className="main-content-presentation">
@@ -74,7 +91,7 @@ const Home = () => {
               label="Accéder à mon espace Avis"
               className="cta-button"
               icon={UserCheck}
-              onClick={() => navigate("/avis-espace")}
+              onClick={handleGoToReview}
             />
           </section>
 
@@ -108,7 +125,6 @@ const Home = () => {
           </section>
         </main>
       </div>
-      {/* Footer séparé */}
       <Footer />
     </>
   );

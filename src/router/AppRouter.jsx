@@ -13,6 +13,8 @@ import AdviceCreate from "../pages/Advices/AdviceCreate";
 import AdviceList from "../pages/Advices/AdviceList";
 import AdviceDetail from "../pages/Advices/AdviceDetail";
 import ActivateAccount from "../pages/Auth/ActivateAccount";
+import ResendActivationCode from "../pages/Auth/ResendActivationCode";
+import CreateReviewPage from "../pages/Advices/CreateReviewPage";
 const AppRouter = () => {
   return (
     <BrowserRouter>
@@ -33,6 +35,8 @@ const AppRouter = () => {
         <Route path="/adviceCreate" element={<AdviceCreate />} />
         <Route path="/adviceList" element={<AdviceList />} />
         <Route path="/adviceDetail" element={<AdviceDetail />} />
+        <Route path="reSendActivationCode" element={<ResendActivationCode />} />
+        <Route path="/createRevienPage" element={<CreateReviewPage />} />
       </Routes>
     </BrowserRouter>
   );

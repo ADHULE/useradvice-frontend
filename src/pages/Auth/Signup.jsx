@@ -24,6 +24,7 @@ import { MOIS } from "../../utils/constants/mois";
 import { ANNEES } from "../../utils/constants/annees";
 import Footer from "../../components/common/Footer";
 import { register } from "../../api/userApi";
+import { goToPath } from "../../components/navigation/goToPath";
 
 const Signup = () => {
   // Utilisation du camelCase standard pour les états
@@ -46,7 +47,6 @@ const Signup = () => {
   const [success, setSuccess] = useState(null);
 
   const clearFormFields = () => {
-    // 💡 Correction: Utilisation de setFirstName
     setFirstName("");
     setLastname("");
     setJour("");
@@ -77,9 +77,8 @@ const Signup = () => {
 
     // 3. Préparation des données pour l'API :
     const userData = {
-      // 💡 ADAPTATION: Assurer que la clé est 'firstname' (minuscules) pour l'API
       firstname: firstName,
-      lastname, // Clé 'lastname' correspond à l'API
+      lastname,
       gender, // La valeur sera "Homme", "Femme", ou "Autre"
       dateOfBirth,
       email,
@@ -98,6 +97,9 @@ const Signup = () => {
       alert(`Succès: ${successMessage}`);
       clearFormFields();
       console.log("Inscription réussie:", response.data);
+      setTimeout(() => {
+        goToPath("/adviceCreate");
+      }, 3000);
     } catch (err) {
       // ... (gestion de l'erreur)
       const errorMessage =
