@@ -1,11 +1,35 @@
 // /api/adviceApi.js
-import useAxios from "../hooks/useAxios";
+import apiInstance from "./useAxios";
 
-const api = useAxios();
+// Tu n'as pas besoin d'appeler apiInstance(), c'est déjà l'instance Axios
+const api = apiInstance; // juste assigner
 
-export const getAllAdvices = () => api.get("/advices/all");
+// ────────────────────────────────────────────────
+// LIST ALL (admin)
+// ────────────────────────────────────────────────
+export const getAllAdvices = () => api.get("/advices/admin");
+
+// ────────────────────────────────────────────────
+// LIST MY OWN (user)
+// ────────────────────────────────────────────────
+export const getMyAdvices = () => api.get("/advices/me");
+
+// ────────────────────────────────────────────────
+// GET BY ID
+// ────────────────────────────────────────────────
 export const getAdviceById = (id) => api.get(`/advices/${id}`);
+
+// ────────────────────────────────────────────────
+// CREATE (user)
+// ────────────────────────────────────────────────
 export const createAdvice = (data) => api.post("/advices", data);
-export const updateAdvice = (id, data) =>
-  api.put(`/advices/update/${id}`, data);
-export const deleteAdvice = (id) => api.delete(`/advices/delete/${id}`);
+
+// ────────────────────────────────────────────────
+// UPDATE (user propriétaire)
+// ────────────────────────────────────────────────
+export const updateAdvice = (id, data) => api.put(`/advices/${id}`, data);
+
+// ────────────────────────────────────────────────
+// DELETE (user propriétaire ou admin)
+// ────────────────────────────────────────────────
+export const deleteAdvice = (id) => api.delete(`/advices/${id}`);

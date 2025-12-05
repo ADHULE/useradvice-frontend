@@ -1,10 +1,11 @@
+// src/pages/Home/Home.jsx
 import React, { useState, useEffect } from "react";
 import { UserCheck, Star, Building2, UserPlus } from "lucide-react";
 import Header from "../../components/common/Header";
 import Footer from "../../components/common/Footer";
 import { goToPath } from "../../components/navigation/goToPath";
+import { logout as apiLogout } from "../../api/userApi";
 
-// Bouton réutilisable
 const ButtonGoTo = ({ label, className, icon: Icon, onClick }) => (
   <button
     className={`px-4 py-2 font-semibold text-sm rounded-lg shadow-md transition-all duration-300 flex items-center justify-center space-x-2 ${className}`}
@@ -27,11 +28,7 @@ const Home = () => {
   // Vérification du token au montage
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
-    if (token) {
-      setIsLoggedIn(true);
-    } else {
-      setIsLoggedIn(false);
-    }
+    setIsLoggedIn(!!token);
   }, []);
 
   // Gestion du thème
@@ -49,24 +46,42 @@ const Home = () => {
 
   const toggleTheme = () => setTheme(theme === "light" ? "dark" : "light");
 
-  const heroImage =
-    "https://placehold.co/1000x400/3B82F6/FFFFFF/png?text=SYSTEME+ADHULE";
-
-  // Fonction de navigation sécurisée
   const handleGoToReview = () => {
     if (isLoggedIn) {
-      goToPath("/createReviewPage"); // ✅ utilisateur connecté → page avis
+      goToPath("/createReviewPage");
     } else {
-      goToPath("/login"); // ✅ sinon → page login/inscription
+      goToPath("/login");
     }
   };
+
+  //  fonction logout
+  const handleLogout = async () => {
+    try {
+      await apiLogout(); // Appel API pour supprimer le refresh token côté backend
+    } catch (e) {
+      console.warn("Erreur API logout :", e);
+    }
+
+    // Nettoyage local
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("expiresAt");
+
+    // Mise à jour de l’état
+    setIsLoggedIn(false);
+
+    // Retour propre sur la page Home
+    goToPath("/");
+  };
+
+  const heroImage =
+    "https://placehold.co/1000x400/3B82F6/FFFFFF/png?text=SYSTEME+ADHULE";
 
   return (
     <>
       <div className="home-container">
         <Header
           isLoggedIn={isLoggedIn}
-          setIsLoggedIn={setIsLoggedIn}
+          onLogout={handleLogout}
           theme={theme}
           toggleTheme={toggleTheme}
         />
@@ -125,6 +140,7 @@ const Home = () => {
           </section>
         </main>
       </div>
+
       <Footer />
     </>
   );

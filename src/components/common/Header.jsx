@@ -1,7 +1,7 @@
-// src/components/Header.jsx
+// src/components/common/Header.jsx
 import React from "react";
 import { LogIn, UserPlus, Sun, Moon, MessageSquareText } from "lucide-react";
-import { useNavigate } from "react-router-dom"; // <-- import
+import { useNavigate } from "react-router-dom";
 
 const ButtonGoTo = ({ label, className, icon: Icon, onClick }) => (
   <button className={`btn ${className}`} onClick={onClick}>
@@ -10,7 +10,7 @@ const ButtonGoTo = ({ label, className, icon: Icon, onClick }) => (
   </button>
 );
 
-const Header = ({ isLoggedIn, setIsLoggedIn, theme, toggleTheme }) => {
+const Header = ({ isLoggedIn, onLogout, theme, toggleTheme }) => {
   const navigate = useNavigate();
 
   const handleAuthClick = (action) => {
@@ -18,15 +18,8 @@ const Header = ({ isLoggedIn, setIsLoggedIn, theme, toggleTheme }) => {
     else if (action === "Inscription") navigate("/signup");
   };
 
-  const handleLogout = () => {
-    setIsLoggedIn(false);
-    console.log("Déconnexion effectuée.");
-    navigate("/login");
-  };
-
   return (
     <header className={`header ${theme === "dark" ? "dark" : ""}`}>
-      {/* Logo */}
       <div
         className={`header-logo ${theme === "dark" ? "dark" : ""}`}
         onClick={() => navigate("/")}
@@ -34,7 +27,6 @@ const Header = ({ isLoggedIn, setIsLoggedIn, theme, toggleTheme }) => {
         SYSTEME ADHULE
       </div>
 
-      {/* Actions */}
       <div className="header-actions">
         {/* Toggle Thème */}
         <button
@@ -63,7 +55,7 @@ const Header = ({ isLoggedIn, setIsLoggedIn, theme, toggleTheme }) => {
                 label="Déconnexion"
                 className="btn-logout"
                 icon={LogIn}
-                onClick={handleLogout}
+                onClick={onLogout} // 🔥 utilise le vrai logout
               />
             </>
           ) : (

@@ -53,7 +53,7 @@ const Login = () => {
 
         // Redirection après 2 secondes
         setTimeout(() => {
-          goToPath("/createRevienPage"); // Redirection vers la page sécurisée
+          goToPath("/createReviewPage"); // Redirection vers la page sécurisée
         }, 2000);
       } else {
         // Si la réponse était 200 mais le token est étrangement absent

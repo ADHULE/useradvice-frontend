@@ -7,7 +7,7 @@ import { motion } from "framer-motion"; // Animation de base
 import $ from "jquery"; // ⬅️ Importation de jQuery
 
 const CreateReviewPage = () => {
-  // ⚠️ Utilisation de jQuery pour une animation simple (non standard en React)
+  //Utilisation de jQuery pour une animation simple (non standard en React)
   useEffect(() => {
     // Animation simple : fait rebondir les liens au chargement
     $(".nav-link")
@@ -64,7 +64,7 @@ const CreateReviewPage = () => {
         <Link to="/" className="nav-link home-link">
           <FaHome className="link-icon" /> Accueil
         </Link>
-        <Link to="new" className="nav-link action-link">
+        <Link to="/adviceCreate" className="nav-link action-link">
           <FaPlusCircle className="link-icon" /> Nouvel Avis
         </Link>
         <Link to="list" className="nav-link list-link">

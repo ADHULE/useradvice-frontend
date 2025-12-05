@@ -1,30 +1,37 @@
 // src/api/useAxios.js
-
 import axios from "axios";
-// ⚠️ Assurez-vous d'avoir une implémentation de goToPath qui utilise useNavigate de React Router.
 import { goToPath } from "../components/navigation/goToPath";
 
-/**
- * apiInstance : Instance Axios centralisée
- * Gère l'ajout de l'Access Token et le renouvellement automatique (Refresh).
- */
+// Création de l'instance Axios
 const apiInstance = axios.create({
-  baseURL: "http://localhost:9191/api", // ⬅️ Votre Base URL API
+  baseURL: "http://localhost:9191/api",
   headers: {
     "Content-Type": "application/json",
   },
   timeout: 10000,
-  // Nécessaire si le backend envoie le Refresh Token via un cookie HttpOnly.
-  withCredentials: true,
+  withCredentials: true, // 🔑 Permet l'envoi des cookies HttpOnly
 });
 
-// === Intercepteur de Requête : Ajout du Token d'Accès ===
+// Gestion de la concurrence pour le refresh
+let isRefreshing = false;
+let failedQueue = [];
+
+const processQueue = (error, token = null) => {
+  failedQueue.forEach((prom) => {
+    if (error) {
+      prom.reject(error);
+    } else {
+      prom.resolve(token);
+    }
+  });
+  failedQueue = [];
+};
+
+// === Intercepteur de Requête : Ajout du Access Token ===
 apiInstance.interceptors.request.use(
   (config) => {
-    // Récupère l'Access Token stocké après la connexion
     const token = localStorage.getItem("accessToken");
     if (token) {
-      // Ajout de l'en-tête Authorization Bearer
       config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
@@ -32,51 +39,62 @@ apiInstance.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-// === Intercepteur de Réponse : Gestion 401 (Token Expiré) et Refresh ===
+// === Intercepteur de Réponse : Gestion automatique du refresh ===
 apiInstance.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
-    const refreshTokenValue = localStorage.getItem("refreshToken");
 
-    // 1. Détection de l'erreur 401 et vérification que ce n'est pas une boucle de retry
     if (error.response?.status === 401 && !originalRequest._retry) {
+      if (isRefreshing) {
+        return new Promise((resolve, reject) => {
+          failedQueue.push({ resolve, reject });
+        })
+          .then((token) => {
+            originalRequest.headers.Authorization = `Bearer ${token}`;
+            return apiInstance(originalRequest);
+          })
+          .catch((err) => Promise.reject(err));
+      }
+
       originalRequest._retry = true;
+      isRefreshing = true;
 
-      if (refreshTokenValue) {
-        try {
-          // 2. Tente de rafraîchir le token en envoyant le refresh token au backend
-          const res = await axios.post(
-            "http://localhost:9191/api/refresh-token", // Endpoint de refresh
-            { refresh: refreshTokenValue } // Le refresh token est envoyé dans le corps
-          );
+      try {
+        // 🔑 Appel au refresh token (via cookie HttpOnly)
+        const res = await apiInstance.post("/refresh-token");
 
-          const newAccessToken = res.data.token;
+        const newAccessToken = res.data.token;
 
-          // 3. Stockage du nouvel Access Token
-          localStorage.setItem("accessToken", newAccessToken);
+        // Stockage du nouvel access token
+        localStorage.setItem("accessToken", newAccessToken);
 
-          // 4. Mise à jour de l'en-tête et rejeu de la requête originale
-          originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
-          return apiInstance(originalRequest);
-        } catch (refreshError) {
-          // 5. Échec du rafraîchissement (Refresh Token expiré ou invalide)
-          console.error(
-            "Échec du refresh token : Déconnexion forcée",
-            refreshError
-          );
+        // Vider la file d’attente
+        isRefreshing = false;
+        processQueue(null, newAccessToken);
 
-          // Nettoyage de tous les tokens et redirection
-          localStorage.removeItem("accessToken");
-          localStorage.removeItem("refreshToken");
-          localStorage.removeItem("expiresAt");
-          goToPath("/login"); // Redirection vers la connexion
+        // Rejouer la requête originale
+        originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+        return apiInstance(originalRequest);
+      } catch (refreshError) {
+        isRefreshing = false;
+        processQueue(refreshError, null);
 
-          return Promise.reject(refreshError);
-        }
+        console.error(
+          "Échec du refresh token : Déconnexion forcée",
+          refreshError
+        );
+
+        // Nettoyage
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("expiresAt");
+
+        goToPath("/login");
+
+        return Promise.reject(refreshError);
       }
     }
-    // Si ce n'est pas un 401 ou si le refresh token n'est pas disponible, rejeter l'erreur
+
     return Promise.reject(error);
   }
 );
