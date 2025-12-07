@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 import { Link, Outlet } from "react-router-dom";
 import { FaPlusCircle, FaListAlt, FaBullhorn, FaHome } from "react-icons/fa"; // Nouvelles icônes
 import { motion } from "framer-motion"; // Animation de base
-import $ from "jquery"; // ⬅️ Importation de jQuery
+import $ from "jquery"; //  Importation de jQuery
 
 const CreateReviewPage = () => {
   //Utilisation de jQuery pour une animation simple (non standard en React)
@@ -67,7 +67,7 @@ const CreateReviewPage = () => {
         <Link to="/adviceCreate" className="nav-link action-link">
           <FaPlusCircle className="link-icon" /> Nouvel Avis
         </Link>
-        <Link to="list" className="nav-link list-link">
+        <Link to="/myAdvices" className="nav-link list-link">
           <FaListAlt className="link-icon" /> Mes Avis
         </Link>
       </motion.nav>

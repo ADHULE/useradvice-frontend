@@ -54,7 +54,7 @@ const Login = () => {
         // Redirection après 2 secondes
         setTimeout(() => {
           goToPath("/createReviewPage"); // Redirection vers la page sécurisée
-        }, 2000);
+        }, 1000);
       } else {
         // Si la réponse était 200 mais le token est étrangement absent
         setError("Erreur de protocole: Access Token manquant dans la réponse.");

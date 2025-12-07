@@ -1,18 +1,19 @@
+// src/pages/Advice/AdviceDetail.jsx
+
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import Footer from "../../components/common/Footer";
-// IMPORTER LES ICÔNES REACT
 import {
-  FaArrowLeft, // Retour à la liste
-  FaInfoCircle, // Informations générales
-  FaUser, // Utilisateur
-  FaIdCard, // ID
-  FaCommentDots, // Message
-  FaRegClock, // Statut et Date
-  FaEnvelope, // Email
-  FaSpinner, // Chargement
-  FaCheckCircle, // Statut Traité (pour l'exemple)
-  FaHourglassHalf, // Statut En attente (pour l'exemple)
+  FaArrowLeft,
+  FaInfoCircle,
+  FaUser,
+  FaIdCard,
+  FaCommentDots,
+  FaRegClock,
+  FaEnvelope,
+  FaSpinner,
+  FaCheckCircle,
+  FaHourglassHalf,
 } from "react-icons/fa";
 
 // Simulation API (inchangée)
@@ -42,15 +43,21 @@ const api = {
   },
 };
 
-// Fonction utilitaire pour choisir l'icône de statut
+// ✅ Fonction utilitaire corrigée pour gérer les statuts
 const StatusDisplay = ({ status }) => {
-  const statusNormalized = status?.toLowerCase().replace(" ", "-");
-  let IconComponent = FaHourglassHalf; // Icône par défaut
+  if (!status) return null;
+
+  const normalized = status.trim().toLowerCase();
+
+  let IconComponent = FaHourglassHalf;
   let colorClass = "status-pending";
 
-  if (statusNormalized === "traité") {
+  if (normalized === "traité") {
     IconComponent = FaCheckCircle;
     colorClass = "status-resolved";
+  } else if (normalized === "en attente") {
+    IconComponent = FaHourglassHalf;
+    colorClass = "status-pending";
   }
 
   return (
@@ -74,7 +81,6 @@ const AdviceDetail = () => {
   if (!advice)
     return (
       <div className="loading-detail">
-        {/* Icône de chargement */}
         <FaSpinner className="loader-icon" size={30} />
         <p>Chargement du détail...</p>
       </div>
@@ -85,14 +91,13 @@ const AdviceDetail = () => {
       <div className="advice-detail-container">
         <div className="advice-detail-header">
           <h2>Détails de l'avis</h2>
-          {/* Icône dans le bouton de retour en haut */}
-          <Link to="/adviceList" className="btn-back-light btn-icon">
+          {/* ✅ Harmonisation de la route vers /myAdvices */}
+          <Link to="/myAdvices" className="btn-back-light btn-icon">
             <FaArrowLeft /> Retour à la liste
           </Link>
         </div>
 
         <div className="advice-card">
-          {/* Section Informations générales avec icône */}
           <h3 className="section-title">
             <FaInfoCircle className="title-icon" /> Informations générales
           </h3>
@@ -100,7 +105,7 @@ const AdviceDetail = () => {
           <div className="detail-row">
             <span className="label">
               <FaIdCard /> ID :
-            </span>{" "}
+            </span>
             <span>{advice.id}</span>
           </div>
 
@@ -124,14 +129,19 @@ const AdviceDetail = () => {
             </span>
             <span>
               {advice.createdAt
-                ? new Date(advice.createdAt).toLocaleString()
+                ? new Date(advice.createdAt).toLocaleDateString("fr-FR", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })
                 : "—"}
             </span>
           </div>
 
           <hr />
 
-          {/* Section Utilisateur avec icône */}
           <h3 className="section-title">
             <FaUser className="title-icon" /> Utilisateur
           </h3>
@@ -153,8 +163,8 @@ const AdviceDetail = () => {
           </div>
 
           <div className="actions">
-            {/* Icône dans le bouton de retour en bas */}
-            <Link to="/adviceList" className="btn-back btn-icon">
+            {/* ✅ Harmonisation de la route */}
+            <Link to="/myAdvices" className="btn-back btn-icon">
               <FaArrowLeft /> Retour
             </Link>
           </div>

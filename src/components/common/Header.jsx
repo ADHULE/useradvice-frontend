@@ -1,7 +1,9 @@
-// src/components/common/Header.jsx
+// src/components/Header.jsx
 import React from "react";
-import { LogIn, UserPlus, Sun, Moon, MessageSquareText } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { LogIn, UserPlus, Sun, Moon } from "lucide-react";
+
+import { useThemeGlobal } from "../../context/ThemeContext";
+import { goToPath } from "../navigation/goToPath";
 
 const ButtonGoTo = ({ label, className, icon: Icon, onClick }) => (
   <button className={`btn ${className}`} onClick={onClick}>
@@ -10,29 +12,24 @@ const ButtonGoTo = ({ label, className, icon: Icon, onClick }) => (
   </button>
 );
 
-const Header = ({ isLoggedIn, onLogout, theme, toggleTheme }) => {
-  const navigate = useNavigate();
+const Header = ({ isLoggedIn, onLogout }) => {
+  const { theme, toggleTheme } = useThemeGlobal();
 
   const handleAuthClick = (action) => {
-    if (action === "Connexion") navigate("/login");
-    else if (action === "Inscription") navigate("/signup");
+    if (action === "Connexion") goToPath("/login");
+    else if (action === "Inscription") goToPath("/signup");
   };
 
   return (
-    <header className={`header ${theme === "dark" ? "dark" : ""}`}>
-      <div
-        className={`header-logo ${theme === "dark" ? "dark" : ""}`}
-        onClick={() => navigate("/")}
-      >
-        SYSTEME ADHULE
-      </div>
+    <header className={`header ${theme}`}>
+      <div className={`header-logo ${theme}`}>SYSTEME ADHULE</div>
 
       <div className="header-actions">
         {/* Toggle Thème */}
         <button
           onClick={toggleTheme}
-          className={`theme-toggle ${theme === "dark" ? "dark" : ""}`}
-          aria-label="Toggle theme"
+          className={`theme-toggle ${theme}`}
+          aria-label="Changer de thème"
         >
           {theme === "light" ? (
             <Moon size={20} className="text-gray-900" />
@@ -41,34 +38,25 @@ const Header = ({ isLoggedIn, onLogout, theme, toggleTheme }) => {
           )}
         </button>
 
-        {/* Boutons Auth */}
         <div className="auth-buttons">
           {isLoggedIn ? (
-            <>
-              <ButtonGoTo
-                label="Avis"
-                className="btn-submit"
-                icon={MessageSquareText}
-                onClick={() => navigate("/avis")}
-              />
-              <ButtonGoTo
-                label="Déconnexion"
-                className="btn-logout"
-                icon={LogIn}
-                onClick={onLogout} // 🔥 utilise le vrai logout
-              />
-            </>
+            <ButtonGoTo
+              label="Déconnexion"
+              className="btn-logout"
+              icon={LogIn}
+              onClick={onLogout}
+            />
           ) : (
             <>
               <ButtonGoTo
                 label="Connexion"
-                className={`btn-login ${theme === "dark" ? "dark" : ""}`}
+                className={`btn-login ${theme}`}
                 icon={LogIn}
                 onClick={() => handleAuthClick("Connexion")}
               />
               <ButtonGoTo
                 label="Inscription"
-                className={`btn-register ${theme === "dark" ? "dark" : ""}`}
+                className={`btn-register ${theme}`}
                 icon={UserPlus}
                 onClick={() => handleAuthClick("Inscription")}
               />

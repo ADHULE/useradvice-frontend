@@ -1,5 +1,3 @@
-// src/pages/Advice/AdviceCreate.jsx - Version Finale
-
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Footer from "../../components/common/Footer";
@@ -12,67 +10,57 @@ import {
   FaListUl,
   FaQuoteRight,
   FaQuestionCircle,
-  FaArrowLeft, // Pour la navigation
+  FaArrowLeft,
+  FaArrowRight,
 } from "react-icons/fa";
 
 import { createAdvice } from "../../api/adviceApi";
+import { goToPath } from "../../components/navigation/goToPath";
 
 const AdviceCreate = () => {
-  const navigate = useNavigate();
-
   const [advice, setAdvice] = useState({
     message: "",
-    // Le statut est généralement défini par le backend lors de la création (ex: PENDING)
-    status: "EN ATTENTE",
+    status: "PENDING",
   });
 
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null); // Pour afficher les erreurs
+  const [error, setError] = useState(null);
 
+  // Soumission du formulaire
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(null); // Réinitialiser l'erreur
+    setError(null);
 
     if (!advice.message.trim()) {
       setError("Veuillez saisir un message pour l'avis.");
       return;
     }
 
-    // Le contrôle du token est techniquement géré par l'intercepteur Axios,
-    // mais cette vérification rapide est utile.
     if (!localStorage.getItem("accessToken")) {
       alert("Session expirée. Veuillez vous reconnecter.");
-      navigate("/login");
+      goToPath("/login");
       return;
     }
 
     const advicePayload = {
-      // Nettoyage de l'objet pour l'envoi
       message: advice.message.trim(),
-      status: advice.status.trim() || "PENDING", // Valeur par défaut si vide
-      // La date doit idéalement être gérée côté serveur pour l'exactitude,
-      // mais on la garde ici pour respecter la structure initiale :
+      status: advice.status.trim() || "PENDING",
       createdAt: new Date().toISOString(),
     };
 
     try {
       setLoading(true);
-
-      const response = await createAdvice(advicePayload);
-
-      // Si l'appel API réussit (statut 2xx), la redirection est faite immédiatement :
-      navigate("/myAdvices");
+      await createAdvice(advicePayload);
+      goToPath("/myAdvices");
     } catch (err) {
       console.error("Erreur lors de la soumission de l'avis:", err);
-
-      // 🚩 Gestion détaillée de l'erreur pour le débogage
       const apiError = err.response?.data?.message || err.message;
 
       if (err.response?.status === 401 || err.response?.status === 403) {
         setError(
           "Session expirée ou droits insuffisants. L'avis n'a pas été créé."
         );
-        // Redirection vers le login si le refresh token a échoué (géré par l'intercepteur)
+        goToPath("/login");
       } else {
         setError(
           `Une erreur est survenue lors de l'enregistrement. Détails : ${apiError}`
@@ -83,27 +71,32 @@ const AdviceCreate = () => {
     }
   };
 
-  const handleGoToAdvices = () => {
-    navigate("/myAdvices");
-  };
-
   return (
     <>
       <div className="advice-page-layout">
         <div className="advice-main-content">
-          <button
-            className="btn-back-to-list"
-            onClick={handleGoToAdvices}
-            title="Voir mes avis"
-          >
-            <FaListUl /> Mes Avis
-          </button>
+          <div className="nav-buttons">
+            <button
+              className="btn-back-previous"
+              onClick={() => goToPath("/createReviewPage")}
+              title="Retour à la page précédente"
+            >
+              <FaArrowLeft /> Page précédente
+            </button>
+
+            <button
+              className="btn-back-to-list"
+              onClick={() => goToPath("/myAdvices")}
+              title="Voir mes avis"
+            >
+              <FaArrowRight /> Retour à Mes Avis
+            </button>
+          </div>
 
           <h2 className="page-title-icon">
             <FaPaperPlane className="header-icon" /> Créer un Avis
           </h2>
 
-          {/* ❌ Affichage de l'erreur */}
           {error && <div className="alert alert-error">{error}</div>}
 
           <form className="advice-form" onSubmit={handleSubmit}>
@@ -163,7 +156,9 @@ const AdviceCreate = () => {
           </h4>
           <ul>
             <li>Le message est obligatoire.</li>
-            <li>Le statut par défaut sera *En attente*.</li>
+            <li>
+              Le statut par défaut sera <strong>En attente</strong>.
+            </li>
             <li>Évitez les informations personnelles.</li>
           </ul>
 

@@ -1,9 +1,14 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-
+// src/App.jsx
+import React from "react";
 import AppRouter from "./router/AppRouter";
+import { ThemeProvider } from "./context/ThemeContext";
 
 function App() {
-  return <AppRouter />;
+  return (
+    <ThemeProvider>
+      <AppRouter />
+    </ThemeProvider>
+  );
 }
 
 export default App;
