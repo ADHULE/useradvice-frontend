@@ -18,7 +18,7 @@ import ActivateAccount from "../pages/Auth/ActivateAccount";
 import ResendActivationCode from "../pages/Auth/ResendActivationCode";
 import CreateReviewPage from "../pages/Advices/CreateReviewPage";
 import MyAdvices from "../pages/Advices/MyAdvices";
-import AdminDashboard from "../pages/Dashboard/AdminDashboard";
+import AdminDashboard from "../pages/Admin/AdminDashboard";
 import Users from "../pages/Admin/Users";
 import Reviews from "../pages/Admin/Reviews";
 import Stats from "../pages/Admin/Stats";

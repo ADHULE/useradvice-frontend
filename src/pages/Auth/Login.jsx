@@ -23,36 +23,50 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
     setSuccess(null);
+    setLoading(true);
 
     try {
       const response = await login({ email, password });
-      const { token: accessToken, expiresAt } = response.data;
+      console.log("Réponse API :", response.data);
 
-      if (accessToken) {
-        localStorage.setItem("accessToken", accessToken);
-        localStorage.setItem("expiresAt", expiresAt);
-        localStorage.removeItem("refreshToken");
+      const { token, expiresAt, user } = response.data || {};
 
-        setSuccess(
-          "Connexion réussie ! Redirection vers l'espace avis en cours..."
-        );
-
-        setTimeout(() => {
-          goToPath("/createReviewPage");
-        }, 2000);
-      } else {
-        setError("Erreur de protocole: Access Token manquant dans la réponse.");
+      if (!token) {
+        setError("Erreur : Jeton d'accès manquant dans la réponse serveur.");
+        setLoading(false);
+        return;
       }
+
+      // Stockage
+      localStorage.setItem("accessToken", token);
+      if (expiresAt) localStorage.setItem("expiresAt", expiresAt);
+      localStorage.setItem("user", JSON.stringify(user));
+
+      setSuccess("Connexion réussie — redirection ...");
+
+      // Vérification ADMIN
+      const isAdmin = user?.roles?.some((r) => r.name === "ROLE_ADMIN");
+
+      setTimeout(() => {
+        if (isAdmin) {
+          goToPath("/adminDashBoard", { replace: true });
+        } else {
+          goToPath("/createReviewPage", { replace: true });
+        }
+      }, 800);
     } catch (err) {
       console.error("Erreur de connexion :", err);
-      const errorMessage =
+      const message =
         err.response?.data?.message || "Email ou mot de passe incorrect.";
-      setError(errorMessage);
+      setError(message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -60,7 +74,7 @@ const Login = () => {
     <>
       <div className="login-page">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 25 }}
           animate={{ opacity: 1, y: 0 }}
           className="login-card"
         >
@@ -69,32 +83,27 @@ const Login = () => {
           </h2>
           <p className="card-subtitle">Connectez-vous à votre compte</p>
 
-          {/* Messages de feedback */}
           {success && (
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               className="alert-success"
-              role="alert"
-              aria-live="polite"
             >
               <CheckCircle size={20} /> {success}
             </motion.div>
           )}
+
           {error && (
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               className="alert-error"
-              role="alert"
-              aria-live="assertive"
             >
               <AlertCircle size={20} /> {error}
             </motion.div>
           )}
 
           <form onSubmit={handleSubmit}>
-            {/* Champ email */}
             <div className="input-group with-icon">
               <Mail className="input-icon" />
               <Input
@@ -102,12 +111,11 @@ const Login = () => {
                 placeholder="Adresse e-mail"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="flex-1"
                 required
+                className="flex-1"
               />
             </div>
 
-            {/* Champ mot de passe */}
             <div className="input-group with-icon">
               <Lock className="input-icon" />
               <Input
@@ -115,24 +123,18 @@ const Login = () => {
                 placeholder="Mot de passe"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="flex-1"
                 required
+                className="flex-1"
               />
               <button
                 type="button"
                 className="toggle-password"
                 onClick={() => setShowPassword((s) => !s)}
-                aria-label={
-                  showPassword
-                    ? "Masquer le mot de passe"
-                    : "Afficher le mot de passe"
-                }
               >
                 {showPassword ? <EyeOff /> : <Eye />}
               </button>
             </div>
 
-            {/* Options */}
             <div className="options-row">
               <label className="checkbox-group">
                 <input type="checkbox" /> <span>Se souvenir de moi</span>
@@ -142,18 +144,16 @@ const Login = () => {
               </a>
             </div>
 
-            {/* Bouton de connexion */}
-            <button type="submit" className="login-button">
-              <span>Se connecter</span>
-              <LogInIcon style={{ marginLeft: "8px" }} />
+            <button type="submit" className="login-button" disabled={loading}>
+              <span>{loading ? "Connexion..." : "Se connecter"}</span>
+              <LogInIcon style={{ marginLeft: 6 }} />
             </button>
           </form>
 
-          {/* Connexions sociales */}
           <SocialLogin
-            onGoogle={() => alert("Connexion Google (à implémenter)")}
-            onGithub={() => alert("Connexion Github (à implémenter)")}
-            onFacebook={() => alert("Connexion Facebook (à implémenter)")}
+            onGoogle={() => alert("Login Google")}
+            onGithub={() => alert("Login Github")}
+            onFacebook={() => alert("Login Facebook")}
             text="Continuez avec"
           />
         </motion.div>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Eye, Star } from "lucide-react"; // ✅ imports nettoyés
+import { Eye, Star } from "lucide-react";
 import Sidebar from "../../components/common/Sidebar";
 import ReviewModal from "./ReviewModal";
 import Navbar from "../../components/common/Navbar";
@@ -50,12 +50,12 @@ export default function Reviews() {
 
                 {/* Aperçu du rating */}
                 <div className="stars-row">
-                  {[new Array(5)].map((_, i) => (
+                  {[new Array(5)].map((post, index) => (
                     <Star
-                      key={i}
+                      key={post.index}
                       size={16}
-                      fill={i < r.rating ? "#fbbf24" : "none"}
-                      color={i < r.rating ? "#fbbf24" : "var(--border)"}
+                      fill={index < r.rating ? "#fbbf24" : "none"}
+                      color={index < r.rating ? "#fbbf24" : "var(--border)"}
                     />
                   ))}
                 </div>
