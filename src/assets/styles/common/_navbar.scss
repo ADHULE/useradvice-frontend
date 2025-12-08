@@ -1,0 +1,18 @@
+.custom-navbar {
+    background-color: #f8fafc;
+    border-bottom: 1px solid #e5e7eb;
+
+    .navbar-brand {
+        font-weight: 700;
+        color: #2563eb;
+    }
+
+    .btn-primary {
+        background-color: #2563eb;
+        border: none;
+
+        &:hover {
+            background-color: #1d4ed8;
+        }
+    }
+}

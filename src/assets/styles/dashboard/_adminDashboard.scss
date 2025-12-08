@@ -1,0 +1,261 @@
+/* ================================
+   🎨 Palette de couleurs globales
+   ================================ */
+:root {
+    --color-primary: #2563eb;
+    --color-secondary: #7c3aed;
+    --color-success: #16a34a;
+    --color-danger: #dc2626;
+    --color-warning: #f59e0b;
+
+    --color-bg: #f8fafc;
+    --color-card: #ffffff;
+    --color-text: #1e293b;
+    --color-border: rgba(0, 0, 0, 0.05);
+    --color-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+
+    --kpi-blue-bg: #dbeafe;
+    --kpi-blue-text: #2563eb;
+    --kpi-green-bg: #dcfce7;
+    --kpi-green-text: #16a34a;
+    --kpi-red-bg: #fee2e2;
+    --kpi-red-text: #dc2626;
+    --kpi-purple-bg: #ede9fe;
+    --kpi-purple-text: #7c3aed;
+}
+
+/* 🌙 Dark mode */
+:root.dark {
+    --color-bg: #0f172a;
+    --color-card: #1e293b;
+    --color-text: #f1f5f9;
+    --color-border: rgba(255, 255, 255, 0.05);
+    --color-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* ================================
+   📐 Layout principal
+   ================================ */
+.admin-dashboard-container {
+    display: flex;
+    min-height: 100vh;
+    background: var(--color-bg);
+    color: var(--color-text);
+}
+
+.admin-layout {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.dashboard-container {
+    flex: 1;
+    padding: clamp(1rem, 3vw, 2.5rem);
+    transition: background 0.3s ease;
+}
+
+/* ================================
+   🏷️ Header
+   ================================ */
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+
+    .dashboard-title {
+        font-size: clamp(1.5rem, 4vw, 2.25rem);
+        font-weight: 800;
+        letter-spacing: -0.025em;
+    }
+
+    .dashboard-subtitle {
+        font-size: 0.95rem;
+        opacity: 0.7;
+    }
+
+    .notif-btn {
+        background: var(--color-card);
+        border: 1px solid var(--color-border);
+        border-radius: 50%;
+        padding: 0.5rem;
+        cursor: pointer;
+        transition: background 0.2s;
+
+        &:hover {
+            background: #f1f5f9;
+        }
+    }
+}
+
+/* ================================
+   📊 KPI Stat Cards
+   ================================ */
+.stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.stat-card {
+    background: var(--color-card);
+    border: 1px solid var(--color-border);
+    border-radius: 16px;
+    padding: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    box-shadow: var(--color-shadow);
+    transition: transform 0.2s ease;
+
+    &:hover {
+        transform: translateY(-4px);
+    }
+
+    .icon-box {
+        padding: 0.8rem;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &.blue {
+            background: var(--kpi-blue-bg);
+            color: var(--kpi-blue-text);
+        }
+
+        &.green {
+            background: var(--kpi-green-bg);
+            color: var(--kpi-green-text);
+        }
+
+        &.red {
+            background: var(--kpi-red-bg);
+            color: var(--kpi-red-text);
+        }
+
+        &.purple {
+            background: var(--kpi-purple-bg);
+            color: var(--kpi-purple-text);
+        }
+    }
+
+    .stat-value {
+        font-size: 1.5rem;
+        font-weight: 700;
+    }
+
+    .stat-label {
+        font-size: 0.85rem;
+        opacity: 0.7;
+    }
+
+    .stat-trend {
+        font-size: 0.8rem;
+        font-weight: 500;
+        color: var(--color-text);
+    }
+}
+
+/* ================================
+   🗂️ Grille principale responsive
+   ================================ */
+.dashboard-main-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 2rem;
+
+    @media (max-width: 1024px) {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    @media (max-width: 768px) {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+}
+
+.dashboard-card {
+    background: var(--color-card);
+    border: 1px solid var(--color-border);
+    border-radius: 20px;
+    padding: 1.5rem;
+    box-shadow: var(--color-shadow);
+
+    .card-header h3 {
+        font-size: 1.2rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+    }
+}
+
+/* ================================
+   📊 Bloc Graphique
+   ================================ */
+.chart-section {
+    .chart-placeholder {
+        height: clamp(200px, 40vw, 300px);
+        border: 2px dashed var(--color-border);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0.6;
+        font-size: clamp(0.9rem, 2vw, 1rem);
+    }
+}
+
+/* ================================
+   📝 Bloc Activités récentes
+   ================================ */
+.recent-activity {
+    .activity-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+
+        li {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--color-border);
+            display: flex;
+            justify-content: space-between;
+            font-size: clamp(0.8rem, 2vw, 0.9rem);
+
+            small {
+                opacity: 0.6;
+                font-size: clamp(0.7rem, 1.8vw, 0.8rem);
+            }
+        }
+    }
+}
+
+/* ================================
+   ⚠️ Alertes
+   ================================ */
+.alert-box {
+    margin-top: 2rem;
+    padding: 1rem;
+    border-radius: 12px;
+    background: var(--kpi-red-bg);
+    color: var(--kpi-red-text);
+    border: 1px solid var(--kpi-red-bg);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-weight: 500;
+}
+
+/* ================================
+   📌 Footer
+   ================================ */
+footer {
+    background: var(--color-card);
+    border-top: 1px solid var(--color-border);
+    padding: 1rem;
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--color-text);
+}

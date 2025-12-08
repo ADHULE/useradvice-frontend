@@ -1,0 +1,19 @@
+@import "./variables";
+
+:root {
+    --bg: #{$light-bg};
+    --card: #{$light-card};
+    --text: #{$light-text};
+    --border: #{$light-border};
+    --shadow: #{$light-shadow};
+    --primary: #{$primary};
+    --primary-rgb: #{$primary-rgb};
+}
+
+.dark-theme {
+    --bg: #{$dark-bg};
+    --card: #{$dark-card};
+    --text: #{$dark-text};
+    --border: #{$dark-border};
+    --shadow: #{$dark-shadow};
+}

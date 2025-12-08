@@ -1,5 +1,4 @@
 // src/pages/Auth/Login.jsx
-
 import React, { useState } from "react";
 import {
   Mail,
@@ -9,6 +8,7 @@ import {
   LogIn,
   CheckCircle,
   AlertCircle,
+  LogInIcon,
 } from "lucide-react";
 import { motion } from "framer-motion";
 import Input from "../../components/ui/Input";
@@ -30,38 +30,26 @@ const Login = () => {
     setSuccess(null);
 
     try {
-      // Appel API de connexion
       const response = await login({ email, password });
-
-      //  Déstructuration ajustée : Le 'refresh' est ignoré car il est dans un Cookie HttpOnly.
       const { token: accessToken, expiresAt } = response.data;
 
-      // Condition de succès : vérifier uniquement la présence de l'Access Token.
       if (accessToken) {
-        // 1. Stockage de l'Access Token dans localStorage
-        // L'intercepteur Axios le lira pour l'ajouter à l'en-tête Authorization.
         localStorage.setItem("accessToken", accessToken);
         localStorage.setItem("expiresAt", expiresAt);
-
-        // 2. Nettoyage de l'ancien Refresh Token dans localStorage (pour sécurité/propreté)
         localStorage.removeItem("refreshToken");
 
-        // Message succès
         setSuccess(
           "Connexion réussie ! Redirection vers l'espace avis en cours..."
         );
 
-        // Redirection après 2 secondes
         setTimeout(() => {
-          goToPath("/createReviewPage"); // Redirection vers la page sécurisée
-        }, 1000);
+          goToPath("/createReviewPage");
+        }, 2000);
       } else {
-        // Si la réponse était 200 mais le token est étrangement absent
         setError("Erreur de protocole: Access Token manquant dans la réponse.");
       }
     } catch (err) {
       console.error("Erreur de connexion :", err);
-      // Récupère le message d'erreur du backend (ex: Bad credentials)
       const errorMessage =
         err.response?.data?.message || "Email ou mot de passe incorrect.";
       setError(errorMessage);
@@ -87,6 +75,8 @@ const Login = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               className="alert-success"
+              role="alert"
+              aria-live="polite"
             >
               <CheckCircle size={20} /> {success}
             </motion.div>
@@ -96,6 +86,8 @@ const Login = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               className="alert-error"
+              role="alert"
+              aria-live="assertive"
             >
               <AlertCircle size={20} /> {error}
             </motion.div>
@@ -130,7 +122,11 @@ const Login = () => {
                 type="button"
                 className="toggle-password"
                 onClick={() => setShowPassword((s) => !s)}
-                aria-label="Afficher / Masquer le mot de passe"
+                aria-label={
+                  showPassword
+                    ? "Masquer le mot de passe"
+                    : "Afficher le mot de passe"
+                }
               >
                 {showPassword ? <EyeOff /> : <Eye />}
               </button>
@@ -148,7 +144,8 @@ const Login = () => {
 
             {/* Bouton de connexion */}
             <button type="submit" className="login-button">
-              Se connecter
+              <span>Se connecter</span>
+              <LogInIcon style={{ marginLeft: "8px" }} />
             </button>
           </form>
 

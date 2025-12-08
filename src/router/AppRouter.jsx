@@ -18,6 +18,11 @@ import ActivateAccount from "../pages/Auth/ActivateAccount";
 import ResendActivationCode from "../pages/Auth/ResendActivationCode";
 import CreateReviewPage from "../pages/Advices/CreateReviewPage";
 import MyAdvices from "../pages/Advices/MyAdvices";
+import AdminDashboard from "../pages/Dashboard/AdminDashboard";
+import Users from "../pages/Admin/Users";
+import Reviews from "../pages/Admin/Reviews";
+import Stats from "../pages/Admin/Stats";
+import Settings from "../pages/Admin/Settings";
 
 const AppRouter = () => {
   return (
@@ -48,6 +53,15 @@ const AppRouter = () => {
 
         <Route path="/createReviewPage" element={<CreateReviewPage />} />
         <Route path="/myAdvices" element={<MyAdvices />} />
+
+        {/* la configuration des routes de l'administrateur */}
+
+        <Route path="/adminDashBoard" element={<AdminDashboard />} />
+
+        <Route path="/reviews" element={<Reviews />} />
+        <Route path="/users" element={<Users />} />
+        <Route path="/stats" element={<Stats />} />
+        <Route path="/settings" element={<Settings />} />
       </Routes>
     </BrowserRouter>
   );

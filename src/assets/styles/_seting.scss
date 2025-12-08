@@ -7,24 +7,63 @@ $card-background: #ffffff;
 $input-border: #d1d5db;
 $input-focus: $primary-color;
 $icon-color: #6b7280;
-$border-radius: 0.375rem;
-$transition-speed: 0.2s;
-$shadow-light: 0 4px 12px rgba(0, 0, 0, 0.08);
-$shadow-hover: 0 8px 25px rgba(0, 0, 0, 0.15);
+$border-radius: 0.75rem;
+$transition-speed: 0.3s;
+$shadow-light: 0 4px 12px rgba(0, 0, 0, 0.05);
+$shadow-hover: 0 10px 30px rgba(0, 0, 0, 0.12);
 
+/* --------------------------------------------------------
+   1. ROOT VARIABLES (CSS Natives pour Thème Dynamique)
+   -------------------------------------------------------- */
+:root {
+    --primary: #{$primary-color};
+    --primary-hover: #{$primary-hover};
+    --text: #{$text-color};
+    --bg-page: #{$background};
+    --bg-card: #{$card-background};
+    --border: #{$input-border};
+    --radius: #{$border-radius};
+}
 
-/* Reset global */
+/* Version sombre activée par le hook useTheme via [data-theme='dark'] */
+[data-theme='dark'] {
+    --primary: #{lighten($primary-color, 10%)};
+    --text: #f3f4f6;
+    --bg-page: #0f172a;
+    --bg-card: #1e293b;
+    --border: #334155;
+}
 
-* {
+/* --------------------------------------------------------
+   2. RESET GLOBAL & BASE
+   -------------------------------------------------------- */
+*,
+*::before,
+*::after {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
 }
 
-html,
-body,
-#root {
-    height: 100vh;
-    background-color: rgb(229, 239, 240);
-    font-family: 'Inter', sans-serif;
+body {
+    min-height: 100vh;
+    background-color: var(--bg-page);
+    color: var(--text);
+    font-family: 'Inter', system-ui, sans-serif;
+    line-height: 1.5;
+    transition: background-color $transition-speed ease, color $transition-speed ease;
+}
+
+/* --------------------------------------------------------
+   3. UTILS & TYPO
+   -------------------------------------------------------- */
+.glass-effect {
+    background: rgba($card-background, 0.7); // SCSS pour opacité fixe
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--border);
+}
+
+.shadow-lg {
+    box-shadow: $shadow-hover;
 }

@@ -1,23 +1,9 @@
-// src/pages/Signup.jsx
-
 import React, { useState } from "react";
-// ... (imports)
-import {
-  Mail,
-  Lock,
-  Eye,
-  EyeOff,
-  User,
-  UserPlus,
-  Loader2,
-  CheckCircle,
-  XCircle,
-} from "lucide-react";
+import { Mail, Lock, Eye, EyeOff, User, UserPlus, Loader2 } from "lucide-react"; // ⚡️ Nettoyage : suppression de CheckCircle et XCircle inutilisés
 import { motion } from "framer-motion";
 import SocialLogin from "./SocialLogin";
 import Input from "../../components/ui/Input";
 
-// Imports des constantes
 import { GENRES } from "../../utils/constants/genres";
 import { JOURS } from "../../utils/constants/jours";
 import { MOIS } from "../../utils/constants/mois";
@@ -27,9 +13,8 @@ import { register } from "../../api/userApi";
 import { goToPath } from "../../components/navigation/goToPath";
 
 const Signup = () => {
-  // Utilisation du camelCase standard pour les états
   const [firstName, setFirstName] = useState("");
-  const [lastname, setLastname] = useState(""); // Corresponds à 'lastname' dans l'API
+  const [lastname, setLastname] = useState("");
 
   const [jour, setJour] = useState("");
   const [mois, setMois] = useState("");
@@ -64,9 +49,7 @@ const Signup = () => {
     setSuccess(null);
 
     if (password !== confirmPassword) {
-      const errorMsg = "Les mots de passe ne correspondent pas.";
-      setError(errorMsg);
-      alert(`Erreur: ${errorMsg}`);
+      setError("Les mots de passe ne correspondent pas.");
       return;
     }
 
@@ -75,11 +58,10 @@ const Signup = () => {
       "0"
     )}`;
 
-    // 3. Préparation des données pour l'API :
     const userData = {
       firstname: firstName,
       lastname,
-      gender, // La valeur sera "Homme", "Femme", ou "Autre"
+      gender,
       dateOfBirth,
       email,
       password,
@@ -89,32 +71,25 @@ const Signup = () => {
 
     try {
       const response = await register(userData);
-      // ... (gestion du succès)
       const successMessage =
         response.data?.message ||
         "Inscription réussie ! Veuillez activer votre compte.";
       setSuccess(successMessage);
-      alert(`Succès: ${successMessage}`);
       clearFormFields();
-      console.log("Inscription réussie:", response.data);
       setTimeout(() => {
         goToPath("/adviceCreate");
       }, 3000);
     } catch (err) {
-      // ... (gestion de l'erreur)
       const errorMessage =
         err.response?.data?.message ||
         "Une erreur est survenue lors de l'inscription. Veuillez réessayer.";
       setError(errorMessage);
-      alert(`Erreur: ${errorMessage}`);
-      console.error("Erreur d'inscription:", err);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    // ... (Rendu du formulaire)
     <>
       <div className="signup-container">
         <motion.div
@@ -128,22 +103,44 @@ const Signup = () => {
           <p className="card-subtitle">
             Rejoignez-nous et commencez votre aventure
           </p>
-          {/* ... (Affichage des messages d'état) ... */}
+
+          {/* Messages d'état */}
+          {success && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="alert-success"
+              role="alert"
+              aria-live="polite"
+            >
+              {success}
+            </motion.div>
+          )}
+          {error && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="alert-error"
+              role="alert"
+              aria-live="assertive"
+            >
+              {error}
+            </motion.div>
+          )}
 
           <form onSubmit={handleSignup} className="space-y-4">
-            {/* Prénom */}
+            {/* Prénom et Postnom */}
             <div className="flex gap-2">
               <div className="input-group flex-1">
                 <User className="input-icon" />
                 <Input
                   placeholder="Prénom"
-                  value={firstName} // Utilise l'état local firstName
+                  value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
                   required
                   disabled={loading}
                 />
               </div>
-              {/* Postnom */}
               <div className="input-group flex-1">
                 <User className="input-icon" />
                 <Input
@@ -169,7 +166,6 @@ const Signup = () => {
                 <option value="" disabled>
                   Sélectionner le genre
                 </option>
-                {/* Assurez-vous que les valeurs correspondent à ce que l'API attend (ex: "Homme") */}
                 {GENRES.map((g) => (
                   <option key={g.value} value={g.value}>
                     {g.label}
@@ -177,60 +173,63 @@ const Signup = () => {
                 ))}
               </select>
             </div>
-            {/* ... (suite du formulaire est correcte) ... */}
 
-            <label className="text-sm font-medium block">
-              Date de naissance
-            </label>
-            <div className="flex gap-2">
-              <select
-                value={jour}
-                onChange={(e) => setJour(e.target.value)}
-                required
-                className="input-field flex-1"
-                disabled={loading}
-              >
-                <option value="" disabled>
-                  Jour
-                </option>
-                {JOURS.map((j) => (
-                  <option key={j.value} value={j.value}>
-                    {j.label}
+            {/* Date de naissance */}
+
+            <div className="input-group-container">
+              <label>Date de naissance</label>
+              <div className="date-selector-group">
+                <select
+                  value={jour}
+                  onChange={(e) => setJour(e.target.value)}
+                  required
+                  className="modern-select"
+                  disabled={loading}
+                >
+                  <option value="" disabled>
+                    Jour
                   </option>
-                ))}
-              </select>
-              <select
-                value={mois}
-                onChange={(e) => setMois(e.target.value)}
-                required
-                className="input-field flex-1"
-                disabled={loading}
-              >
-                <option value="" disabled>
-                  Mois
-                </option>
-                {MOIS.map((m) => (
-                  <option key={m.value} value={m.value}>
-                    {m.label}
+                  {JOURS.map((j) => (
+                    <option key={j.value} value={j.value}>
+                      {j.label}
+                    </option>
+                  ))}
+                </select>
+
+                <select
+                  value={mois}
+                  onChange={(e) => setMois(e.target.value)}
+                  required
+                  className="modern-select"
+                  disabled={loading}
+                >
+                  <option value="" disabled>
+                    Mois
                   </option>
-                ))}
-              </select>
-              <select
-                value={annee}
-                onChange={(e) => setAnnee(e.target.value)}
-                required
-                className="input-field flex-1"
-                disabled={loading}
-              >
-                <option value="" disabled>
-                  Année
-                </option>
-                {ANNEES.map((y) => (
-                  <option key={y.value} value={y.value}>
-                    {y.label}
+                  {MOIS.map((m) => (
+                    <option key={m.value} value={m.value}>
+                      {m.label}
+                    </option>
+                  ))}
+                </select>
+
+                <select
+                  value={annee}
+                  onChange={(e) => setAnnee(e.target.value)}
+                  required
+                  className="modern-select"
+                  disabled={loading}
+                >
+                  <option value="" disabled>
+                    Année
                   </option>
-                ))}
-              </select>
+                  {ANNEES.map((y) => (
+                    <option key={y.value} value={y.value}>
+                      {y.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
 
             {/* Email */}
@@ -262,6 +261,11 @@ const Signup = () => {
                 className="toggle-password"
                 onClick={() => setShowPassword(!showPassword)}
                 disabled={loading}
+                aria-label={
+                  showPassword
+                    ? "Masquer le mot de passe"
+                    : "Afficher le mot de passe"
+                }
               >
                 {showPassword ? <EyeOff /> : <Eye />}
               </button>
@@ -283,11 +287,15 @@ const Signup = () => {
                 className="toggle-password"
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                 disabled={loading}
+                aria-label={
+                  showConfirmPassword
+                    ? "Masquer la confirmation du mot de passe"
+                    : "Afficher la confirmation du mot de passe"
+                }
               >
                 {showConfirmPassword ? <EyeOff /> : <Eye />}
               </button>
             </div>
-
             {/* Bouton principal */}
             <button type="submit" className="signup-button" disabled={loading}>
               {loading ? (
@@ -299,14 +307,16 @@ const Signup = () => {
             </button>
           </form>
 
+          {/* ✅ Lien vers la page de connexion */}
           <div className="login-link">
             Déjà un compte ? <a href="/login">Se connecter</a>
           </div>
 
+          {/* ✅ Connexions sociales */}
           <SocialLogin
-            onGoogle={() => alert("Google")}
-            onApple={() => alert("Apple")}
-            onFacebook={() => alert("Facebook")}
+            onGoogle={() => alert("Connexion Google (à implémenter)")}
+            onApple={() => alert("Connexion Apple (à implémenter)")}
+            onFacebook={() => alert("Connexion Facebook (à implémenter)")}
             text="Inscrivez-vous avec"
           />
         </motion.div>
