@@ -4,9 +4,7 @@ import { FaCheckCircle, FaExclamationCircle, FaSpinner } from "react-icons/fa";
 import Footer from "../../components/common/Footer";
 import { activate, requestNewCode } from "../../api/userApi";
 import { Link } from "react-router-dom";
-import { Button } from "bootstrap";
 import { goToPath } from "../../components/navigation/goToPath";
-// import ButtonGoTo from "../../components/ui/Button";
 
 const OTP_LENGTH = 6;
 
@@ -15,17 +13,18 @@ const ActivateAccount = () => {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(null);
   const [error, setError] = useState(null);
-  const [info, setInfo] = useState(null); // 👉 message d’information
+  const [info, setInfo] = useState(null);
 
   const inputsRef = useRef([]);
 
-  // Détecter si tous les chiffres sont remplis
+  // Soumettre automatiquement quand tout est rempli
   useEffect(() => {
-    if (otp.every((digit) => digit !== "")) {
+    if (otp.every((d) => d !== "")) {
       submitOtp();
     }
   }, [otp]);
 
+  /** Gère la saisie caractère par caractère */
   const handleChange = (e, idx) => {
     const value = e.target.value.replace(/\D/g, "");
     if (!value) return;
@@ -39,31 +38,56 @@ const ActivateAccount = () => {
     }
   };
 
+  /** Gère le collage d’un code complet (6 chiffres) */
+  const handlePaste = (e) => {
+    const paste = e.clipboardData.getData("text").replace(/\D/g, "");
+
+    if (!paste) return;
+
+    const digits = paste.split("").slice(0, OTP_LENGTH);
+
+    const newOtp = [...otp];
+    digits.forEach((digit, index) => {
+      newOtp[index] = digit;
+    });
+
+    setOtp(newOtp);
+
+    // Place le focus après le dernier chiffre collé
+    const last = digits.length - 1;
+    if (inputsRef.current[last]) {
+      inputsRef.current[last].focus();
+    }
+
+    e.preventDefault();
+  };
+
+  /** Effacement intelligent */
   const handleKeyDown = (e, idx) => {
     if (e.key === "Backspace" && otp[idx] === "" && idx > 0) {
       inputsRef.current[idx - 1].focus();
     }
   };
 
+  /** Soumission API */
   const submitOtp = async () => {
     setLoading(true);
     setError(null);
     setSuccess(null);
     setInfo(null);
+
     try {
       const code = otp.join("");
       const response = await activate({ code });
 
-      const msg = response.data?.message || "Compte activé avec succès !";
-      setSuccess(msg);
-      setTimeout(() => {
-        goToPath("/login");
-      }, 3000);
+      setSuccess(response.data?.message || "Compte activé avec succès !");
+      setTimeout(() => goToPath("/login"), 3000);
     } catch (err) {
       setError(
         err.response?.data?.message ||
           "Erreur lors de l'activation. Votre code est expiré !"
       );
+
       setOtp(Array(OTP_LENGTH).fill(""));
       inputsRef.current[0].focus();
     } finally {
@@ -71,12 +95,13 @@ const ActivateAccount = () => {
     }
   };
 
-  // 👉 nouvelle fonction pour demander un code
+  /** Requête nouveau code */
   const handleRequestNewCode = async () => {
     setLoading(true);
     setError(null);
     setSuccess(null);
     setInfo(null);
+
     try {
       const response = await requestNewCode();
       setInfo(
@@ -115,7 +140,8 @@ const ActivateAccount = () => {
             </div>
           )}
 
-          <div className="otp-container">
+          {/* Zone OTP */}
+          <div className="otp-container" onPaste={handlePaste}>
             {otp.map((digit, idx) => (
               <input
                 key={idx}
@@ -137,12 +163,14 @@ const ActivateAccount = () => {
                 <span>Activation en cours...</span>
               </div>
             )}
+
             <Link to={"/reSendActivationCode"}>
               Demander un nouveau code d'activation
             </Link>
           </div>
         </div>
       </div>
+
       <Footer />
     </>
   );

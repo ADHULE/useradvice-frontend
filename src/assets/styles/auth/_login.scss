@@ -65,7 +65,7 @@ CARTE LOGIN
         gap: 8px;
     }
 
-    p {
+    p.card-subtitle {
         color: $text-color;
         opacity: 0.7;
         margin-bottom: 24px;
@@ -80,8 +80,7 @@ CARTE LOGIN
         flex-direction: column;
         gap: 1rem;
 
-        /* Groupes de champs */
-        div {
+        .input-group {
             display: flex;
             align-items: center;
             position: relative;
@@ -96,7 +95,7 @@ CARTE LOGIN
                 box-shadow: 0 0 0 2px rgba($primary-color, 0.25);
             }
 
-            svg {
+            svg.input-icon {
                 margin-right: 8px;
                 color: $icon-color;
             }
@@ -110,7 +109,7 @@ CARTE LOGIN
                 color: $text-color;
             }
 
-            button {
+            button.toggle-password {
                 background: none;
                 border: none;
                 cursor: pointer;
@@ -125,14 +124,14 @@ CARTE LOGIN
             }
         }
 
-        /* Options */
-        >div:last-of-type {
+        /* Options "se souvenir / mot de passe oublié" */
+        .options-row {
             display: flex;
             justify-content: space-between;
             margin-top: 10px;
             font-size: 14px;
 
-            label {
+            .checkbox-group {
                 display: flex;
                 align-items: center;
                 gap: 6px;
@@ -143,7 +142,7 @@ CARTE LOGIN
                 }
             }
 
-            a {
+            a.forgot-password {
                 color: $primary-color;
                 text-decoration: none;
                 transition: 0.2s;
@@ -155,8 +154,8 @@ CARTE LOGIN
             }
         }
 
-        /* Bouton de connexion */
-        button[type="submit"] {
+        /* Boutons de connexion / activation */
+        .login-button {
             width: 100%;
             padding: 12px 0;
             background: $primary-color;
@@ -166,7 +165,6 @@ CARTE LOGIN
             cursor: pointer;
             font-size: 16px;
             font-weight: bold;
-            text-align: center;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -183,6 +181,24 @@ CARTE LOGIN
             &:active {
                 transform: translateY(0);
                 box-shadow: $shadow-light;
+            }
+
+            &.secondary-button {
+                background: lighten($primary-color, 35%);
+                color: $primary-color;
+
+                &:hover {
+                    background: lighten($primary-color, 25%);
+                }
+            }
+
+            &.activation-button {
+                background: $secondary-color;
+                color: white;
+
+                &:hover {
+                    background: darken($secondary-color, 5%);
+                }
             }
         }
     }
@@ -233,7 +249,7 @@ RESPONSIVE
         width: 100%;
         padding: 1.5rem;
 
-        form div {
+        form .input-group {
             flex-direction: column;
             align-items: flex-start;
 
@@ -241,7 +257,7 @@ RESPONSIVE
                 margin-top: 0.5rem;
             }
 
-            svg {
+            svg.input-icon {
                 margin-bottom: 0.25rem;
             }
         }

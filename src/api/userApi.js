@@ -16,6 +16,7 @@ export const logout = () => api.post("/logout");
 export const register = (data) => api.post("/inscription", data);
 export const activate = (activationData) =>
   api.post("/activation", activationData);
+
 export const requestNewCode = (data) => api.post("/generate-new-code", data);
 
 // --------------------- MOT DE PASSE ---------------------
