@@ -1,6 +1,11 @@
-// src/pages/Home/Home.jsx
 import React, { useState, useEffect } from "react";
-import { UserCheck, Star, Building2, UserPlus } from "lucide-react";
+import {
+  UserCheck,
+  Star,
+  Building2,
+  UserPlus,
+  ShieldCheck,
+} from "lucide-react"; // ShieldCheck pour l'admin
 import Header from "../../components/common/Header";
 import Footer from "../../components/common/Footer";
 import { goToPath } from "../../components/navigation/goToPath";
@@ -18,58 +23,58 @@ const ButtonGoTo = ({ label, className, icon: Icon, onClick }) => (
 
 const Home = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false); // 🔑 Etat pour le statut admin
   const [theme, setTheme] = useState(() => {
-    if (typeof localStorage !== "undefined") {
-      return localStorage.getItem("theme") || "light";
-    }
-    return "light";
+    return localStorage.getItem("theme") || "light";
   });
 
-  // Vérification du token au montage
+  // --- Synchronisation avec Login.jsx ---
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
+    const userStr = localStorage.getItem("user");
+
     setIsLoggedIn(!!token);
+
+    if (userStr) {
+      const user = JSON.parse(userStr);
+      // Même logique que dans Login.jsx : vérification du tableau de rôles
+      const adminCheck = user?.roles?.some((r) => r.name === "ROLE_ADMIN");
+      setIsAdmin(!!adminCheck);
+    }
   }, []);
 
-  // Gestion du thème
   useEffect(() => {
     const root = document.documentElement;
-    if (theme === "dark") {
-      root.classList.add("dark");
-      root.classList.remove("light");
-    } else {
-      root.classList.add("light");
-      root.classList.remove("dark");
-    }
+    root.classList.toggle("dark", theme === "dark");
     localStorage.setItem("theme", theme);
   }, [theme]);
 
   const toggleTheme = () => setTheme(theme === "light" ? "dark" : "light");
 
+  // 🔑 Redirection selon les mêmes conditions que Login
   const handleGoToReview = () => {
     if (isLoggedIn) {
-      goToPath("/createReviewPage");
+      if (isAdmin) {
+        goToPath("/adminDashBoard"); // Redirection Admin
+      } else {
+        goToPath("/createReviewPage"); // Redirection Utilisateur
+      }
     } else {
       goToPath("/login");
     }
   };
 
-  //  fonction logout
   const handleLogout = async () => {
     try {
-      await apiLogout(); // Appel API pour supprimer le refresh token côté backend
+      await apiLogout();
     } catch (e) {
       console.warn("Erreur API logout :", e);
     }
-
-    // Nettoyage local
     localStorage.removeItem("accessToken");
     localStorage.removeItem("expiresAt");
-
-    // Mise à jour de l’état
+    localStorage.removeItem("user"); // 🔑 Nettoyage de l'objet user complet
     setIsLoggedIn(false);
-
-    // Retour propre sur la page Home
+    setIsAdmin(false);
     goToPath("/");
   };
 
@@ -85,7 +90,6 @@ const Home = () => {
           theme={theme}
           toggleTheme={toggleTheme}
         />
-
         <main className="main-content-presentation">
           <section
             className="hero-section"
@@ -102,10 +106,17 @@ const Home = () => {
             <p className="hero-tagline">
               Partagez votre expérience et aidez-nous à bâtir l'excellence.
             </p>
+
             <ButtonGoTo
-              label="Accéder à mon espace Avis"
+              label={
+                isAdmin
+                  ? "Accéder au Tableau de Bord Admin" // Texte spécifique Admin
+                  : isLoggedIn
+                  ? "Accéder à mes Avis"
+                  : "Se connecter pour donner un avis"
+              }
               className="cta-button"
-              icon={UserCheck}
+              icon={isAdmin ? ShieldCheck : UserCheck} // Icône change si admin
               onClick={handleGoToReview}
             />
           </section>
@@ -114,33 +125,23 @@ const Home = () => {
             <div className="info-card">
               <Star className="info-icon" />
               <h3>Notre Engagement</h3>
-              <p>
-                Nous valorisons la transparence et l'honnêteté. Chaque avis est
-                une chance de mieux vous servir.
-              </p>
+              <p>Transparence et honnêteté pour chaque avis vérifié.</p>
             </div>
-
             <div className="info-card">
               <Building2 className="info-icon" />
-              <h3>À Propos de SYSTEME ADHULE</h3>
-              <p>
-                Leader dans notre domaine, SYSTEME ADHULE s'engage à fournir des
-                solutions de haute qualité.
-              </p>
+              <h3>À Propos</h3>
+              <p>SYSTEME ADHULE fournit des solutions de haute qualité.</p>
             </div>
-
             <div className="info-card">
               <UserPlus className="info-icon" />
-              <h3>Pourquoi créer un compte ?</h3>
+              <h3>Espace Membre</h3>
               <p>
-                Créer un compte vous permet de soumettre des avis vérifiés,
-                suivre vos contributions et contacter le support.
+                Suivez vos contributions et contactez le support facilement.
               </p>
             </div>
           </section>
         </main>
       </div>
-
       <Footer />
     </>
   );

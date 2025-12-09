@@ -1,3 +1,7 @@
+// Définition de variables locales si non définies globalement
+$primary-color: #3b82f6; // Bleu moderne
+$transition: cubic-bezier(0.4, 0, 0.2, 1);
+
 .admin-sidebar {
     background: var(--bg-card);
     border-right: 1px solid var(--border);
@@ -7,29 +11,58 @@
     height: 100vh;
     position: sticky;
     top: 0;
-    // border: 1px solid red;
+    transition: width 0.3s $transition;
+    box-shadow: 4px 0 10px rgba(0, 0, 0, 0.02);
+
+    // Bouton de réduction (Toggle)
+    .toggle-btn {
+        position: absolute;
+        right: -12px;
+        top: 30px;
+        width: 24px;
+        height: 24px;
+        background: var(--primary);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        border: 2px solid var(--bg-card);
+        z-index: 10;
+        transition: transform 0.3s ease;
+
+        &:hover {
+            transform: scale(1.1);
+        }
+    }
 
     .sidebar-header {
         display: flex;
         align-items: center;
         gap: 12px;
-        margin-bottom: 2.5rem;
+        margin-bottom: 3rem;
+        padding-left: 0.5rem;
 
         .logo-icon {
-            width: 40px;
+            min-width: 40px;
             height: 40px;
-            background: var(--primary);
+            background: linear-gradient(135deg, var(--primary), #60a5fa);
             color: white;
             border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 800;
+            box-shadow: 0 4px 12px rgba($primary-color, 0.3);
         }
 
         .logo-text {
+            font-size: 1.2rem;
             font-weight: 800;
+            letter-spacing: 1px;
             color: var(--text);
+            white-space: nowrap;
         }
     }
 
@@ -48,35 +81,40 @@
             border-radius: 12px;
             color: var(--text);
             opacity: 0.7;
-            transition: all 0.3s ease;
+            text-decoration: none; // Pour les composants Link
+            transition: all 0.2s $transition;
+            white-space: nowrap;
+            overflow: hidden;
 
             .icon {
                 min-width: 24px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .label {
+                font-weight: 500;
             }
 
             &:hover {
                 opacity: 1;
-                background: rgba($primary-color, 0.05);
+                background: rgba($primary-color, 0.08);
+                color: var(--primary);
             }
 
-            // --- STYLE LORSQUE LA PAGE EST ACTIVE ---
+            // Style Page Active
             &.active {
                 opacity: 1;
-                background: rgba($primary-color, 0.1); // Fond léger coloré
-                color: var(--primary); // Texte et Icône à la couleur primaire
-                font-weight: 700;
+                background: rgba($primary-color, 0.12);
+                color: var(--primary);
+                font-weight: 600;
 
-                .icon {
-                    color: var(--primary);
-                }
-
-                &::before {
-                    // Petit trait de couleur sur le côté
-                    content: "";
+                .active-indicator {
                     position: absolute;
                     left: 0;
-                    height: 60%;
                     width: 4px;
+                    height: 20px;
                     background: var(--primary);
                     border-radius: 0 4px 4px 0;
                 }
@@ -84,16 +122,81 @@
         }
     }
 
-    /* Version réduite */
+    .sidebar-footer {
+        margin-top: auto;
+        padding-top: 1rem;
+        border-top: 1px solid var(--border);
+
+        .home-link {
+            opacity: 0.8;
+
+            &:hover {
+                opacity: 1;
+                background: rgba(var(--text-rgb), 0.05);
+            }
+        }
+    }
+
+    // Version réduite (Desktop)
     &.collapsed {
         padding: 1.5rem 0.75rem;
+        align-items: center;
+
+        .sidebar-header {
+            padding-left: 0;
+            justify-content: center;
+        }
 
         .nav-item {
-            justify-content: center;
             padding: 0.85rem;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
 
-            &.active::before {
-                left: -12px;
+            .label {
+                display: none;
+            }
+
+            &.active .active-indicator {
+                left: -8px; // Ajustement pour l'indicateur en mode réduit
+            }
+        }
+    }
+
+    // Version Mobile
+    &.mobile {
+        position: fixed;
+        bottom: 0;
+        top: auto;
+        height: auto;
+        width: 100% !important;
+        flex-direction: row;
+        padding: 0.75rem;
+        border-right: none;
+        border-top: 1px solid var(--border);
+        justify-content: space-around;
+        z-index: 1000;
+
+        .sidebar-header,
+        .toggle-btn,
+        .sidebar-footer {
+            display: none; // Cache le logo et le footer sur mobile pour gagner de la place
+        }
+
+        .sidebar-nav {
+            flex-direction: row;
+            justify-content: space-around;
+            width: 100%;
+
+            .nav-item {
+                flex-direction: column;
+                gap: 4px;
+                padding: 0.5rem;
+                font-size: 0.7rem;
+
+                .icon {
+                    min-width: 20px;
+                }
             }
         }
     }

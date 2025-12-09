@@ -4,6 +4,7 @@ import { LogIn, UserPlus, Sun, Moon } from "lucide-react";
 
 import { useThemeGlobal } from "../../context/ThemeContext";
 import { goToPath } from "../navigation/goToPath";
+import { useAuth } from "../../pages/Auth/AuthProvider";
 
 const ButtonGoTo = ({ label, className, icon: Icon, onClick }) => (
   <button className={`btn ${className}`} onClick={onClick}>
@@ -12,7 +13,7 @@ const ButtonGoTo = ({ label, className, icon: Icon, onClick }) => (
   </button>
 );
 
-const Header = ({ isLoggedIn, onLogout }) => {
+const Header = ({ isLoggedIn, onLogout = useAuth }) => {
   const { theme, toggleTheme } = useThemeGlobal();
 
   const handleAuthClick = (action) => {
