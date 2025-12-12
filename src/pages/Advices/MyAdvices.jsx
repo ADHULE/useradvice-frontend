@@ -1,5 +1,3 @@
-// src/pages/Advice/MyAdvices.jsx
-
 import React, { useEffect, useState } from "react";
 import { getMyAdvices, deleteAdvice } from "../../api/adviceApi";
 import {
@@ -11,45 +9,27 @@ import {
   FaClock,
   FaTimesCircle,
   FaExclamationTriangle,
-  FaArrowLeft, // Icône pour bouton retour
+  FaArrowLeft,
+  FaSyncAlt,
 } from "react-icons/fa";
 import Footer from "../../components/common/Footer";
-
-// Import React Router
-import { useNavigate, Link } from "react-router-dom";
-
-// Import utilitaire de navigation
 import { goToPath } from "../../components/navigation/goToPath";
 
 const MyAdvices = () => {
   const [advices, setAdvices] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  // Hook de navigation
-  const navigate = useNavigate();
-
-  // ------------------------------------------------
-  // Fonction utilitaire pour le formatage des dates
-  // ------------------------------------------------
   const formatDate = (dateString) => {
     if (!dateString) return "Date inconnue";
-    try {
-      const options = {
-        year: "numeric",
-        month: "short",
-        day: "numeric",
-        hour: "2-digit",
-        minute: "2-digit",
-      };
-      return new Date(dateString).toLocaleDateString("fr-FR", options);
-    } catch (e) {
-      return "Date invalide";
-    }
+    return new Date(dateString).toLocaleDateString("fr-FR", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
   };
 
-  // ------------------------------------------------
-  // Affichage du statut
-  // ------------------------------------------------
   const getStatusDisplay = (status) => {
     switch (status?.toUpperCase()) {
       case "PUBLISHED":
@@ -84,14 +64,11 @@ const MyAdvices = () => {
     }
   };
 
-  // ------------------------------------------------
-  // Charger les avis
-  // ------------------------------------------------
   const loadData = async () => {
     try {
       setLoading(true);
       const res = await getMyAdvices();
-      setAdvices(res.data);
+      setAdvices(res.data || []);
     } catch (err) {
       console.error("Erreur chargement avis:", err);
       alert("Impossible de charger vos avis. Veuillez vous reconnecter.");
@@ -100,12 +77,10 @@ const MyAdvices = () => {
     }
   };
 
-  // ------------------------------------------------
-  // Supprimer un avis
-  // ------------------------------------------------
   const handleDelete = async (id) => {
-    if (!window.confirm("Voulez-vous vraiment supprimer cet avis ?")) return;
-
+    // Ask user confirmation before deleting (using globalThis.confirm for cross-environment compatibility)
+    if (!globalThis.confirm("Voulez-vous vraiment supprimer cet avis ?"))
+      return;
     try {
       await deleteAdvice(id);
       alert("Avis supprimé avec succès !");
@@ -116,23 +91,30 @@ const MyAdvices = () => {
     }
   };
 
-  // Charger les données au montage
   useEffect(() => {
     loadData();
-    document.querySelector(".advice-list")?.classList.add("is-loaded");
   }, []);
 
   return (
     <>
       <div className="advice-page-layout">
         <div className="advice-main-content">
-          <button
-            className="btn-back-to-create"
-            onClick={() => goToPath("/adviceCreate")}
-            title="Retourner à la création d'un avis"
-          >
-            <FaArrowLeft /> Nouvel Avis
-          </button>
+          <div className="advice-header-buttons">
+            <button
+              className="btn-back-to-create"
+              onClick={() => goToPath("/adviceCreate")}
+              title="Créer un nouvel avis"
+            >
+              <FaArrowLeft /> Nouvel Avis
+            </button>
+            <button
+              className="btn-refresh"
+              onClick={loadData}
+              title="Actualiser la liste"
+            >
+              <FaSyncAlt /> Actualiser
+            </button>
+          </div>
 
           <h2 className="page-title-icon">
             <FaLightbulb className="header-icon" /> Mes Avis
@@ -144,25 +126,22 @@ const MyAdvices = () => {
           <ul className="advice-list">
             {advices.map((a) => {
               const statusDisplay = getStatusDisplay(a.status);
-
               return (
                 <li key={a.id} className="advice-item">
                   <div className="advice-details-group">
                     <div className="advice-message">
                       <FaCommentDots className="message-icon" /> {a.message}
                     </div>
-
                     <div className="advice-metadata">
                       <span
                         className={`advice-status ${statusDisplay.className}`}
                       >
                         {statusDisplay.icon} {statusDisplay.label}
                       </span>
-                      <FaRegCalendarAlt className="metadata-icon" />
-                      Publié le {formatDate(a.createdAt)}
+                      <FaRegCalendarAlt className="metadata-icon" /> Publié le{" "}
+                      {formatDate(a.createdAt)}
                     </div>
                   </div>
-
                   <button
                     className="btn-delete"
                     onClick={() => handleDelete(a.id)}

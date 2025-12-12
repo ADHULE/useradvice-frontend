@@ -1,5 +1,6 @@
+// src/pages/Auth/Signup.jsx
 import React, { useState } from "react";
-import { Mail, Lock, Eye, EyeOff, User, UserPlus, Loader2 } from "lucide-react"; // ⚡️ Nettoyage : suppression de CheckCircle et XCircle inutilisés
+import { Mail, Lock, Eye, EyeOff, User, UserPlus, Loader2 } from "lucide-react";
 import { motion } from "framer-motion";
 import SocialLogin from "./SocialLogin";
 import Input from "../../components/ui/Input";
@@ -11,6 +12,7 @@ import { ANNEES } from "../../utils/constants/annees";
 import Footer from "../../components/common/Footer";
 import { register } from "../../api/userApi";
 import { goToPath } from "../../components/navigation/goToPath";
+import Alert from "../../components/ui/Alert";
 
 const Signup = () => {
   const [firstName, setFirstName] = useState("");
@@ -77,7 +79,7 @@ const Signup = () => {
       setSuccess(successMessage);
       clearFormFields();
       setTimeout(() => {
-        goToPath("/adviceCreate");
+        goToPath("/login");
       }, 3000);
     } catch (err) {
       const errorMessage =
@@ -113,7 +115,7 @@ const Signup = () => {
               role="alert"
               aria-live="polite"
             >
-              {success}
+              <Alert message={success} type="success" />
             </motion.div>
           )}
           {error && (
@@ -124,7 +126,7 @@ const Signup = () => {
               role="alert"
               aria-live="assertive"
             >
-              {error}
+              <Alert message={error} type="error" />
             </motion.div>
           )}
 
@@ -162,6 +164,7 @@ const Signup = () => {
                 required
                 className="flex-1 input-field"
                 disabled={loading}
+                aria-label="Genre"
               >
                 <option value="" disabled>
                   Sélectionner le genre
@@ -177,14 +180,15 @@ const Signup = () => {
             {/* Date de naissance */}
 
             <div className="input-group-container">
-              <label>Date de naissance</label>
-              <div className="date-selector-group">
+              <label htmlFor="birth-date-group">Date de naissance</label>
+              <div className="date-selector-group" id="birth-date-group">
                 <select
                   value={jour}
                   onChange={(e) => setJour(e.target.value)}
                   required
                   className="modern-select"
                   disabled={loading}
+                  aria-label="Jour"
                 >
                   <option value="" disabled>
                     Jour
@@ -202,6 +206,7 @@ const Signup = () => {
                   required
                   className="modern-select"
                   disabled={loading}
+                  aria-label="Mois"
                 >
                   <option value="" disabled>
                     Mois
@@ -219,6 +224,7 @@ const Signup = () => {
                   required
                   className="modern-select"
                   disabled={loading}
+                  aria-label="Année"
                 >
                   <option value="" disabled>
                     Année
@@ -307,12 +313,12 @@ const Signup = () => {
             </button>
           </form>
 
-          {/* ✅ Lien vers la page de connexion */}
+          {/* Lien vers la page de connexion */}
           <div className="login-link">
             Déjà un compte ? <a href="/login">Se connecter</a>
           </div>
 
-          {/* ✅ Connexions sociales */}
+          {/* Connexions sociales */}
           <SocialLogin
             onGoogle={() => alert("Connexion Google (à implémenter)")}
             onApple={() => alert("Connexion Apple (à implémenter)")}

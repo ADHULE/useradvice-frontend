@@ -1,28 +1,37 @@
-import React, { createContext, useState } from "react";
+// src/context/AuthContext.jsx
+import React, { createContext, useContext, useState, useMemo } from "react";
+import TokenService from "../Services/TokenService";
 
-//  Crée le contexte
-export const AuthContext = createContext();
+// Création du contexte
+const AuthContext = createContext(null);
 
-//  Crée le provider
+// Fournisseur du contexte
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null); // info utilisateur
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // état de connexion
+  const [user, setUser] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(!!TokenService.getAccessToken());
 
-  // fonction pour se connecter
-  const login = (userData) => {
+  // Fonction login : enregistre le token et l'utilisateur
+  const login = (userData, token) => {
+    TokenService.saveTokens(token);
     setUser(userData);
     setIsLoggedIn(true);
   };
 
-  // fonction pour se déconnecter
+  // Fonction logout : supprime le token et réinitialise l'état
   const logout = () => {
+    TokenService.clearTokens();
     setUser(null);
     setIsLoggedIn(false);
   };
 
-  return (
-    <AuthContext.Provider value={{ user, isLoggedIn, login, logout }}>
-      {children}
-    </AuthContext.Provider>
+  // Valeur du contexte (mémoïsée pour éviter les re-renders inutiles)
+  const value = useMemo(
+    () => ({ user, isLoggedIn, login, logout }),
+    [user, isLoggedIn]
   );
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
+
+// Hook utilitaire pour accéder facilement au contexte
+export const useAuth = () => useContext(AuthContext);

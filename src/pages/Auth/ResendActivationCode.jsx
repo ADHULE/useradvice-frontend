@@ -1,5 +1,5 @@
+// src/pages/Auth/ResendActivationCode.jsx
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { requestNewCode } from "../../api/userApi";
 import { goToPath } from "../../components/navigation/goToPath";
 import Footer from "../../components/common/Footer";
@@ -24,11 +24,12 @@ const ResendActivationCode = () => {
     setIsError(false);
 
     try {
-      //  Appel à Axios via la fonction requestNewCode
-      // const response = await requestNewCode({ email });
+      // Appel à l'API via la fonction requestNewCode
+      const response = await requestNewCode({ email });
 
       setMessage(
-        "Un nouveau code d’activation a été envoyé à votre adresse e-mail. Vérifiez votre boîte de réception."
+        response.data.message ||
+          "Un nouveau code d'activation a été envoyé à votre adresse e-mail. Vérifiez votre boîte de réception."
       );
       setIsError(false);
       setEmail("");
@@ -57,9 +58,9 @@ const ResendActivationCode = () => {
     <>
       <div className="login-page">
         <div className="login-card">
-          <h2> Renvoyer le Code d’Activation</h2>
+          <h2> Renvoyer le Code d'Activation</h2>
           <p>
-            Veuillez entrer l’adresse e-mail de votre compte pour recevoir un
+            Veuillez entrer l'adresse e-mail de votre compte pour recevoir un
             nouveau code de validation.
           </p>
 

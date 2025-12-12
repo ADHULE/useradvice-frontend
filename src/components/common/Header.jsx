@@ -4,8 +4,9 @@ import { LogIn, UserPlus, Sun, Moon } from "lucide-react";
 
 import { useThemeGlobal } from "../../context/ThemeContext";
 import { goToPath } from "../navigation/goToPath";
-import { useAuth } from "../../pages/Auth/AuthProvider";
+import useAuth from "../../hooks/useAuth";
 
+// Bouton réutilisable
 const ButtonGoTo = ({ label, className, icon: Icon, onClick }) => (
   <button className={`btn ${className}`} onClick={onClick}>
     {Icon && <Icon size={18} />}
@@ -13,9 +14,11 @@ const ButtonGoTo = ({ label, className, icon: Icon, onClick }) => (
   </button>
 );
 
-const Header = ({ isLoggedIn, onLogout = useAuth }) => {
+const Header = ({ isLoggedIn, onLogout }) => {
   const { theme, toggleTheme } = useThemeGlobal();
+  const { logout } = useAuth(); // récupération de la fonction logout depuis le contexte
 
+  // Gestion des clics sur Connexion / Inscription
   const handleAuthClick = (action) => {
     if (action === "Connexion") goToPath("/login");
     else if (action === "Inscription") goToPath("/signup");
@@ -45,7 +48,7 @@ const Header = ({ isLoggedIn, onLogout = useAuth }) => {
               label="Déconnexion"
               className="btn-logout"
               icon={LogIn}
-              onClick={onLogout}
+              onClick={onLogout || logout} //  utilise la prop si fournie, sinon le logout du contexte
             />
           ) : (
             <>

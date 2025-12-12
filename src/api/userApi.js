@@ -1,40 +1,40 @@
-// src/api/userApi.js
+// userApi.js
+// Fonctions d'appel API spécifiques aux utilisateurs et à l'authentification
 
-import api from "./useAxios"; // directement utiliser l'instance
+import apiInstance from "./apiInstance";
 
-// --------------------- AUTHENTIFICATION ---------------------
+// --------------------- AUTH ---------------------
+export const login = (credentials) => apiInstance.post("/login", credentials);
 
-export const login = (credentials) => api.post("/login", credentials);
-
-// Si refresh token est en cookie HttpOnly
 export const refreshToken = () =>
-  api.post("/refresh-token", {}, { withCredentials: true });
+  apiInstance.post("/refresh-token", {}, { withCredentials: true });
 
-// Déconnexion (le token est géré par l’intercepteur)
-export const logout = () => api.post("/logout");
+export const logout = () => apiInstance.post("/logout");
 
-export const register = (data) => api.post("/inscription", data);
-export const activate = (activationData) =>
-  api.post("/activation", activationData);
+export const register = (data) => apiInstance.post("/inscription", data);
 
-export const requestNewCode = (data) => api.post("/generate-new-code", data);
+export const activate = (data) => apiInstance.post("/activation", data);
 
-// --------------------- MOT DE PASSE ---------------------
+export const requestNewCode = (data) =>
+  apiInstance.post("/generate-new-code", data);
 
-export const changePassword = (data) => api.post("/change-password", data);
-export const newPassword = (data) => api.post("/new-password", data);
+// --------------------- PASSWORD ---------------------
+export const changePassword = (data) =>
+  apiInstance.post("/change-password", data);
 
-// --------------------- UTILISATEUR CONNECTÉ ---------------------
+export const newPassword = (data) => apiInstance.post("/new-password", data);
 
-export const getMe = () => api.get("/users/me");
-export const updateMe = (data) => api.put("/users/me", data);
-export const deleteMe = () => api.delete("/users/me");
+// --------------------- CURRENT USER ---------------------
+export const getMe = () => apiInstance.get("/me");
 
-// --------------------- AVIS ---------------------
+export const updateMe = (data) => apiInstance.put("/me", data);
 
-export const createReview = (data) => api.post("/avis", data);
-export const getMyReviews = () => api.get("/avis/me");
+export const deleteMe = () => apiInstance.delete("/me");
+
+// --------------------- REVIEWS ---------------------
+export const createReview = (data) => apiInstance.post("/avis", data);
+
+export const getMyReviews = () => apiInstance.get("/avis/me");
 
 // --------------------- ADMIN ---------------------
-
-export const getAllUsers = () => api.get("/users");
+export const getAllUsers = () => apiInstance.get("/users");

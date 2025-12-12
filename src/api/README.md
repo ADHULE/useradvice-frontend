@@ -17,11 +17,9 @@ Cette organisation rend les appels réutilisables, maintenables et cohérents.
 
 ## ├── useAxios.js # Configuration Axios centrale
 
-## ├── authApi.js # Authentification classique (login, register, password)
-
 ## ├── oauthApi.js # Social login (Google, GitHub, Facebook)
 
-## ├── userApi.js # Utilisateur (profil, informations)
+## ├── userApi.js # Utilisateur (authentification, profil, informations)
 
 ## ├── adviceApi.js # Advices CRUD (Create / Read / Update / Delete)
 
@@ -37,21 +35,7 @@ Ajoute automatiquement le token dans le header
 
 Gère les erreurs globales (ex: 401)
 
-## 2. authApi.js
-
-Endpoints principaux :
-| Fonction | Endpoint | Description |
-| ------------------------ | ----------------------- | ---------------------------- |
-| `register(data)` | POST `/inscription` | Inscription utilisateur |
-| `activateAccount(data)` | POST `/activation` | Activation du compte |
-| `login(email, password)` | POST `/login` | Connexion utilisateur |
-| `refreshToken()` | POST `/refresh-token` | Rafraîchir le token JWT |
-| `changePassword(data)` | POST `/change-password` | Changer mot de passe |
-| `forgotPassword(email)` | POST `/forgot-password` | Mot de passe oublié |
-| `newPassword(data)` | POST `/new-password` | Définir nouveau mot de passe |
-| `logout()` | POST `/logout` | Déconnexion |
-
-## 3. oauthApi.js
+## 2. oauthApi.js
 
 Endpoints Social login :
 | Fonction | Endpoint | Description |
@@ -60,29 +44,41 @@ Endpoints Social login :
 | `loginWithGithub(code)` | POST `/auth/github` | Connexion via GitHub OAuth |
 | `loginWithFacebook(accessToken)` | POST `/auth/facebook` | Connexion via Facebook OAuth |
 
-## 4. userApi.js
+## 3. userApi.js
 
 Endpoints utilisateur :
 
-| Fonction  | Endpoint  | Description                             |
-| --------- | --------- | --------------------------------------- |
-| `getMe()` | GET `/me` | Récupère le profil utilisateur connecté |
+| Fonction               | Endpoint                | Description                             |
+| ---------------------- | ----------------------- | --------------------------------------- |
+| `getMe()`              | GET `/me`               | Récupère le profil utilisateur connecté |
+| `updateMe(data)`       | PUT `/me`               | Met à jour le profil utilisateur        |
+| `deleteMe()`           | DELETE `/me`            | Supprime le compte utilisateur          |
+| `login(credentials)`   | POST `/login`           | Connexion utilisateur                   |
+| `register(data)`       | POST `/inscription`     | Inscription utilisateur                 |
+| `activate(data)`       | POST `/activation`      | Activation du compte                    |
+| `logout()`             | POST `/logout`          | Déconnexion                             |
+| `refreshToken()`       | POST `/refresh-token`   | Rafraîchir le token JWT                 |
+| `changePassword(data)` | POST `/change-password` | Changer mot de passe                    |
+| `newPassword(data)`    | POST `/new-password`    | Nouveau mot de passe                    |
+| `createReview(data)`   | POST `/avis`            | Créer un avis/review                    |
+| `getMyReviews()`       | GET `/avis/me`          | Récupérer mes avis                      |
 
-À adapter si ton backend a un autre endpoint pour le profil.
+| `getAllUsers()` | GET `/users` | Récupérer tous les utilisateurs (admin) |
 
-## 5. adviceApi.js
+## 4. adviceApi.js
 
 Endpoints Advice :
 
-| Fonction                 | Endpoint                      | Description                |
-| ------------------------ | ----------------------------- | -------------------------- |
-| `getAllAdvices()`        | GET `/advices/all`            | Récupérer tous les advices |
-| `getAdviceById(id)`      | GET `/advices/{id}`           | Récupérer un advice par id |
-| `createAdvice(data)`     | POST `/advices`               | Créer un nouvel advice     |
-| `updateAdvice(id, data)` | PUT `/advices/update/{id}`    | Mettre à jour un advice    |
-| `deleteAdvice(id)`       | DELETE `/advices/delete/{id}` | Supprimer un advice        |
+| Fonction                 | Endpoint                | Description                |
+| ------------------------ | ----------------------- | -------------------------- |
+| `getAllAdvices()`        | GET `/advices/admin`    | Récupérer tous les advices |
+| `getMyAdvices()`         | GET `/advices/me`       | Récupérer mes advices      |
+| `getAdviceById(id)`      | GET `/advices/${id}`    | Récupérer un advice par id |
+| `createAdvice(data)`     | POST `/advices`         | Créer un nouvel advice     |
+| `updateAdvice(id, data)` | PUT `/advices/${id}`    | Mettre à jour un advice    |
+| `deleteAdvice(id)`       | DELETE `/advices/${id}` | Supprimer un advice        |
 
-## 6. index.js
+## 5. index.js
 
 index.js simplifie l’import des fonctions API.
 

@@ -1,5 +1,7 @@
+// AdviceCreate.jsx
+// Page pour créer un nouvel avis
+
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import Footer from "../../components/common/Footer";
 import {
   FaPaperPlane,
@@ -31,11 +33,13 @@ const AdviceCreate = () => {
     e.preventDefault();
     setError(null);
 
+    // Validation côté client
     if (!advice.message.trim()) {
       setError("Veuillez saisir un message pour l'avis.");
       return;
     }
 
+    // Vérification de la session
     if (!localStorage.getItem("accessToken")) {
       alert("Session expirée. Veuillez vous reconnecter.");
       goToPath("/login");
@@ -50,8 +54,8 @@ const AdviceCreate = () => {
 
     try {
       setLoading(true);
-      await createAdvice(advicePayload);
-      goToPath("/myAdvices");
+      await createAdvice(advicePayload); // Appel API
+      goToPath("/myAdvices"); // Redirection après succès
     } catch (err) {
       console.error("Erreur lors de la soumission de l'avis:", err);
       const apiError = err.response?.data?.message || err.message;
@@ -60,7 +64,7 @@ const AdviceCreate = () => {
         setError(
           "Session expirée ou droits insuffisants. L'avis n'a pas été créé."
         );
-        goToPath("/login");
+        // goToPath("/login");
       } else {
         setError(
           `Une erreur est survenue lors de l'enregistrement. Détails : ${apiError}`
@@ -75,6 +79,7 @@ const AdviceCreate = () => {
     <>
       <div className="advice-page-layout">
         <div className="advice-main-content">
+          {/* Boutons de navigation */}
           <div className="nav-buttons">
             <button
               className="btn-back-previous"
@@ -99,6 +104,7 @@ const AdviceCreate = () => {
 
           {error && <div className="alert alert-error">{error}</div>}
 
+          {/* Formulaire */}
           <form className="advice-form" onSubmit={handleSubmit}>
             <div className="form-group">
               <label htmlFor="message">
@@ -142,6 +148,7 @@ const AdviceCreate = () => {
           </form>
         </div>
 
+        {/* Sidebar explicative */}
         <aside className="advice-sidebar">
           <h3>
             <FaLightbulb /> Guide

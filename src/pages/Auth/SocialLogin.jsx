@@ -1,10 +1,12 @@
+// src/pages/Auth/SocialLogin.jsx
 import React from "react";
-import { FaGoogle, FaFacebook, FaGithub } from "react-icons/fa";
+import { FaGoogle, FaFacebook, FaGithub, FaApple } from "react-icons/fa";
 
 const SocialLogin = ({
   onGoogle,
   onGithub,
   onFacebook,
+  onApple,
   text = "Continuer avec",
 }) => {
   return (
@@ -14,7 +16,12 @@ const SocialLogin = ({
         <button onClick={onGoogle} className="social-btn google">
           <FaGoogle /> Google
         </button>
-        <button onClick={onGithub} className="social-btn apple">
+        {onApple && (
+          <button onClick={onApple} className="social-btn apple">
+            <FaApple /> Apple
+          </button>
+        )}
+        <button onClick={onGithub} className="social-btn github">
           <FaGithub /> Github
         </button>
         <button onClick={onFacebook} className="social-btn facebook">

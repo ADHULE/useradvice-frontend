@@ -38,7 +38,7 @@ const ActivateAccount = () => {
     }
   };
 
-  /** Gère le collage d’un code complet (6 chiffres) */
+  /** Gère le collage d'un code complet (6 chiffres) */
   const handlePaste = (e) => {
     const paste = e.clipboardData.getData("text").replace(/\D/g, "");
 
@@ -156,7 +156,7 @@ const ActivateAccount = () => {
             ))}
           </div>
 
-          <div className="activionOption">
+          <div className="activation-options">
             {loading && (
               <div className="loading">
                 <FaSpinner className="spin" size={24} />
@@ -164,7 +164,7 @@ const ActivateAccount = () => {
               </div>
             )}
 
-            <Link to={"/reSendActivationCode"}>
+            <Link to={"/resendActivationCode"}>
               Demander un nouveau code d'activation
             </Link>
           </div>

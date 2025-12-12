@@ -1,4 +1,14 @@
-// src/router/AppRouter.jsx
+/**
+ * AppRouter.jsx
+ * Main routing configuration for the application.
+ * Defines all routes and their corresponding page components.
+ *
+ * Routes include:
+ * - Public: Home, Login, Signup, Account Activation
+ * - User: User list/detail/update, Advice management, Reviews
+ * - Admin: Dashboard, Reviews, Users, Stats, Settings
+ */
+
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -24,17 +34,27 @@ import Reviews from "../pages/Admin/Reviews";
 import Stats from "../pages/Admin/Stats";
 import Settings from "../pages/Admin/Settings";
 
+/**
+ * Main router component that defines all application routes.
+ * @returns {React.ReactElement} BrowserRouter with all routes configured
+ */
 const AppRouter = () => {
   return (
     <BrowserRouter>
       <NavigatorInitializer />
 
       <Routes>
+        {/* ===== PUBLIC ROUTES ===== */}
         <Route path="/" element={<Home />} />
         <Route path="/activateAccount" element={<ActivateAccount />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route
+          path="/reSendActivationCode"
+          element={<ResendActivationCode />}
+        />
 
+        {/* ===== USER ROUTES ===== */}
         <Route path="/userList" element={<UserList />} />
         <Route path="/userDetail" element={<UserDetail />} />
         <Route path="/userUpdate" element={<UserUpdate />} />
@@ -45,19 +65,11 @@ const AppRouter = () => {
         <Route path="/adviceCreate" element={<AdviceCreate />} />
         <Route path="/adviceList" element={<AdviceList />} />
         <Route path="/adviceDetail" element={<AdviceDetail />} />
-
-        <Route
-          path="/reSendActivationCode"
-          element={<ResendActivationCode />}
-        />
-
         <Route path="/createReviewPage" element={<CreateReviewPage />} />
         <Route path="/myAdvices" element={<MyAdvices />} />
 
-        {/* la configuration des routes de l'administrateur */}
-
+        {/* ===== ADMIN ROUTES ===== */}
         <Route path="/adminDashBoard" element={<AdminDashboard />} />
-
         <Route path="/reviews" element={<Reviews />} />
         <Route path="/users" element={<Users />} />
         <Route path="/stats" element={<Stats />} />

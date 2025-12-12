@@ -1,35 +1,23 @@
-// /api/adviceApi.js
-import apiInstance from "./useAxios";
+// adviceApi.js
+// Fonctions pour interagir avec l'API des avis
 
-// Tu n'as pas besoin d'appeler apiInstance(), c'est déjà l'instance Axios
-const api = apiInstance; // juste assigner
+import apiInstance from "./apiInstance";
 
-// ────────────────────────────────────────────────
-// LIST ALL (admin)
-// ────────────────────────────────────────────────
-export const getAllAdvices = () => api.get("/advices/admin");
+// Liste tous les avis (admin uniquement)
+export const getAllAdvices = () => apiInstance.get("/advices/admin");
 
-// ────────────────────────────────────────────────
-// LIST MY OWN (user)
-// ────────────────────────────────────────────────
-export const getMyAdvices = () => api.get("/advices/me");
+// Liste mes propres avis (utilisateur connecté)
+export const getMyAdvices = () => apiInstance.get("/advices/me");
 
-// ────────────────────────────────────────────────
-// GET BY ID
-// ────────────────────────────────────────────────
-export const getAdviceById = (id) => api.get(`/advices/${id}`);
+// Récupère un avis par ID
+export const getAdviceById = (id) => apiInstance.get(`/advices/${id}`);
 
-// ────────────────────────────────────────────────
-// CREATE (user)
-// ────────────────────────────────────────────────
-export const createAdvice = (data) => api.post("/advices", data);
+// Crée un nouvel avis (utilisateur connecté)
+export const createAdvice = (data) => apiInstance.post("/advices", data);
 
-// ────────────────────────────────────────────────
-// UPDATE (user propriétaire)
-// ────────────────────────────────────────────────
-export const updateAdvice = (id, data) => api.put(`/advices/${id}`, data);
+// Met à jour un avis (propriétaire)
+export const updateAdvice = (id, data) =>
+  apiInstance.put(`/advices/${id}`, data);
 
-// ────────────────────────────────────────────────
-// DELETE (user propriétaire ou admin)
-// ────────────────────────────────────────────────
-export const deleteAdvice = (id) => api.delete(`/advices/${id}`);
+// Supprime un avis (propriétaire ou admin)
+export const deleteAdvice = (id) => apiInstance.delete(`/advices/${id}`);
