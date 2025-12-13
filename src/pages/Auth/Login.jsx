@@ -3,11 +3,12 @@
  * Page d'authentification (email / mot de passe)
  * - Récupère user + token + expiresAt depuis le backend
  * - Stocke correctement les données via useAuth
- * - Redirige selon le rôle (ROLE_ADMIN)
+ * - Redirige selon le rôle (ROLE_ADMIN / ROLE_USER)
+ * - Affiche un message et un bouton d'activation si le compte est inactif
  */
 
 import React, { useState } from "react";
-import { Mail, Lock, Eye, EyeOff, LogIn, AlertCircle } from "lucide-react";
+import { Mail, Lock, Eye, EyeOff, LogIn } from "lucide-react";
 import { motion } from "framer-motion";
 
 import Input from "../../components/ui/Input";
@@ -58,36 +59,44 @@ const Login = () => {
         throw new Error("Réponse serveur invalide");
       }
 
-      // 🔐 Stockage GLOBAL et propre
+      //  Stockage GLOBAL
       login({
         token,
         expiresAt,
-        user, // ⚠️ OBJET (pas stringify)
+        user,
       });
 
-      // 🔀 Redirection selon rôle
+      //  Redirection selon rôle
       const isAdmin = user.roles?.some((role) => role.name === "ROLE_ADMIN");
-
       goToPath(isAdmin ? "/adminDashboard" : "/createReviewPage", {
         replace: true,
       });
     } catch (err) {
       console.error("Erreur login :", err);
 
-      const message =
-        err.response?.data?.message || "Email ou mot de passe incorrect";
+      const message = err.response?.data?.message;
 
+      // Cas compte non activé
       if (message === ACCOUNT_NOT_ACTIVATED_MESSAGE) {
         setNeedsActivation(true);
         setError(
-          err.response?.data?.details || "Votre compte n'est pas encore activé."
+          err.response?.data?.details ||
+            "Votre compte n'est pas encore activé. Veuillez activer votre compte."
         );
       } else {
-        setError(message);
+        setError(message || "Email ou mot de passe incorrect");
       }
     } finally {
       setLoading(false);
     }
+  };
+
+  // =======================
+  // OUVRIR LA PAGE D'ACTIVATION
+  // =======================
+  const handleOpenActivationPage = () => {
+    // Redirige vers une nouvelle page dédiée à l’activation
+    goToPath("/activateAccount", { replace: false });
   };
 
   return (
@@ -104,18 +113,14 @@ const Login = () => {
 
           <p className="card-subtitle">Connectez-vous à votre compte</p>
 
-          {/* =======================
-              MESSAGE D'ERREUR
-          ======================= */}
+          {/* MESSAGE D'ERREUR */}
           {error && (
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
               <Alert message={error} type="error" />
             </motion.div>
           )}
 
-          {/* =======================
-              FORMULAIRE
-          ======================= */}
+          {/* FORMULAIRE */}
           <form onSubmit={handleSubmit}>
             {/* EMAIL */}
             <div className="input-group with-icon">
@@ -138,6 +143,7 @@ const Login = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
+                aria-label="Mot de passe"
               />
               <button
                 type="button"
@@ -155,9 +161,24 @@ const Login = () => {
             </button>
           </form>
 
-          {/* =======================
-              LOGIN SOCIAL
-          ======================= */}
+          {/* BOUTON ACTIVER COMPTE SI INACTIF */}
+          {needsActivation && (
+            <div className="activation-section">
+              <p className="activation-message">
+                Votre compte n'est pas activé. Cliquez ci-dessous pour
+                l'activer.
+              </p>
+              <button
+                type="button"
+                className="activation-button"
+                onClick={handleOpenActivationPage}
+              >
+                Activer mon compte
+              </button>
+            </div>
+          )}
+
+          {/* LOGIN SOCIAL */}
           <SocialLogin
             onGoogle={() => alert("Google login")}
             onGithub={() => alert("Github login")}
