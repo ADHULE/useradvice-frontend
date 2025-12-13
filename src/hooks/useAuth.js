@@ -1,67 +1,68 @@
-// useAuth.js
-// Hook personnalisé pour gérer l'authentification et le cycle de vie du token
-
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import useLocalStorage from "./useLocalStorage";
 import apiInstance from "../api/apiInstance";
 import setupAxiosInterceptors from "../api/setupAxiosInterceptors";
-import { goToPath } from "../components/navigation/goToPath";
 
 const useAuth = () => {
-  const [accessToken, setAccessToken] = useLocalStorage("accessToken", null);
+  const [token, setToken] = useLocalStorage("accessToken", null);
   const [expiresAt, setExpiresAt] = useLocalStorage("expiresAt", null);
   const [user, setUser] = useLocalStorage("user", null);
 
-  const saveToken = (token, exp) => {
-    setAccessToken(token);
-    if (exp) setExpiresAt(exp);
+  const isLoggedIn = useMemo(() => {
+    if (!token || !expiresAt) return false;
+    return new Date(expiresAt).getTime() > Date.now();
+  }, [token, expiresAt]);
+
+  // LOGIN
+  const login = ({ token, expiresAt, user }) => {
+    setToken(token);
+    setExpiresAt(expiresAt);
+    setUser(user);
   };
 
-  const clearToken = () => {
-    setAccessToken(null);
-    setExpiresAt(null);
-    setUser(null);
-  };
-
-  //  Déconnexion avec appel API et envoi du header Authorization
+  //  LOGOUT — ENVOI EXPLICITE DU TOKEN AU BACKEND
   const logout = async () => {
     try {
-      const token = accessToken || localStorage.getItem("accessToken");
       if (token) {
         await apiInstance.post(
           "/logout",
-          {}, // certains backends attendent un body, adapter si nécessaire
+          {}, // body vide
           {
-            headers: { Authorization: `Bearer ${token}` },
-            withCredentials: true,
+            headers: {
+              Authorization: `Bearer ${token}`, //  TOKEN ENVOYÉ
+            },
           }
         );
       }
     } catch (err) {
-      console.warn("Erreur API logout :", err);
+      console.warn("Erreur logout backend :", err);
     } finally {
-      clearToken();
-      goToPath("/login");
+      //  Nettoyage local OBLIGATOIRE
+      setToken(null);
+      setExpiresAt(null);
+      setUser(null);
+
+      window.location.href = "/login";
     }
   };
 
-  // ✅ Initialisation des intercepteurs
+  //  Interceptors
   useEffect(() => {
     setupAxiosInterceptors(apiInstance, {
-      getToken: () => accessToken || localStorage.getItem("accessToken"),
-      saveToken,
-      clearToken,
+      getToken: () => token,
+      saveToken: (t, e) => {
+        setToken(t);
+        setExpiresAt(e);
+      },
+      clearToken: logout,
     });
-  }, [accessToken]);
+  }, []);
 
   return {
-    accessToken,
-    expiresAt,
-    saveToken,
-    clearToken,
+    token,
     user,
-    setUser,
-    apiInstance,
+    isLoggedIn,
+    login,
     logout,
   };
 };

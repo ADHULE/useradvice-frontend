@@ -1,68 +1,75 @@
-// src/components/Header.jsx
-import React from "react";
-import { LogIn, UserPlus, Sun, Moon } from "lucide-react";
+/**
+ * Header.jsx
+ * - Affiche Connexion / Inscription si non connecté
+ * - Affiche Déconnexion si connecté
+ * - Utilise UNE SEULE source de vérité : useAuth
+ */
 
-import { useThemeGlobal } from "../../context/ThemeContext";
+import React from "react";
+import { LogIn, UserPlus, LogOut, Sun, Moon } from "lucide-react";
+
 import { goToPath } from "../navigation/goToPath";
+import { useThemeGlobal } from "../../context/ThemeContext";
 import useAuth from "../../hooks/useAuth";
 
 // Bouton réutilisable
-const ButtonGoTo = ({ label, className, icon: Icon, onClick }) => (
+const Button = ({ icon: Icon, label, onClick, className }) => (
   <button className={`btn ${className}`} onClick={onClick}>
     {Icon && <Icon size={18} />}
     <span>{label}</span>
   </button>
 );
 
-const Header = ({ isLoggedIn, onLogout }) => {
+const Header = () => {
   const { theme, toggleTheme } = useThemeGlobal();
-  const { logout } = useAuth(); // récupération de la fonction logout depuis le contexte
-
-  // Gestion des clics sur Connexion / Inscription
-  const handleAuthClick = (action) => {
-    if (action === "Connexion") goToPath("/login");
-    else if (action === "Inscription") goToPath("/signup");
-  };
+  const { isLoggedIn, logout, user } = useAuth();
 
   return (
     <header className={`header ${theme}`}>
-      <div className={`header-logo ${theme}`}>SYSTEME ADHULE</div>
+      {/* LOGO */}
+      <div className="header-logo cursor-pointer" onClick={() => goToPath("/")}>
+        SYSTEME ADHULE
+      </div>
 
+      {/* ACTIONS */}
       <div className="header-actions">
-        {/* Toggle Thème */}
+        {/* THEME */}
         <button
           onClick={toggleTheme}
           className={`theme-toggle ${theme}`}
           aria-label="Changer de thème"
         >
-          {theme === "light" ? (
-            <Moon size={20} className="text-gray-900" />
-          ) : (
-            <Sun size={20} className="text-yellow-400" />
-          )}
+          {theme === "light" ? <Moon size={20} /> : <Sun size={20} />}
         </button>
 
+        {/* AUTH */}
         <div className="auth-buttons">
           {isLoggedIn ? (
-            <ButtonGoTo
-              label="Déconnexion"
-              className="btn-logout"
-              icon={LogIn}
-              onClick={onLogout || logout} //  utilise la prop si fournie, sinon le logout du contexte
-            />
+            <>
+              <span className="user-name">
+                {user?.firstname || user?.username}
+              </span>
+
+              <Button
+                icon={LogOut}
+                label="Déconnexion"
+                className="btn-logout"
+                onClick={logout}
+              />
+            </>
           ) : (
             <>
-              <ButtonGoTo
-                label="Connexion"
-                className={`btn-login ${theme}`}
+              <Button
                 icon={LogIn}
-                onClick={() => handleAuthClick("Connexion")}
+                label="Connexion"
+                className="btn-login"
+                onClick={() => goToPath("/login")}
               />
-              <ButtonGoTo
-                label="Inscription"
-                className={`btn-register ${theme}`}
+              <Button
                 icon={UserPlus}
-                onClick={() => handleAuthClick("Inscription")}
+                label="Inscription"
+                className="btn-register"
+                onClick={() => goToPath("/signup")}
               />
             </>
           )}
