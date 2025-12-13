@@ -18,6 +18,7 @@ import {
 
 import { createAdvice } from "../../api/adviceApi";
 import { goToPath } from "../../components/navigation/goToPath";
+import useLocalStorage from "../../hooks/useLocalStorage"; // 🔑 import du hook
 
 const AdviceCreate = () => {
   const [advice, setAdvice] = useState({
@@ -27,6 +28,9 @@ const AdviceCreate = () => {
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  // 🔑 utilisation du hook pour récupérer le token
+  const [token] = useLocalStorage("accessToken", null);
 
   // Soumission du formulaire
   const handleSubmit = async (e) => {
@@ -40,10 +44,9 @@ const AdviceCreate = () => {
     }
 
     // Vérification de la session
-    if (!localStorage.getItem("accessToken")) {
-      alert("Session expirée. Veuillez vous reconnecter.");
-      goToPath("/login");
-      return;
+    if (!token) {
+      setError("Session expirée. Veuillez vous reconnecter.");
+      return; // ❌ pas de redirection automatique
     }
 
     const advicePayload = {
@@ -54,17 +57,17 @@ const AdviceCreate = () => {
 
     try {
       setLoading(true);
-      await createAdvice(advicePayload); // Appel API
-      goToPath("/myAdvices"); // Redirection après succès
+      await createAdvice(advicePayload, token); // 🔑 passage du token
+      goToPath("/myAdvices"); // ✅ Redirection uniquement si succès
     } catch (err) {
       console.error("Erreur lors de la soumission de l'avis:", err);
       const apiError = err.response?.data?.message || err.message;
 
+      // 🔑 On reste sur la page et on affiche l'erreur
       if (err.response?.status === 401 || err.response?.status === 403) {
         setError(
-          "Session expirée ou droits insuffisants. L'avis n'a pas été créé."
+          "Session expirée ou droits insuffisants. Veuillez vous reconnecter pour continuer."
         );
-        // goToPath("/login");
       } else {
         setError(
           `Une erreur est survenue lors de l'enregistrement. Détails : ${apiError}`
