@@ -1,3 +1,5 @@
+// pages/Auth/Login.jsx
+
 import React, { useState } from "react";
 import { Mail, Lock, Eye, EyeOff, LogIn } from "lucide-react";
 import { motion } from "framer-motion";
@@ -12,27 +14,36 @@ import { goToPath } from "../../components/navigation/goToPath";
 import useAuth from "../../hooks/useAuth";
 import { ACCOUNT_NOT_ACTIVATED_MESSAGE } from "../../utils/constants";
 
+/**
+ * Page de connexion
+ * ⚠️ Ne dépend PAS des interceptors globaux
+ */
 const Login = () => {
-  // ÉTAT DU FORMULAIRE
-
+  // -------------------------------
+  // ÉTAT FORMULAIRE
+  // -------------------------------
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
+  // -------------------------------
   // ÉTAT UI
-
+  // -------------------------------
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [needsActivation, setNeedsActivation] = useState(false);
 
+  // -------------------------------
   // AUTH GLOBAL
-
+  // -------------------------------
   const { login } = useAuth();
 
+  // -------------------------------
   // SOUMISSION FORMULAIRE
-
+  // -------------------------------
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     setError(null);
     setNeedsActivation(false);
     setLoading(true);
@@ -45,20 +56,17 @@ const Login = () => {
         throw new Error("Réponse serveur invalide");
       }
 
-      //  Stockage GLOBAL
-      login({
-        token,
-        expiresAt,
-        user,
-      });
+      // Stockage global sécurisé
+      login({ token, expiresAt, user });
 
-      //  Redirection selon rôle
+      // Redirection selon rôle
       const isAdmin = user.roles?.some((role) => role.name === "ROLE_ADMIN");
+
       goToPath(isAdmin ? "/adminDashboard" : "/createReviewPage", {
         replace: true,
       });
     } catch (err) {
-      console.error("Erreur login :", err);
+      console.error("❌ Erreur login :", err);
 
       const message = err.response?.data?.message;
 
@@ -66,8 +74,7 @@ const Login = () => {
       if (message === ACCOUNT_NOT_ACTIVATED_MESSAGE) {
         setNeedsActivation(true);
         setError(
-          err.response?.data?.details ||
-            "Votre compte n'est pas encore activé. Veuillez activer votre compte."
+          err.response?.data?.details || "Votre compte n'est pas encore activé."
         );
       } else {
         setError(message || "Email ou mot de passe incorrect");
@@ -77,11 +84,11 @@ const Login = () => {
     }
   };
 
-  // OUVRIR LA PAGE D'ACTIVATION
-
+  // -------------------------------
+  // REDIRECTION ACTIVATION COMPTE
+  // -------------------------------
   const handleOpenActivationPage = () => {
-    // Redirige vers une nouvelle page dédiée à l’activation
-    goToPath("/activateAccount", { replace: false });
+    goToPath("/activateAccount");
   };
 
   return (
@@ -128,7 +135,6 @@ const Login = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                aria-label="Mot de passe"
               />
               <button
                 type="button"
@@ -146,12 +152,11 @@ const Login = () => {
             </button>
           </form>
 
-          {/* BOUTON ACTIVER COMPTE SI INACTIF */}
+          {/* ACTIVATION COMPTE */}
           {needsActivation && (
             <div className="activation-section">
               <p className="activation-message">
-                Votre compte n'est pas activé. Cliquez ci-dessous pour
-                l'activer.
+                Votre compte n'est pas activé.
               </p>
               <button
                 type="button"
