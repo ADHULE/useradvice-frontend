@@ -1,12 +1,3 @@
-/**
- * Login.jsx
- * Page d'authentification (email / mot de passe)
- * - Récupère user + token + expiresAt depuis le backend
- * - Stocke correctement les données via useAuth
- * - Redirige selon le rôle (ROLE_ADMIN / ROLE_USER)
- * - Affiche un message et un bouton d'activation si le compte est inactif
- */
-
 import React, { useState } from "react";
 import { Mail, Lock, Eye, EyeOff, LogIn } from "lucide-react";
 import { motion } from "framer-motion";
@@ -19,32 +10,27 @@ import SocialLogin from "./SocialLogin";
 import { login as loginApi } from "../../api/userApi";
 import { goToPath } from "../../components/navigation/goToPath";
 import useAuth from "../../hooks/useAuth";
-
-const ACCOUNT_NOT_ACTIVATED_MESSAGE = "Compte non activé";
+import { ACCOUNT_NOT_ACTIVATED_MESSAGE } from "../../utils/constants";
 
 const Login = () => {
-  // =======================
   // ÉTAT DU FORMULAIRE
-  // =======================
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-  // =======================
   // ÉTAT UI
-  // =======================
+
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [needsActivation, setNeedsActivation] = useState(false);
 
-  // =======================
   // AUTH GLOBAL
-  // =======================
+
   const { login } = useAuth();
 
-  // =======================
   // SOUMISSION FORMULAIRE
-  // =======================
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
@@ -91,9 +77,8 @@ const Login = () => {
     }
   };
 
-  // =======================
   // OUVRIR LA PAGE D'ACTIVATION
-  // =======================
+
   const handleOpenActivationPage = () => {
     // Redirige vers une nouvelle page dédiée à l’activation
     goToPath("/activateAccount", { replace: false });

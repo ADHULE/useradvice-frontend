@@ -1,146 +1,357 @@
+/* ========================================================================= */
+/* 1. Variables Modernes */
+/* ========================================================================= */
+:root {
+    --color-primary: #2563eb;
+    /* Bleu moderne */
+    --color-secondary: #64748b;
+    /* Gris neutre */
+    --color-success: #16a34a;
+    /* Vert */
+    --color-warning: #facc15;
+    /* Jaune */
+    --color-danger: #dc2626;
+    /* Rouge */
+
+    --color-light-bg: #f9fafb;
+    --color-border: #e5e7eb;
+    --color-card-bg: #ffffff;
+
+    --font-family: "Inter", "Segoe UI", sans-serif;
+
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+    --shadow-lg: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+/* ========================================================================= */
+/* 2. Conteneur et En-tête */
+/* ========================================================================= */
+.container {
+
+    margin: 0 auto;
+    padding: 2rem;
+    font-family: var(--font-family);
+    color: #374151;
+}
+
+.advice-page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--color-border);
+    flex-wrap: wrap;
+}
+
+/* ========================================================================= */
+/* En-tête : Titre avec lien Accueil + Icône */
+/* ========================================================================= */
+
+.page-title-icon {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: clamp(1.6rem, 4vw, 2.2rem);
+    font-weight: 700;
+    color: #1f2937;
+    /* gris foncé moderne */
+    margin: 0;
+}
+
+/* Lien "Accueil" */
+.nav-link.home-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #2563eb;
+    /* bleu moderne */
+    text-decoration: none;
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    transition: all 0.25s ease-in-out;
+}
+
+.nav-link.home-link:hover {
+    background-color: #eff6ff;
+    /* bleu très clair */
+    color: #1d4ed8;
+    transform: translateY(-2px);
+}
+
+/* Icône du lien Accueil */
+.link-icon {
+    font-size: 1.2rem;
+    color: inherit;
+}
+
+/* Icône ampoule */
+.header-icon {
+    color: #facc15;
+    /* jaune moderne */
+    font-size: 1.8rem;
+    transition: transform 0.3s ease;
+}
+
+.page-title-icon:hover .header-icon {
+    transform: rotate(-10deg) scale(1.1);
+}
+
+.page-title-icon .header-icon {
+    color: var(--color-warning);
+    font-size: clamp(1.8rem, 5vw, 2.2rem);
+}
+
+.advice-header-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+
+
+}
+
+/* ========================================================================= */
+/* 3. Boutons */
+/* ========================================================================= */
+.btn-primary,
+.btn-secondary,
+.btn-delete {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.25s ease-in-out;
+}
+
+.btn-primary {
+    background-color: var(--color-primary);
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #1d4ed8;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+}
+
+.btn-secondary {
+    background-color: white;
+    color: var(--color-primary);
+    border: 1px solid var(--color-primary);
+}
+
+.btn-secondary:hover {
+    background-color: var(--color-primary);
+    color: white;
+}
+
+.btn-delete {
+    background-color: var(--color-danger);
+    color: white;
+}
+
+.btn-delete:hover:enabled {
+    background-color: #b91c1c;
+    transform: scale(1.05);
+}
+
+/* ========================================================================= */
+/* 4. Layout */
+/* ========================================================================= */
 .advice-page-layout {
     display: flex;
     gap: 2rem;
-    padding: 2rem;
+}
 
-    .advice-main-content {
-        flex: 3;
+.advice-main-content {
+    flex: 3;
+}
 
-        .advice-header-buttons {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 1rem;
+.advice-sidebar {
+    flex: 1;
+    background-color: var(--color-light-bg);
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: var(--shadow-sm);
+    height: fit-content;
+}
 
-            .btn-back-to-create,
-            .btn-refresh {
-                display: inline-flex;
-                align-items: center;
-                gap: 0.5rem;
-                padding: 0.5rem 1rem;
-                background-color: #007bff;
-                color: white;
-                border: none;
-                border-radius: 4px;
-                cursor: pointer;
-                font-weight: 500;
+/* ========================================================================= */
+/* 5. Cartes */
+/* ========================================================================= */
+.advice-list {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+}
 
-                &:hover {
-                    background-color: #0056b3;
-                }
-            }
-        }
+.advice-card {
+    background-color: var(--color-card-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.25s, box-shadow 0.25s;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+}
 
-        .page-title-icon {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
+.advice-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+}
 
-            .header-icon {
-                color: #f5c518;
-            }
-        }
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px dashed var(--color-border);
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
 
-        .advice-list {
-            list-style: none;
-            padding: 0;
+.advice-status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
 
-            .advice-item {
-                display: flex;
-                justify-content: space-between;
-                align-items: flex-start;
-                padding: 1rem;
-                border: 1px solid #ddd;
-                border-radius: 6px;
-                margin-bottom: 1rem;
-                background-color: #fff;
+.card-body .advice-message-content {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #374151;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+}
 
-                .advice-details-group {
-                    flex: 1;
+.card-footer {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px dashed var(--color-border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.85rem;
+    color: #6b7280;
+}
 
-                    .advice-message {
-                        font-size: 1rem;
-                        display: flex;
-                        align-items: center;
-                        gap: 0.5rem;
-                    }
+.not-deletable-info {
+    font-style: italic;
+    color: #9ca3af;
+}
 
-                    .advice-metadata {
-                        margin-top: 0.5rem;
-                        display: flex;
-                        align-items: center;
-                        gap: 0.5rem;
+/* ========================================================================= */
+/* 6. Statuts */
+/* ========================================================================= */
+.status-processed {
+    background-color: #dcfce7;
+    color: var(--color-success);
+}
 
-                        .advice-status {
-                            display: flex;
-                            align-items: center;
-                            gap: 0.25rem;
-                            padding: 0.2rem 0.5rem;
-                            border-radius: 4px;
-                            font-size: 0.875rem;
-                            font-weight: 500;
+.status-pending {
+    background-color: #fef9c3;
+    color: #ca8a04;
+}
 
-                            &.status-published {
-                                background-color: #d4edda;
-                                color: #155724;
-                            }
+.status-rejected {
+    background-color: #fee2e2;
+    color: var(--color-danger);
+}
 
-                            &.status-pending {
-                                background-color: #fff3cd;
-                                color: #856404;
-                            }
+.status-default {
+    background-color: #f3f4f6;
+    color: #6b7280;
+}
 
-                            &.status-rejected {
-                                background-color: #f8d7da;
-                                color: #721c24;
-                            }
+/* ========================================================================= */
+/* 7. Feedback et Animations */
+/* ========================================================================= */
+.loading-message,
+.feedback-message {
+    text-align: center;
+    font-size: 1rem;
+    margin: 1rem 0;
+    color: #6b7280;
+}
 
-                            &.status-default {
-                                background-color: #e2e3e5;
-                                color: #383d41;
-                            }
-                        }
-                    }
-                }
+.icon-spin {
+    animation: spin 1s linear infinite;
+}
 
-                .btn-delete {
-                    display: inline-flex;
-                    align-items: center;
-                    gap: 0.5rem;
-                    padding: 0.5rem 0.75rem;
-                    background-color: #dc3545;
-                    color: white;
-                    border: none;
-                    border-radius: 4px;
-                    cursor: pointer;
-                    font-size: 0.875rem;
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
 
-                    &:hover {
-                        background-color: #b52a37;
-                    }
-                }
-            }
-        }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ========================================================================= */
+/* 8. Responsivité */
+/* ========================================================================= */
+@media (max-width: 992px) {
+    .advice-page-layout {
+        flex-direction: column;
+        gap: 1.5rem;
     }
 
     .advice-sidebar {
-        flex: 1;
-        background-color: #f8f9fa;
+        width: 100%;
+    }
+
+    .advice-header-actions {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+        flex-basis: calc(50% - 0.5rem);
+    }
+}
+
+@media (max-width: 576px) {
+    .advice-header-actions {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+        width: 100%;
+    }
+
+    .advice-card {
         padding: 1rem;
-        border-radius: 6px;
-        font-size: 0.9rem;
+    }
 
-        h3,
-        h4 {
-            margin-top: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
+    .card-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
 
-        ul {
-            padding-left: 1rem;
-            list-style-type: disc;
-        }
+    .card-footer {
+        flex-direction: column;
+        align-items: stretch;
     }
 }

@@ -17,6 +17,41 @@
         background-color: #111827;
         border-color: #1f2937;
     }
+
+
+    /* User Name Styling */
+    .user-name {
+        display: inline-flex;
+        align-items: center;
+        border: 1px solid;
+        box-shadow: 10px 10px 10px black;
+        font-size: 1rem;
+        font-weight: 600;
+        color: #2563eb;
+        background-color: #eff6ff;
+        padding: 0.4rem 0.8rem;
+        border-radius: 6px;
+        box-shadow: 0 2px 4px rgba(37, 99, 235, 0.15);
+        transition: all 0.25s ease-in-out;
+        cursor: default;
+    }
+
+    /* Effet au survol */
+    .user-name:hover {
+        color: #1d4ed8;
+        background-color: #dbeafe;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(37, 99, 235, 0.25);
+    }
+
+    /* Variante responsive : plus petit sur mobile */
+    @media (max-width: 576px) {
+        .user-name {
+            font-size: 0.9rem;
+            padding: 0.3rem 0.6rem;
+        }
+    }
+
 }
 
 .header-logo {

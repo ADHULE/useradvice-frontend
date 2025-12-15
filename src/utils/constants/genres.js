@@ -22,7 +22,7 @@
  * </select>
  */
 export const GENRES = [
-  { value: "Home", label: "Homme" }, // Backend requirement - preserves exact value
+  { value: "Homme", label: "Homme" }, // Backend requirement - preserves exact value
   { value: "Femme", label: "Femme" },
   { value: "Autre", label: "Autre" },
 ];

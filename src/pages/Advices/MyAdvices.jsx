@@ -1,23 +1,34 @@
 import React, { useEffect, useState } from "react";
-import { getMyAdvices, deleteAdvice } from "../../api/adviceApi";
 import {
   FaTrash,
-  FaCommentDots,
   FaLightbulb,
   FaRegCalendarAlt,
   FaCheckCircle,
   FaClock,
   FaTimesCircle,
   FaExclamationTriangle,
-  FaArrowLeft,
+  FaPlusCircle,
   FaSyncAlt,
+  FaEnvelopeOpenText,
+  FaHome,
 } from "react-icons/fa";
+import { Link } from "react-router-dom";
+
+import { getMyAdvices, deleteAdvice } from "../../api/adviceApi";
 import Footer from "../../components/common/Footer";
 import { goToPath } from "../../components/navigation/goToPath";
 
+/**
+ * Page : Mes Avis & Suggestions
+ */
 const MyAdvices = () => {
   const [advices, setAdvices] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [feedback, setFeedback] = useState({ type: "", message: "" });
+
+  /* =========================
+     Utils
+  ========================== */
 
   const formatDate = (dateString) => {
     if (!dateString) return "Date inconnue";
@@ -30,149 +41,240 @@ const MyAdvices = () => {
     });
   };
 
+  const normalizeStatus = (status) =>
+    typeof status === "string" ? status.toUpperCase().trim() : "";
+
   const getStatusDisplay = (status) => {
-    switch (status?.toUpperCase()) {
-      case "PUBLISHED":
-      case "TRAITÉ":
-      case "ACCEPTE":
-        return {
-          icon: <FaCheckCircle />,
-          className: "status-published",
-          label: "Traité",
-        };
-      case "PENDING":
-      case "EN ATTENTE":
-        return {
-          icon: <FaClock />,
-          className: "status-pending",
-          label: "En attente",
-        };
-      case "REJECTED":
-      case "REJETÉ":
-      case "REFUSE":
-        return {
-          icon: <FaTimesCircle />,
-          className: "status-rejected",
-          label: "Rejeté",
-        };
-      default:
-        return {
-          icon: <FaExclamationTriangle />,
-          className: "status-default",
-          label: "Statut Inconnu",
-        };
+    const s = normalizeStatus(status);
+
+    if (["PUBLISHED", "TRAITÉ", "ACCEPTE"].includes(s)) {
+      return {
+        icon: <FaCheckCircle />,
+        className: "status-processed",
+        label: "Traité",
+      };
     }
+
+    if (["PENDING", "EN ATTENTE", "EN_ATTENTE"].includes(s)) {
+      return {
+        icon: <FaClock />,
+        className: "status-pending",
+        label: "En attente",
+      };
+    }
+
+    if (["REJECTED", "REJETÉ", "REFUSE"].includes(s)) {
+      return {
+        icon: <FaTimesCircle />,
+        className: "status-rejected",
+        label: "Rejeté",
+      };
+    }
+
+    return {
+      icon: <FaExclamationTriangle />,
+      className: "status-default",
+      label: "Inconnu",
+    };
   };
 
+  /* =========================
+     API Calls
+  ========================== */
+
   const loadData = async () => {
+    setLoading(true);
+    setFeedback({ type: "", message: "" });
+
     try {
-      setLoading(true);
       const res = await getMyAdvices();
-      setAdvices(res.data || []);
-    } catch (err) {
-      console.error("Erreur chargement avis:", err);
-      alert("Impossible de charger vos avis. Veuillez vous reconnecter.");
+      setAdvices(res?.data ?? []);
+
+      if (!res?.data || res.data.length === 0) {
+        setFeedback({ type: "info", message: "Aucun avis trouvé." });
+      }
+    } catch (error) {
+      console.error("Erreur chargement avis :", error);
+      setAdvices([]);
+      setFeedback({
+        type: "error",
+        message: "Impossible de charger vos avis.",
+      });
     } finally {
       setLoading(false);
     }
   };
 
   const handleDelete = async (id) => {
-    // Ask user confirmation before deleting (using globalThis.confirm for cross-environment compatibility)
-    if (!globalThis.confirm("Voulez-vous vraiment supprimer cet avis ?"))
+    if (!id) {
+      setFeedback({
+        type: "error",
+        message: "ID invalide. Suppression impossible.",
+      });
       return;
+    }
+
+    const confirmed = window.confirm(
+      "Voulez-vous vraiment supprimer cet avis ? Cette action est irréversible."
+    );
+    if (!confirmed) return;
+
     try {
       await deleteAdvice(id);
-      alert("Avis supprimé avec succès !");
-      loadData();
-    } catch (err) {
-      console.error("Erreur suppression avis:", err);
-      alert("Impossible de supprimer cet avis. Vérifiez vos droits.");
+
+      setAdvices((prev) => prev.filter((a) => a.id !== id));
+
+      setFeedback({
+        type: "success",
+        message: "Avis supprimé avec succès.",
+      });
+    } catch (error) {
+      console.error("Erreur suppression :", error);
+
+      setFeedback({
+        type: "error",
+        message:
+          error?.response?.status === 403
+            ? "Vous n'avez pas l'autorisation de supprimer cet avis."
+            : "Erreur lors de la suppression de l'avis.",
+      });
     }
   };
+
+  /* =========================
+     Lifecycle
+  ========================== */
 
   useEffect(() => {
     loadData();
   }, []);
 
+  /* =========================
+     Render
+  ========================== */
+
   return (
     <>
-      <div className="advice-page-layout">
-        <div className="advice-main-content">
-          <div className="advice-header-buttons">
-            <button
-              className="btn-back-to-create"
-              onClick={() => goToPath("/adviceCreate")}
-              title="Créer un nouvel avis"
-            >
-              <FaArrowLeft /> Nouvel Avis
-            </button>
-            <button
-              className="btn-refresh"
-              onClick={loadData}
-              title="Actualiser la liste"
-            >
-              <FaSyncAlt /> Actualiser
-            </button>
-          </div>
+      <div className="container">
+        <div className="advice-page-container">
+          {/* Header */}
+          <header className="advice-page-header">
+            <h1 className="page-title-icon">
+              <Link to="/" className="nav-link home-link">
+                <FaHome /> Accueil
+              </Link>
+              <FaLightbulb className="header-icon" /> Mes Avis et Suggestions
+            </h1>
 
-          <h2 className="page-title-icon">
-            <FaLightbulb className="header-icon" /> Mes Avis
-          </h2>
+            <div className="advice-header-actions">
+              <button
+                className="btn-primary"
+                onClick={() => goToPath("/adviceCreate")}
+              >
+                <FaPlusCircle /> Créer un Avis
+              </button>
 
-          {loading && <p>Chargement des avis...</p>}
-          {!loading && advices.length === 0 && <p>Aucun avis trouvé.</p>}
+              <button
+                className="btn-secondary"
+                onClick={loadData}
+                disabled={loading}
+              >
+                <FaSyncAlt className={loading ? "icon-spin" : ""} /> Actualiser
+              </button>
+            </div>
+          </header>
 
-          <ul className="advice-list">
-            {advices.map((a) => {
-              const statusDisplay = getStatusDisplay(a.status);
-              return (
-                <li key={a.id} className="advice-item">
-                  <div className="advice-details-group">
-                    <div className="advice-message">
-                      <FaCommentDots className="message-icon" /> {a.message}
-                    </div>
-                    <div className="advice-metadata">
-                      <span
-                        className={`advice-status ${statusDisplay.className}`}
-                      >
-                        {statusDisplay.icon} {statusDisplay.label}
-                      </span>
-                      <FaRegCalendarAlt className="metadata-icon" /> Publié le{" "}
-                      {formatDate(a.createdAt)}
-                    </div>
-                  </div>
-                  <button
-                    className="btn-delete"
-                    onClick={() => handleDelete(a.id)}
-                    title="Supprimer cet avis"
-                  >
-                    <FaTrash /> Supprimer
-                  </button>
+          {/* Content */}
+          <div className="advice-page-layout">
+            <section className="advice-main-content">
+              {loading && (
+                <p className="loading-message">Chargement des avis...</p>
+              )}
+
+              {!loading && feedback.message && (
+                <p className={`feedback-message ${feedback.type}`}>
+                  {feedback.message}
+                </p>
+              )}
+
+              {!loading && advices.length > 0 && (
+                <ul className="advice-list">
+                  {advices.map((a) => {
+                    const status = getStatusDisplay(a.status);
+                    const isDeletable = [
+                      "PENDING",
+                      "EN ATTENTE",
+                      "EN_ATTENTE",
+                    ].includes(normalizeStatus(a.status));
+
+                    return (
+                      <li key={a.id} className="advice-card">
+                        <div className="card-header">
+                          <span
+                            className={`advice-status-badge ${status.className}`}
+                          >
+                            {status.icon} {status.label}
+                          </span>
+
+                          <span className="advice-metadata">
+                            <FaRegCalendarAlt /> {formatDate(a.createdAt)}
+                          </span>
+                        </div>
+
+                        <div className="card-body">
+                          <FaEnvelopeOpenText className="message-icon" />
+                          <p>{a.message}</p>
+                        </div>
+
+                        <div className="card-footer">
+                          {!isDeletable && (
+                            <span className="not-deletable-info">
+                              Avis non supprimable
+                            </span>
+                          )}
+
+                          <button
+                            className="btn-delete"
+                            onClick={() => handleDelete(a.id)}
+                            disabled={!isDeletable}
+                            style={{
+                              cursor: isDeletable ? "pointer" : "not-allowed",
+                            }}
+                          >
+                            <FaTrash /> Supprimer
+                          </button>
+                        </div>
+                      </li>
+                    );
+                  })}
+                </ul>
+              )}
+            </section>
+
+            {/* Sidebar */}
+            <aside className="advice-sidebar">
+              <h3>
+                <FaLightbulb /> Guide des statuts
+              </h3>
+              <ul>
+                <li className="status-processed">
+                  <FaCheckCircle /> Traité
                 </li>
-              );
-            })}
-          </ul>
+                <li className="status-pending">
+                  <FaClock /> En attente
+                </li>
+                <li className="status-rejected">
+                  <FaTimesCircle /> Rejeté
+                </li>
+              </ul>
+              <p className="deletion-note">
+                * Seuls les avis en attente peuvent être supprimés.
+              </p>
+            </aside>
+          </div>
         </div>
-
-        <aside className="advice-sidebar">
-          <h3>
-            <FaLightbulb /> Guide
-          </h3>
-          <p>
-            Vous pouvez consulter le statut de vos avis et les supprimer tant
-            qu'ils ne sont pas traités définitivement.
-          </p>
-          <h4>
-            <FaClock /> Statuts
-          </h4>
-          <ul>
-            <li>Traité (Vert) : Avis pris en compte.</li>
-            <li>En attente (Jaune) : En cours de modération.</li>
-            <li>Rejeté (Rouge) : Non conforme aux règles.</li>
-          </ul>
-        </aside>
       </div>
+
       <Footer />
     </>
   );

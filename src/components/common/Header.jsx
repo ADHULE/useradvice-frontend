@@ -7,6 +7,7 @@
 
 import React from "react";
 import { LogIn, UserPlus, LogOut, Sun, Moon } from "lucide-react";
+import { Link } from "react-router-dom";
 
 import { goToPath } from "../navigation/goToPath";
 import { useThemeGlobal } from "../../context/ThemeContext";
@@ -50,11 +51,15 @@ const Header = () => {
                 {user?.firstname || user?.username}
               </span>
 
+              {/* Déconnexion → redirection vers home */}
               <Button
                 icon={LogOut}
                 label="Déconnexion"
                 className="btn-logout"
-                onClick={logout}
+                onClick={() => {
+                  logout();
+                  goToPath("/");
+                }}
               />
             </>
           ) : (
