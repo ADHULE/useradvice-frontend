@@ -16,18 +16,21 @@ const ReviewModal = ({ review, onClose }) => {
       >
         <motion.div
           className="modal-content modern"
-          initial={{ scale: 0.9, y: 20, opacity: 0 }}
-          animate={{ scale: 1, y: 0, opacity: 1 }}
-          exit={{ scale: 0.9, y: 20, opacity: 0 }}
+          initial={{ scale: 0.95, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          exit={{ scale: 0.95, opacity: 0 }}
+          transition={{ duration: 0.2 }}
           onClick={(e) => e.stopPropagation()}
         >
-          {/* Bouton de fermeture */}
-          <button className="close-modal" onClick={onClose}>
-            <X size={22} />
+          <button
+            className="close-modal"
+            onClick={onClose}
+            aria-label="Fermer la modale"
+          >
+            <X size={20} />
           </button>
 
           <div className="modal-body">
-            {/* Header utilisateur */}
             <div className="modal-header">
               <div className="avatar large">{review.initial}</div>
               <div className="header-text">
@@ -36,44 +39,47 @@ const ReviewModal = ({ review, onClose }) => {
               </div>
             </div>
 
-            {/* Étoiles */}
             <div className="stars-row">
               {[...Array(5)].map((_, i) => (
                 <Star
                   key={i}
                   size={20}
                   fill={i < review.rating ? "#fbbf24" : "none"}
-                  color={i < review.rating ? "#fbbf24" : "var(--border)"}
+                  stroke={i < review.rating ? "#f59e0b" : "#d1d5db"}
+                  strokeWidth={1.5}
                 />
               ))}
             </div>
 
-            {/* Message */}
             <div className="message-container">
               <p className="full-message">{review.message}</p>
             </div>
+          </div>
 
-            {/* Footer actions */}
-            <div className="modal-footer">
-              <button
-                className="btn-modal approve"
-                onClick={() => {
-                  console.log("Approuvé");
-                  onClose();
-                }}
-              >
-                <CheckCircle size={18} /> Approuver
-              </button>
-              <button
-                className="btn-modal report"
-                onClick={() => {
-                  console.log("Signalé");
-                  onClose();
-                }}
-              >
-                <ShieldAlert size={18} /> Signaler
-              </button>
-            </div>
+          <div className="modal-footer">
+            <button
+              className="btn btn-success"
+              onClick={() => {
+                console.log("Approuvé");
+                onClose();
+              }}
+            >
+              <CheckCircle size={18} />
+              Approuver
+            </button>
+            <button
+              className="btn btn-danger"
+              onClick={() => {
+                console.log("Signalé");
+                onClose();
+              }}
+            >
+              <ShieldAlert size={18} />
+              Signaler
+            </button>
+            <button className="btn btn-ghost" onClick={onClose}>
+              Annuler
+            </button>
           </div>
         </motion.div>
       </motion.div>

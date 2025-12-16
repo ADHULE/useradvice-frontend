@@ -1,8 +1,17 @@
-// pages/Auth/Login.jsx
+// pages/Auth/Login.jsx - Version Modernisée
 
 import React, { useState } from "react";
-import { Mail, Lock, Eye, EyeOff, LogIn } from "lucide-react";
-import { motion } from "framer-motion";
+import {
+  Mail,
+  Lock,
+  Eye,
+  EyeOff,
+  AlertCircle,
+  Shield,
+  Sparkles,
+  ArrowRight,
+} from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 import Input from "../../components/ui/Input";
 import Footer from "../../components/common/Footer";
@@ -15,34 +24,46 @@ import useAuth from "../../hooks/useAuth";
 import { ACCOUNT_NOT_ACTIVATED_MESSAGE } from "../../utils/constants";
 
 /**
- * Page de connexion
- * ⚠️ Ne dépend PAS des interceptors globaux
+ * Page de connexion - Design Moderne
  */
 const Login = () => {
-  // -------------------------------
-  // ÉTAT FORMULAIRE
-  // -------------------------------
+  // États du formulaire
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-  // -------------------------------
-  // ÉTAT UI
-  // -------------------------------
+  // États UI
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [needsActivation, setNeedsActivation] = useState(false);
+  const [formErrors, setFormErrors] = useState({});
 
-  // -------------------------------
-  // AUTH GLOBAL
-  // -------------------------------
+  // Auth global
   const { login } = useAuth();
 
-  // -------------------------------
-  // SOUMISSION FORMULAIRE
-  // -------------------------------
+  // Validation du formulaire
+  const validateForm = () => {
+    const errors = {};
+
+    if (!email) {
+      errors.email = "L'email est requis";
+    } else if (!/\S+@\S+\.\S+/.test(email)) {
+      errors.email = "Email invalide";
+    }
+
+    if (!password) {
+      errors.password = "Le mot de passe est requis";
+    }
+
+    setFormErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
+  // Soumission du formulaire
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!validateForm()) return;
 
     setError(null);
     setNeedsActivation(false);
@@ -76,105 +97,220 @@ const Login = () => {
         setError(
           err.response?.data?.details || "Votre compte n'est pas encore activé."
         );
+      } else if (err.response?.status === 401) {
+        setError("Email ou mot de passe incorrect");
+      } else if (err.response?.status === 429) {
+        setError(
+          "Trop de tentatives. Veuillez réessayer dans quelques minutes."
+        );
       } else {
-        setError(message || "Email ou mot de passe incorrect");
+        setError(message || "Une erreur est survenue. Veuillez réessayer.");
       }
     } finally {
       setLoading(false);
     }
   };
 
-  // -------------------------------
-  // REDIRECTION ACTIVATION COMPTE
-  // -------------------------------
+  // Redirection activation compte
   const handleOpenActivationPage = () => {
     goToPath("/activateAccount");
   };
 
+  // Réinitialisation mot de passe
+  const handleForgotPassword = () => {
+    goToPath("/forgot-password");
+  };
+
   return (
     <>
-      <div className="login-page">
+      <div className="auth-page login-page">
+        {/* Bannière décorative */}
+        <div className="auth-decorative-banner">
+          <div className="banner-content">
+            <Shield size={48} className="banner-icon" />
+            <h3 className="banner-title">Connexion sécurisée</h3>
+            <p className="banner-subtitle">Votre sécurité est notre priorité</p>
+          </div>
+          <div className="banner-gradient"></div>
+        </div>
+
         <motion.div
-          initial={{ opacity: 0, y: 25 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          className="login-card"
+          transition={{ duration: 0.5 }}
+          className="auth-card login-card"
         >
-          <h2 className="flex items-center gap-2">
-            <LogIn /> Connexion
-          </h2>
-
-          <p className="card-subtitle">Connectez-vous à votre compte</p>
-
-          {/* MESSAGE D'ERREUR */}
-          {error && (
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-              <Alert message={error} type="error" />
-            </motion.div>
-          )}
-
-          {/* FORMULAIRE */}
-          <form onSubmit={handleSubmit}>
-            {/* EMAIL */}
-            <div className="input-group with-icon">
-              <Mail className="input-icon" />
-              <Input
-                type="email"
-                placeholder="Adresse e-mail"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
+          <div className="auth-header">
+            <div className="header-icon">
+              <Sparkles size={32} />
             </div>
+            <h1 className="auth-title">Bienvenue de retour</h1>
+            <p className="auth-subtitle">
+              Connectez-vous pour accéder à votre espace personnel
+            </p>
+          </div>
 
-            {/* PASSWORD */}
-            <div className="input-group with-icon">
-              <Lock className="input-icon" />
-              <Input
-                type={showPassword ? "text" : "password"}
-                placeholder="Mot de passe"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-              <button
-                type="button"
-                className="toggle-password"
-                onClick={() => setShowPassword((v) => !v)}
+          {/* Messages d'erreur */}
+          <AnimatePresence>
+            {error && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                className="mb-6"
               >
-                {showPassword ? <EyeOff /> : <Eye />}
-              </button>
+                <Alert
+                  message={error}
+                  type="error"
+                  icon={<AlertCircle size={18} />}
+                />
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          {/* Formulaire */}
+          <form onSubmit={handleSubmit} className="auth-form">
+            {/* Email */}
+            <div className="form-group">
+              <label htmlFor="email" className="form-label">
+                <Mail size={18} className="label-icon" />
+                Adresse email
+              </label>
+              <Input
+                id="email"
+                type="email"
+                placeholder="votre@email.com"
+                value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                  if (formErrors.email)
+                    setFormErrors({ ...formErrors, email: "" });
+                }}
+                error={formErrors.email}
+                disabled={loading}
+                autoComplete="email"
+              />
+              {formErrors.email && (
+                <span className="form-error">{formErrors.email}</span>
+              )}
             </div>
 
-            {/* ACTION */}
-            <button type="submit" className="login-button" disabled={loading}>
-              {loading ? "Connexion..." : "Se connecter"}
-              <LogIn className="ml-2" />
-            </button>
+            {/* Mot de passe */}
+            <div className="form-group">
+              <div className="label-row">
+                <label htmlFor="password" className="form-label">
+                  <Lock size={18} className="label-icon" />
+                  Mot de passe
+                </label>
+                <button
+                  type="button"
+                  onClick={handleForgotPassword}
+                  className="forgot-password"
+                >
+                  Mot de passe oublié ?
+                </button>
+              </div>
+              <div className="password-input-wrapper">
+                <Input
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Votre mot de passe"
+                  value={password}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                    if (formErrors.password)
+                      setFormErrors({ ...formErrors, password: "" });
+                  }}
+                  error={formErrors.password}
+                  disabled={loading}
+                  autoComplete="current-password"
+                />
+                <button
+                  type="button"
+                  className="password-toggle"
+                  onClick={() => setShowPassword(!showPassword)}
+                  aria-label={
+                    showPassword
+                      ? "Masquer le mot de passe"
+                      : "Afficher le mot de passe"
+                  }
+                >
+                  {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                </button>
+              </div>
+              {formErrors.password && (
+                <span className="form-error">{formErrors.password}</span>
+              )}
+            </div>
+
+            {/* Soumettre */}
+            <motion.button
+              type="submit"
+              className="auth-submit-btn"
+              disabled={loading}
+              whileHover={{ scale: loading ? 1 : 1.02 }}
+              whileTap={{ scale: loading ? 1 : 0.98 }}
+            >
+              {loading ? (
+                <>
+                  <div className="spinner"></div>
+                  Connexion en cours...
+                </>
+              ) : (
+                <>
+                  Se connecter
+                  <ArrowRight size={20} />
+                </>
+              )}
+            </motion.button>
           </form>
 
-          {/* ACTIVATION COMPTE */}
-          {needsActivation && (
-            <div className="activation-section">
-              <p className="activation-message">
-                Votre compte n'est pas activé.
-              </p>
-              <button
-                type="button"
-                className="activation-button"
-                onClick={handleOpenActivationPage}
+          {/* Activation compte */}
+          <AnimatePresence>
+            {needsActivation && (
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                className="activation-notice"
               >
-                Activer mon compte
-              </button>
-            </div>
-          )}
+                <div className="notice-content">
+                  <Shield size={20} />
+                  <p>Votre compte nécessite une activation</p>
+                </div>
+                <button
+                  type="button"
+                  className="activation-btn"
+                  onClick={handleOpenActivationPage}
+                >
+                  Activer mon compte
+                </button>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
-          {/* LOGIN SOCIAL */}
+          {/* Séparateur */}
+          <div className="auth-divider">
+            <span>Ou continuer avec</span>
+          </div>
+
+          {/* Login social */}
           <SocialLogin
-            onGoogle={() => alert("Google login")}
-            onGithub={() => alert("Github login")}
-            onFacebook={() => alert("Facebook login")}
-            text="Ou continuer avec"
+            onGoogle={() => goToPath("/auth/google")}
+            onGithub={() => goToPath("/auth/github")}
+            onFacebook={() => goToPath("/auth/facebook")}
+            text=""
           />
+
+          {/* Lien d'inscription */}
+          <div className="auth-footer">
+            <p>
+              Pas encore de compte ?{" "}
+              <button onClick={() => goToPath("/signup")} className="auth-link">
+                S'inscrire
+              </button>
+            </p>
+          </div>
         </motion.div>
       </div>
 

@@ -38,23 +38,38 @@ import React from "react";
  * />
  */
 const Input = ({
+  id,
   label,
   type = "text",
   value,
   onChange,
   placeholder,
   className = "",
+  disabled = false,
+  error = null,
+  autoComplete,
+  ...props
 }) => {
   return (
     <div className={`input-group ${className}`}>
-      {label && <label className="input-label">{label}</label>}
+      {label && (
+        <label htmlFor={id} className="input-label">
+          {label}
+        </label>
+      )}
       <input
+        id={id}
         type={type}
         value={value}
         onChange={onChange}
         placeholder={placeholder}
-        className="input-field"
+        className={`input-field ${error ? "input-error" : ""}`}
+        disabled={disabled}
+        aria-invalid={!!error}
+        autoComplete={autoComplete}
+        {...props}
       />
+      {error && <div className="form-error">{error}</div>}
     </div>
   );
 };

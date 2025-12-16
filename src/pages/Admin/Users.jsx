@@ -1,19 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { ShieldCheck, Mail, UserCheck, UserX } from "lucide-react";
+import { ShieldCheck, Mail, UserCheck, UserX, Search } from "lucide-react";
 import { motion } from "framer-motion";
-// Assurez-vous que ces chemins sont corrects
 import Navbar from "../../components/common/Navbar";
 import Sidebar from "../../components/common/Sidebar";
 import Footer from "../../components/common/Footer";
 import { getAllUsers } from "../../api/userApi";
-import { FaMars, FaVenus, FaGenderless } from "react-icons/fa";
 
 export default function Users() {
   const [users, setUsers] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [filteredUsers, setFilteredUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [roleFilter, setRoleFilter] = useState("all");
 
-  // --- UTILS ---
   const getInitials = (firstname, lastname) =>
     `${firstname?.[0] || ""}${lastname?.[0] || ""}`.toUpperCase();
 
@@ -26,21 +25,22 @@ export default function Users() {
         })
       : "—";
 
-  const getStatusText = (isActif) => (isActif ? "Actif" : "Inactif");
+  const formatRoleName = (roleName) => {
+    if (!roleName) return "INCONNU";
+    const cleanName = roleName.replace("ROLE_", "");
+    return cleanName.charAt(0).toUpperCase() + cleanName.slice(1).toLowerCase();
+  };
 
-  const formatRoleName = (roleName) =>
-    roleName ? roleName.replace("ROLE_", "") : "INCONNU";
-
-  // --- API ---
   useEffect(() => {
     const loadUsers = async () => {
       try {
         setLoading(true);
         const res = await getAllUsers();
-        setUsers(Array.isArray(res.data) ? res.data : []);
+        const usersList = Array.isArray(res.data) ? res.data : [];
+        setUsers(usersList);
+        setFilteredUsers(usersList);
       } catch (error) {
         console.error("Erreur lors du chargement des utilisateurs:", error);
-        setErrorMessage("Impossible de charger les utilisateurs.");
       } finally {
         setLoading(false);
       }
@@ -48,153 +48,178 @@ export default function Users() {
     loadUsers();
   }, []);
 
-  // --- ICONES GENRE ---
-  function GenderIcon({ gender }) {
-    switch (gender) {
-      case "Homme":
-        return <FaMars title="Homme" />;
-      case "Femme":
-        return <FaVenus title="Femme" />;
-      default:
-        return <FaGenderless title="Autre/Non spécifié" />;
-    }
-  }
+  useEffect(() => {
+    let result = users.filter((user) => {
+      const matchesSearch =
+        `${user.firstname} ${user.lastname}`
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase()) ||
+        user.email.toLowerCase().includes(searchTerm.toLowerCase());
+
+      const matchesRole =
+        roleFilter === "all" ||
+        formatRoleName(user.roleDto?.name).toLowerCase() ===
+          roleFilter.toLowerCase();
+
+      return matchesSearch && matchesRole;
+    });
+
+    setFilteredUsers(result);
+  }, [searchTerm, roleFilter, users]);
+
+  const roles = Array.from(
+    new Set(users.map((u) => formatRoleName(u.roleDto?.name)))
+  );
 
   return (
-    <div className="admin-layout-wrapper">
-      <Navbar />
-      <div className="admin-flex-container">
-        <Sidebar />
+    <>
+      <div className="container">
+        <Navbar />
 
-        <main className="admin-page users-page">
-          <header className="page-header">
-            <h1>Répertoire des utilisateurs</h1>
-            <p>Consultation des comptes et privilèges</p>
-          </header>
+        <div className="admin-layout-wrapper">
+          <div className="admin-flex-container">
+            <Sidebar />
 
-          <div className="table-container">
-            {loading && <p className="loading-message">Chargement...</p>}
-            {errorMessage && <p className="feedback-message">{errorMessage}</p>}
+            <main className="admin-page users-page">
+              <header className="page-header">
+                <div className="flex justify-between items-start">
+                  <div>
+                    <h1>Utilisateurs</h1>
+                    <p className="subtitle">
+                      Gérez les comptes et permissions des utilisateurs
+                    </p>
+                  </div>
+                  <span className="badge badge-primary">
+                    {users.length} utilisateurs
+                  </span>
+                </div>
 
-            {!loading && !errorMessage && (
-              <table className="user-table">
-                <colgroup>
-                  <col className="col-initials" />
-                  <col className="col-contact" />
-                  <col className="col-gender" />
-                  <col className="col-email" />
-                  <col className="col-birthdate" />
-                  <col className="col-created" />
-                  <col className="col-role" />
-                  <col className="col-status" />
-                </colgroup>
+                <div className="flex flex-col sm:flex-row gap-3 mt-4">
+                  <div className="relative flex-1">
+                    <Search
+                      className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+                      size={18}
+                    />
+                    <input
+                      type="text"
+                      placeholder="Rechercher un utilisateur..."
+                      className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                    />
+                  </div>
 
-                <thead>
-                  <tr>
-                    <th>Init.</th>
-                    <th>Contact</th>
-                    <th>Genre</th>
-                    <th>Email</th>
-                    <th>Naissance</th>
-                    <th>Création</th>
-                    <th>Rôle</th>
-                    <th>Statut</th>
-                  </tr>
-                </thead>
+                  <select
+                    className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                    value={roleFilter}
+                    onChange={(e) => setRoleFilter(e.target.value)}
+                  >
+                    <option value="all">Tous les rôles</option>
+                    {roles.map((role) => (
+                      <option key={role} value={role.toLowerCase()}>
+                        {role}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </header>
 
-                <tbody>
-                  {users.map((u, i) => {
-                    const statusText = getStatusText(u.actif);
-                    const roleName = formatRoleName(u.roleDto?.name);
-
-                    return (
-                      <motion.tr
-                        key={u.id}
-                        initial={{ opacity: 0, y: 6 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: i * 0.04 }}
-                      >
-                        {/* INITIALES */}
-                        <td className="cell-initials">
-                          <div className="avatar">
-                            {getInitials(u.firstname, u.lastname)}
-                          </div>
-                        </td>
-
-                        {/* CONTACT */}
-                        <td>
-                          <span className="name">
-                            {u.firstname} {u.lastname}
-                          </span>
-                        </td>
-
-                        {/* GENRE */}
-                        <td>
-                          <div className="cell-flex">
-                            <GenderIcon gender={u.gender} />
-                            <span style={{ marginLeft: "6px" }}>
-                              {u.gender}
+              <div className="table-container">
+                {loading ? (
+                  <div className="loading-message">
+                    <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-primary-600"></div>
+                    Chargement des utilisateurs...
+                  </div>
+                ) : filteredUsers.length === 0 ? (
+                  <div className="no-data-message">
+                    {searchTerm || roleFilter !== "all"
+                      ? "Aucun utilisateur ne correspond aux critères de recherche."
+                      : "Aucun utilisateur trouvé."}
+                  </div>
+                ) : (
+                  <table className="user-table">
+                    <thead>
+                      <tr>
+                        <th>Utilisateur</th>
+                        <th>Email</th>
+                        <th>Date de naissance</th>
+                        <th>Inscription</th>
+                        <th>Rôle</th>
+                        <th>Statut</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {filteredUsers.map((user, index) => (
+                        <motion.tr
+                          key={user.id}
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: index * 0.05 }}
+                        >
+                          <td>
+                            <div className="flex items-center gap-3">
+                              <div className="avatar">
+                                {getInitials(user.firstname, user.lastname)}
+                              </div>
+                              <div>
+                                <div className="font-medium text-gray-900">
+                                  {user.firstname} {user.lastname}
+                                </div>
+                                <div className="text-sm text-gray-500 capitalize">
+                                  {user.gender || "Non spécifié"}
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                          <td>
+                            <div className="flex items-center gap-2">
+                              <Mail size={14} className="text-gray-400" />
+                              <span className="text-gray-700">
+                                {user.email}
+                              </span>
+                            </div>
+                          </td>
+                          <td className="text-gray-600">
+                            {formatDate(user.dateOfBirth)}
+                          </td>
+                          <td className="text-gray-600">
+                            {formatDate(user.createdAt)}
+                          </td>
+                          <td>
+                            <span
+                              className={`role-tag ${formatRoleName(
+                                user.roleDto?.name
+                              ).toLowerCase()}`}
+                            >
+                              <ShieldCheck size={14} />
+                              {formatRoleName(user.roleDto?.name)}
                             </span>
-                          </div>
-                        </td>
-
-                        {/* EMAIL */}
-                        <td>
-                          <div className="cell-flex">
-                            <Mail size={14} />
-                            <span>{u.email}</span>
-                          </div>
-                        </td>
-
-                        {/* NAISSANCE */}
-                        <td>{formatDate(u.dateOfBirth)}</td>
-
-                        {/* CRÉATION */}
-                        <td>{formatDate(u.createdAt)}</td>
-
-                        {/* RÔLE */}
-                        <td>
-                          <span
-                            className={`role-tag ${roleName.toLowerCase()}`}
-                          >
-                            <ShieldCheck size={14} />
-                            {roleName}
-                          </span>
-                        </td>
-
-                        {/* STATUT */}
-                        <td>
-                          <span
-                            className={`status-tag ${statusText.toLowerCase()}`}
-                          >
-                            {u.actif ? (
-                              <UserCheck size={14} />
-                            ) : (
-                              <UserX size={14} />
-                            )}
-                            {statusText}
-                          </span>
-                        </td>
-                      </motion.tr>
-                    );
-                  })}
-                  {users.length === 0 && !loading && !errorMessage && (
-                    <tr>
-                      <td
-                        colSpan="8"
-                        style={{ textAlign: "center", padding: "20px" }}
-                      >
-                        Aucun utilisateur trouvé.
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
-            )}
+                          </td>
+                          <td>
+                            <span
+                              className={`status-tag ${
+                                user.actif ? "actif" : "inactif"
+                              }`}
+                            >
+                              {user.actif ? (
+                                <UserCheck size={14} />
+                              ) : (
+                                <UserX size={14} />
+                              )}
+                              {user.actif ? "Actif" : "Inactif"}
+                            </span>
+                          </td>
+                        </motion.tr>
+                      ))}
+                    </tbody>
+                  </table>
+                )}
+              </div>
+            </main>
           </div>
-        </main>
+        </div>
       </div>
       <Footer />
-    </div>
+    </>
   );
 }

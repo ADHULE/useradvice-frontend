@@ -7,7 +7,6 @@
 
 import React from "react";
 import { LogIn, UserPlus, LogOut, Sun, Moon } from "lucide-react";
-import { Link } from "react-router-dom";
 
 import { goToPath } from "../navigation/goToPath";
 import { useThemeGlobal } from "../../context/ThemeContext";
@@ -28,9 +27,13 @@ const Header = () => {
   return (
     <header className={`header ${theme}`}>
       {/* LOGO */}
-      <div className="header-logo cursor-pointer" onClick={() => goToPath("/")}>
+      <button
+        className="header-logo cursor-pointer"
+        onClick={() => goToPath("/")}
+        aria-label="Aller à l'accueil"
+      >
         SYSTEME ADHULE
-      </div>
+      </button>
 
       {/* ACTIONS */}
       <div className="header-actions">

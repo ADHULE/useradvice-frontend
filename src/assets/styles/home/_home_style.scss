@@ -1,107 +1,1052 @@
-// 🎨 Variables essentielles pour la home page
-$primary-color: #007bff;
-$secondary-color: #28a745;
-$bg-light: #f8f9fa;
-$bg-white: #fff;
-$text-dark: #333;
-$border-radius: 0.5rem;
-$shadow-light: 0 4px 10px rgba(0, 0, 0, 0.1);
+// home-styles.scss
+// Design Tech & Cyber - Couleurs Énergiques et Professionnelles
+// Palette inspirée du Cyberpunk et de l'Esthétique Logicielle - Tons vifs et froids
 
-// ----------------------------
-// CONTAINER PRINCIPAL
-// ----------------------------
-.home-container {
-    font-family: 'Arial, sans-serif';
-    background-color: $bg-light;
-    min-height: 100vh;
-    padding: 10px;
+// ==========================================================================
+// Variables SCSS - Design System Tech
+// ==========================================================================
 
+// Palette de couleurs - Tons Tech & Énergiques
+$colors: (
+    // Bleus Cyber & Tech - Vitesse, Connexion, Fiabilité (Internet)
+    'primary-soft': #00BFFF,
+    // Bleu Ciel Vif
+    'primary-medium': #1E90FF,
+    // Bleu Dodger
+    'primary-deep': #0077B6,
+    // Bleu Profond Tech
+    'indigo-soft': #4682B4,
+    // Bleu Acier Tech
+    'indigo-medium': #003049,
+    // Bleu Marine Sombre
+
+    // Verts Néo & Teals - Innovation, Croissance, Logiciel
+    'neo-green-soft': #39FF14,
+    // Vert Néo Vif
+    'neo-green-medium': #00C78C,
+    // Vert Émeraude
+    'neo-green-deep': #00A388,
+    // Vert Teal Profond
+    'lime-soft': #7CFC00,
+    // Vert Citron Tech
+    'lime-medium': #32CD32,
+    // Vert Lime Énergique
+
+    // Cyan et Turquoise - Fluidité, Données, Avenir
+    'teal-soft': #00FFFF,
+    // Cyan Pur
+    'teal-medium': #00CED1,
+    // Turquoise Froid
+    'teal-deep': #008080,
+    // Teal Sombre
+    'cyan-soft': #40E0D0,
+    // Turquoise Claire
+    'cyan-medium': #20B2AA,
+    // Vert Mer Clair
+
+    // Accents Énergétiques
+    'accent-red': #FF4500,
+    // Rouge Vif Énergique
+    'accent-orange': #FFA500,
+    // Orange Alerte
+    'accent-yellow': #FFD700,
+    // Jaune Or (pour réussite)
+    'accent-pink': #FF69B4,
+    // Rose Vif (Énergie)
+
+    // Neutres Froids et Cyber - Base Solide
+    'neutral-50': #F0F8FF,
+    // Fond Très Clair (AliceBlue)
+    'neutral-100': #E6EBF0,
+    // Fond Léger Froid
+    'neutral-200': #C0D0E0,
+    // Bordures Légères Froid
+    'neutral-300': #A9BCCF,
+    // Texte Secondaire Clair Froid
+    'neutral-400': #8799AB,
+    // Texte Tertiaire Froid
+    'neutral-500': #66788A,
+    // Texte Secondaire Froid
+    'neutral-600': #4D5E6F,
+    // Texte Principal Froid
+    'neutral-700': #384553,
+    // Titres Foncés
+    'neutral-800': #202A35,
+    // Titres Importants (Presque Noir Froid)
+    'neutral-900': #0A141F,
+    // Fond Très Sombre Cyber
+
+    // Effets de transparence (adapté au nouveau Primary et Neo-Green)
+    'glass-white': rgba(240, 248, 255, 0.9),
+    // AliceBlue Léger
+    'glass-dark': rgba(10, 20, 31, 0.9),
+    // Neutral-900 Léger
+    'glass-blue': rgba(30, 144, 255, 0.15),
+    // DodgerBlue
+    'glass-green': rgba(57, 255, 20, 0.15),
+    // Neo-Green
+);
+
+// Dégradés Tech & Cyber
+$gradients: (
+    // Bleus pour l'Internet/Connexion
+    'blue-tech': linear-gradient(135deg, #1E90FF 0%, #00BFFF 100%),
+    // Bleu Ciel à Dodger
+    'blue-cyber': linear-gradient(135deg, #00BFFF 0%, #1E90FF 50%, #0077B6 100%),
+    // Bleu Vif à Profond
+    // Verts pour le Logiciel/Innovation
+    'green-neo': linear-gradient(135deg, #7CFC00 0%, #39FF14 50%, #00C78C 100%),
+    // Lime à Néo-Vert
+    'teal-fresh': linear-gradient(135deg, #00FFFF 0%, #40E0D0 50%, #00CED1 100%),
+    // Cyan Pur à Turquoise Froid
+    // Fusion des thèmes
+    'tech-fusion': linear-gradient(135deg,
+        #1E90FF 0%, // Bleu
+        #40E0D0 33%, // Turquoise
+        #39FF14 66%, // Néo-Vert
+        #00BFFF 100%),
+    // Retour au Bleu
+    'glass-morph': linear-gradient(135deg,
+        rgba(240, 248, 255, 0.2) 0%,
+        rgba(240, 248, 255, 0.1) 100%),
+);
+
+// Variables thématiques
+:root {
+    // Thème clair
+    --color-primary: #{map-get($colors, 'primary-medium')};
+    --color-primary-medium: #{map-get($colors, 'primary-soft')};
+    --color-primary-deep: #{map-get($colors, 'primary-deep')};
+    --color-accent-a: #{map-get($colors, 'neo-green-medium')};
+    --color-accent-b: #{map-get($colors, 'teal-medium')};
+
+    // Dégradés
+    --gradient-primary: #{map-get($gradients, 'blue-tech')};
+    --gradient-vibrant: #{map-get($gradients, 'blue-cyber')};
+    --gradient-secondary: #{map-get($gradients, 'green-neo')};
+    --gradient-accent: #{map-get($gradients, 'teal-fresh')};
+
+    // Neutres
+    --color-bg: #{map-get($colors, 'neutral-50')};
+    --color-bg-secondary: #{map-get($colors, 'neutral-100')};
+    --color-border: #{map-get($colors, 'neutral-200')};
+    --color-text: #{map-get($colors, 'neutral-700')};
+    --color-text-secondary: #{map-get($colors, 'neutral-500')};
+    --color-text-light: #{map-get($colors, 'neutral-400')};
+
+    // Verre (Glass morphism)
+    --glass-bg: #{map-get($colors, 'glass-white')};
+    --glass-border: rgba(30, 144, 255, 0.2);
 }
 
-// ----------------------------
-// HEADER
-// ----------------------------
-.home-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 50px;
-    background-color: $bg-white;
-    border-bottom: 1px solid #ddd;
+// Mode sombre (plus Cyber)
+.dark {
+    --color-primary: #{map-get($colors, 'primary-soft')};
+    --color-primary-medium: #{map-get($colors, 'primary-medium')};
+    --color-primary-deep: #{map-get($colors, 'indigo-soft')};
+    --color-accent-a: #{map-get($colors, 'neo-green-soft')};
+    --color-accent-b: #{map-get($colors, 'teal-soft')};
+
+    --color-bg: #{map-get($colors, 'neutral-900')};
+    --color-bg-secondary: #{map-get($colors, 'neutral-800')};
+    --color-border: #{map-get($colors, 'neutral-700')};
+    --color-text: #{map-get($colors, 'neutral-200')};
+    --color-text-secondary: #{map-get($colors, 'neutral-400')};
+    --color-text-light: #{map-get($colors, 'neutral-500')};
+
+    --glass-bg: #{map-get($colors, 'glass-dark')};
+    --glass-border: rgba(57, 255, 20, 0.2);
 }
 
-.home-logo {
-    font-weight: bold;
-    font-size: 1.5rem;
-    color: $primary-color;
+// ==========================================================================
+// Mixins réutilisables
+// ==========================================================================
+
+// Glass morphism effect
+@mixin glass-morphism {
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
-// ----------------------------
-// SECTION HERO
-// ----------------------------
-.hero-section {
-    text-align: center;
-    margin-top: 30px;
-    border-radius: 8px;
-    padding: 60px 20px;
-    box-shadow: $shadow-light;
-    background-color: $bg-white;
+// Gradient text
+@mixin gradient-text($gradient) {
+    background: $gradient;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    display: inline-block;
+}
 
+// Hover lift effect
+@mixin hover-lift {
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 
-    .hero-tagline {
-        font-size: 1.2em;
-        color: #6c757d;
-        margin-bottom: 30px;
+    &:hover {
+        transform: translateY(-8px);
     }
+}
 
-    .cta-button {
-        padding: 15px 30px;
-        font-size: 1.2em;
-        font-weight: bold;
-        background-color: $secondary-color;
-        color: $bg-white;
-        border: none;
-        border-radius: 50px;
-        cursor: pointer;
-        transition: transform 0.2s, background-color 0.3s;
+// Smooth shadow
+@mixin smooth-shadow($level: 'md') {
+    $shadows: (
+        'sm': 0 4px 6px -1px rgba(0, 0, 0, 0.05),
+        'md': 0 10px 15px -3px rgba(0, 0, 0, 0.08),
+        'lg': 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+        'xl': 0 25px 50px -12px rgba(0, 0, 0, 0.15),
+        '2xl': 0 35px 60px -15px rgba(0, 0, 0, 0.2),
+    );
 
-        &:hover {
-            background-color: darken($secondary-color, 10%);
-            transform: translateY(-2px);
+box-shadow: map-get($shadows, $level);
+}
+
+// Animation de pulse subtile
+@mixin subtle-pulse {
+    animation: subtle-pulse 3s ease-in-out infinite;
+
+    @keyframes subtle-pulse {
+
+        0%,
+        100% {
+            opacity: 0.9;
+            transform: scale(1);
+        }
+
+        50% {
+            opacity: 1;
+            transform: scale(1.02);
         }
     }
 }
 
-// ----------------------------
-// SECTION INFO
-// ----------------------------
-.info-section {
+// ==========================================================================
+// Styles de base
+// ==========================================================================
+
+.home-page {
+    min-height: 100vh;
+    background: var(--color-bg);
+    color: var(--color-text);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+    // Amélioration du rendu du texte
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+// ==========================================================================
+// Section Hero - Design élégant avec effet de profondeur
+// ==========================================================================
+
+.hero-section {
+    position: relative;
+    padding: 8rem 1.5rem;
+    overflow: hidden;
+    min-height: 90vh;
     display: flex;
-    justify-content: space-around;
-    gap: 20px;
-    margin-top: 40px;
-    text-align: center;
+    align-items: center;
+    background: linear-gradient(165deg,
+            var(--color-bg) 0%,
+            lighten(map-get($colors, 'neutral-100'), 1%) 100%);
+
+    .dark & {
+        background: linear-gradient(165deg,
+                var(--color-bg) 0%,
+                lighten(map-get($colors, 'neutral-800'), 5%) 100%);
+    }
 
     @media (max-width: 768px) {
-        flex-direction: column;
+        padding: 4rem 1rem;
+        min-height: 80vh;
+    }
+}
+
+.hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 0;
+
+    // Effets de particules Tech (Mis à jour)
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background:
+            radial-gradient(circle at 20% 80%,
+                rgba(map-get($colors, 'primary-medium'), 0.15) 0%,
+                transparent 50%),
+            radial-gradient(circle at 80% 20%,
+                rgba(map-get($colors, 'neo-green-soft'), 0.1) 0%,
+                transparent 50%),
+            radial-gradient(circle at 40% 40%,
+                rgba(map-get($colors, 'teal-medium'), 0.08) 0%,
+                transparent 50%);
+    }
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+    width: 100%;
+}
+
+.hero-badge {
+    @include glass-morphism;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--color-primary);
+    padding: 0.75rem 1.5rem;
+    border-radius: 2rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+    transition: all 0.3s ease;
+
+    &:hover {
+        background: rgba(var(--color-primary), 0.1);
+        transform: scale(1.05);
+    }
+}
+
+.hero-title {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.02em;
+
+    span {
+        @include gradient-text(map-get($gradients, 'blue-cyber'));
+        position: relative;
+
+        &::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: map-get($gradients, 'blue-cyber');
+            border-radius: 2px;
+            opacity: 0.5;
+        }
+    }
+}
+
+.hero-description {
+    font-size: 1.25rem;
+    line-height: 1.6;
+    color: var(--color-text-secondary);
+    max-width: 700px;
+    margin: 0 auto 3rem;
+    font-weight: 400;
+
+    @media (max-width: 768px) {
+        font-size: 1.125rem;
+    }
+}
+
+.hero-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 4rem;
+    flex-wrap: wrap;
+
+    button {
+        @include hover-lift;
+    }
+}
+
+// ==========================================================================
+// Cartes de statistiques élégantes
+// ==========================================================================
+
+.stats-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    max-width: 900px;
+    margin: 0 auto;
+
+    @media (max-width: 640px) {
+        grid-template-columns: repeat(2, 1fr);
     }
 
-    .info-card {
-        flex: 1;
-        padding: 30px;
-        background-color: $bg-white;
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    @media (max-width: 480px) {
+        grid-template-columns: 1fr;
+    }
+}
 
-        .info-icon {
-            font-size: 2.5em;
-            color: $primary-color;
-            margin-bottom: 15px;
+.stat-item {
+    @include glass-morphism;
+    padding: 1.5rem;
+    border-radius: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+
+    @include hover-lift;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        background: map-get($gradients, 'tech-fusion');
+        transform: scaleX(0);
+        transition: transform 0.3s ease;
+    }
+
+    &:hover {
+        @include smooth-shadow('lg');
+
+        &::before {
+            transform: scaleX(1);
+        }
+    }
+}
+
+.stat-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    background: map-get($gradients, 'blue-tech');
+    color: white;
+    position: relative;
+
+    &::after {
+        content: '';
+        position: absolute;
+        inset: -2px;
+        background: map-get($gradients, 'blue-tech');
+        border-radius: inherit;
+        z-index: -1;
+        opacity: 0.5;
+        filter: blur(4px);
+    }
+}
+
+.stat-content {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    flex: 1;
+}
+
+.stat-value {
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: var(--color-primary);
+    line-height: 1;
+    margin-bottom: 0.25rem;
+}
+
+.stat-label {
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+    font-weight: 500;
+}
+
+// ==========================================================================
+// Section Features - Design élégant
+// ==========================================================================
+
+.features-section {
+    padding: 6rem 1.5rem;
+    background: var(--color-bg-secondary);
+    position: relative;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(90deg,
+                transparent 0%,
+                var(--color-border) 50%,
+                transparent 100%);
+    }
+}
+
+.section-header {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 4rem;
+    position: relative;
+
+    &::after {
+        content: '';
+        position: absolute;
+        bottom: -1rem;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 4px;
+        background: map-get($gradients, 'teal-fresh');
+        border-radius: 2px;
+    }
+}
+
+.section-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--color-text);
+
+    .text-gradient {
+        @include gradient-text(map-get($gradients, 'green-neo'));
+        position: relative;
+    }
+}
+
+.section-subtitle {
+    font-size: 1.125rem;
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.feature-card {
+    @include glass-morphism;
+    border-radius: 1.5rem;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+    @include hover-lift;
+
+    &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: map-get($gradients, 'glass-morph');
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    &:hover {
+        @include smooth-shadow('xl');
+
+        &::before {
+            opacity: 1;
         }
 
-        h3 {
-            color: $text-dark;
-            margin-bottom: 10px;
+        .icon-container {
+            transform: scale(1.1) rotate(8deg);
+
+            &::after {
+                transform: scale(1.5);
+                opacity: 0.3;
+            }
         }
+    }
+}
+
+.icon-container {
+    width: 72px;
+    height: 72px;
+    border-radius: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    margin-bottom: 1.5rem;
+    position: relative;
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+    &::after {
+        content: '';
+        position: absolute;
+        inset: -4px;
+        background: inherit;
+        border-radius: inherit;
+        opacity: 0.3;
+        filter: blur(8px);
+        transition: all 0.4s ease;
+    }
+
+    // Couleurs des icônes (Mises à jour)
+    &.blue {
+        background: map-get($gradients, 'blue-tech');
+    }
+
+    &.purple {
+        background: map-get($gradients, 'green-neo');
+    }
+
+    &.green {
+        background: map-get($gradients, 'teal-fresh');
+    }
+
+    &.orange {
+        background: map-get($colors, 'accent-orange');
+    }
+}
+
+.feature-title {
+    font-size: 1.375rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    color: var(--color-text);
+    position: relative;
+}
+
+.feature-description {
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    font-size: 1rem;
+}
+
+// ==========================================================================
+// Section CTA - Design élégant et persuasif
+// ==========================================================================
+
+.cta-section {
+    padding: 6rem 1.5rem;
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: map-get($gradients, 'blue-cyber');
+        opacity: 0.9;
+        z-index: 1;
+    }
+
+    &::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background:
+            radial-gradient(circle at 30% 50%, rgba(255, 255, 255, 0.2) 0%, transparent 50%),
+            radial-gradient(circle at 70% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+        z-index: 2;
+    }
+}
+
+.cta-card {
+    position: relative;
+    z-index: 3;
+    @include glass-morphism;
+    border-radius: 2rem;
+    padding: 4rem;
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 4rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    @include smooth-shadow('2xl');
+
+    @media (max-width: 768px) {
+        grid-template-columns: 1fr;
+        padding: 2.5rem;
+        gap: 2.5rem;
+    }
+}
+
+.cta-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.cta-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+    color: var(--color-text);
+    line-height: 1.2;
+
+    .text-gradient {
+        @include gradient-text(map-get($colors, 'accent-yellow'));
+    }
+}
+
+.cta-description {
+    font-size: 1.25rem;
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    margin-bottom: 2.5rem;
+}
+
+.cta-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.cta-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--color-primary);
+    font-weight: 600;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 0.5rem 0;
+    font-size: 1rem;
+
+    &:hover {
+        gap: 0.75rem;
+        color: var(--color-primary-deep);
+    }
+}
+
+.cta-visual {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.visual-element {
+    width: 100%;
+    height: 300px;
+    border-radius: 1.5rem;
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background:
+            radial-gradient(circle at center,
+                rgba(255, 255, 255, 0.3) 0%,
+                transparent 70%),
+            conic-gradient(from 0deg,
+                rgba(map-get($colors, 'primary-medium'), 0.2),
+                rgba(map-get($colors, 'teal-medium'), 0.2),
+                rgba(map-get($colors, 'neo-green-medium'), 0.2),
+                rgba(map-get($colors, 'primary-medium'), 0.2));
+        animation: rotate 20s linear infinite;
+    }
+
+    @keyframes rotate {
+        from {
+            transform: rotate(0deg);
+        }
+
+        to {
+            transform: rotate(360deg);
+        }
+    }
+}
+
+// ==========================================================================
+// Section About - Design sobre et professionnel
+// ==========================================================================
+
+.about-section {
+    padding: 6rem 1.5rem;
+    background: var(--color-bg);
+    position: relative;
+}
+
+.about-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    align-items: center;
+
+    @media (max-width: 768px) {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+}
+
+.about-text {
+    h2 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        color: var(--color-text);
+
+        svg {
+            vertical-align: middle;
+            margin-right: 0.75rem;
+            color: var(--color-primary);
+        }
+    }
+
+    p {
+        font-size: 1.125rem;
+        line-height: 1.6;
+        color: var(--color-text-secondary);
+        margin-bottom: 2rem;
+    }
+}
+
+.about-values {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.value-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem;
+    border-radius: 0.75rem;
+    transition: all 0.3s ease;
+
+    &:hover {
+        background: rgba(var(--color-primary), 0.05);
+        transform: translateX(8px);
+    }
+}
+
+.value-icon {
+    width: 40px;
+    height: 40px;
+    background: map-get($gradients, 'teal-fresh');
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1rem;
+    flex-shrink: 0;
+}
+
+.about-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 1000px;
+}
+
+.image-placeholder {
+    width: 320px;
+    height: 320px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    position: relative;
+    @include subtle-pulse;
+
+    &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: map-get($gradients, 'tech-fusion');
+        border-radius: inherit;
+        z-index: 1;
+    }
+
+    &::after {
+        content: '';
+        position: absolute;
+        inset: -4px;
+        background: map-get($gradients, 'tech-fusion');
+        border-radius: inherit;
+        filter: blur(20px);
+        opacity: 0.5;
+        z-index: 0;
+    }
+
+    svg {
+        position: relative;
+        z-index: 2;
+        width: 80px;
+        height: 80px;
+    }
+}
+
+// ==========================================================================
+// Responsive Design
+// ==========================================================================
+
+@media (max-width: 1024px) {
+    .hero-section {
+        padding: 6rem 1.5rem;
+    }
+
+    .cta-card {
+        padding: 3rem;
+        gap: 3rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2.5rem;
+    }
+
+    .hero-actions {
+        flex-direction: column;
+        align-items: stretch;
+
+        button {
+            width: 100%;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+    }
+
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .cta-card {
+        text-align: center;
+    }
+
+    .about-text h2 {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .hero-section {
+        padding: 4rem 1rem;
+    }
+
+    .hero-title {
+        font-size: 2rem;
+    }
+
+    .hero-description {
+        font-size: 1.125rem;
+    }
+
+    .section-title {
+        font-size: 1.75rem;
+    }
+
+    .cta-title {
+        font-size: 1.75rem;
+    }
+
+    .cta-description {
+        font-size: 1.125rem;
+    }
+
+    .image-placeholder {
+        width: 250px;
+        height: 250px;
+    }
+}
+
+// ==========================================================================
+// Accessibilité et améliorations
+// ==========================================================================
+
+// Focus visible amélioré
+button:focus-visible,
+a:focus-visible {
+    outline: 3px solid rgba(var(--color-primary), 0.5);
+    outline-offset: 3px;
+    border-radius: 0.5rem;
+}
+
+// Réduction des animations pour accessibilité
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+// Optimisation pour les écrans tactiles
+@media (hover: none) {
+    .feature-card:hover {
+        transform: none;
+    }
+
+    .stat-item:hover {
+        transform: none;
+    }
+
+    .value-item:hover {
+        transform: none;
+    }
+}
+
+// Amélioration de la lisibilité
+::selection {
+    background: rgba(map-get($colors, 'primary-soft'), 0.3);
+    color: var(--color-text);
+}
+
+// Transitions globales fluides
+* {
+    transition:
+        background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+        border-color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+        color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+        transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+// Correction du z-index pour les éléments superposés
+.hero-section,
+.features-section,
+.cta-section,
+.about-section {
+    position: relative;
+    z-index: 1;
+}
+
+// Amélioration des performances
+@media (prefers-reduced-transparency: reduce) {
+
+    .hero-badge,
+    .stat-item,
+    .feature-card,
+    .cta-card {
+        backdrop-filter: none;
+        background: var(--color-bg);
     }
 }

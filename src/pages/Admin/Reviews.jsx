@@ -3,6 +3,7 @@ import { Eye, Star } from "lucide-react";
 import Sidebar from "../../components/common/Sidebar";
 import ReviewModal from "./ReviewModal";
 import Navbar from "../../components/common/Navbar";
+import Footer from "../../components/common/Footer";
 
 // Importez la fonction API et votre instance d'API (assurez-vous que apiInstance est importé quelque part)
 // Assurez-vous d'avoir accès à l'instance 'apiInstance'
@@ -84,75 +85,84 @@ export default function Reviews() {
   }, []); // Exécuté une seule fois au montage du composant
 
   return (
-    <div className="admin-layout-wrapper">
-      <Navbar />
-      <div className="admin-flex-container">
+    <>
+      <div className="container">
         <Sidebar />
-        <main className="admin-page reviews-page">
-          <header className="page-header">
-            <h1>Consultation des Avis ({reviews.length})</h1>
-          </header>
+        <div className="admin-layout-wrapper">
+          <Navbar />
+          <div className="admin-flex-container">
+            <main className="admin-page reviews-page">
+              <header className="page-header">
+                <h1>Consultation des Avis ({reviews.length})</h1>
+              </header>
 
-          {loading && <p className="loading-message">Chargement des avis...</p>}
+              {loading && (
+                <p className="loading-message">Chargement des avis...</p>
+              )}
 
-          {error && <p className="feedback-message error">{error}</p>}
+              {error && <p className="feedback-message error">{error}</p>}
 
-          {!loading && reviews.length === 0 && !error && (
-            <p className="no-data-message">Aucun avis trouvé pour le moment.</p>
-          )}
+              {!loading && reviews.length === 0 && !error && (
+                <p className="no-data-message">
+                  Aucun avis trouvé pour le moment.
+                </p>
+              )}
 
-          {!loading && reviews.length > 0 && (
-            <div className="review-list">
-              {reviews.map((r) => (
-                <div className="review-card" key={r.id}>
-                  <div className="review-header">
-                    <div className="avatar">{r.initial}</div>
-                    <div className="review-info">
-                      <h3>{r.user}</h3>
-                      <span className="date">{r.date}</span>
+              {!loading && reviews.length > 0 && (
+                <div className="review-list">
+                  {reviews.map((r) => (
+                    <div className="review-card" key={r.id}>
+                      <div className="review-header">
+                        <div className="avatar">{r.initial}</div>
+                        <div className="review-info">
+                          <h3>{r.user}</h3>
+                          <span className="date">{r.date}</span>
+                        </div>
+                      </div>
+
+                      {/* Aperçu du rating */}
+                      <div className="stars-row">
+                        {/* Créer 5 étoiles pour l'affichage */}
+                        {Array.from({ length: 5 }).map((_, index) => (
+                          <Star
+                            key={index}
+                            size={16}
+                            // La couleur dépend du rating attribué
+                            fill={index < r.rating ? "#fbbf24" : "none"}
+                            color={index < r.rating ? "#fbbf24" : "#ccc"}
+                          />
+                        ))}
+                      </div>
+
+                      {/* Aperçu du message */}
+                      <p className="review-message-preview">
+                        {r.message.substring(0, 100)}...
+                      </p>
+
+                      {/* Bouton lecture */}
+                      <button
+                        className="btn-action read"
+                        onClick={() => setSelectedReview(r)}
+                        aria-label={`Lire l'avis de ${r.user}`}
+                      >
+                        <Eye size={20} />
+                      </button>
                     </div>
-                  </div>
-
-                  {/* Aperçu du rating */}
-                  <div className="stars-row">
-                    {/* Créer 5 étoiles pour l'affichage */}
-                    {[...Array(5)].map((_, index) => (
-                      <Star
-                        key={index}
-                        size={16}
-                        // La couleur dépend du rating attribué
-                        fill={index < r.rating ? "#fbbf24" : "none"}
-                        color={index < r.rating ? "#fbbf24" : "#ccc"}
-                      />
-                    ))}
-                  </div>
-
-                  {/* Aperçu du message */}
-                  <p className="review-message-preview">
-                    {r.message.substring(0, 100)}...
-                  </p>
-
-                  {/* Bouton lecture */}
-                  <button
-                    className="btn-action read"
-                    onClick={() => setSelectedReview(r)}
-                    aria-label={`Lire l'avis de ${r.user}`}
-                  >
-                    <Eye size={20} />
-                  </button>
+                  ))}
                 </div>
-              ))}
-            </div>
-          )}
+              )}
 
-          {/* Modal */}
-          <ReviewModal
-            // Passer l'objet d'avis adapté à la modale
-            review={selectedReview}
-            onClose={() => setSelectedReview(null)}
-          />
-        </main>
+              {/* Modal */}
+              <ReviewModal
+                // Passer l'objet d'avis adapté à la modale
+                review={selectedReview}
+                onClose={() => setSelectedReview(null)}
+              />
+            </main>
+          </div>
+        </div>
       </div>
-    </div>
+      <Footer />
+    </>
   );
 }
