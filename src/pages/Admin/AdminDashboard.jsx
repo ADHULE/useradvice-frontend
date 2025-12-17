@@ -25,7 +25,7 @@ import Navbar from "../../components/common/Navbar";
 // Composant de carte de statistique
 const StatCard = ({ icon, label, value, trend, color, delay = 0 }) => (
   <motion.div
-    className="stat-card"
+    className="dashboard-stat-card"
     initial={{ opacity: 0, y: 20 }}
     animate={{ opacity: 1, y: 0 }}
     transition={{ delay }}
@@ -33,71 +33,71 @@ const StatCard = ({ icon, label, value, trend, color, delay = 0 }) => (
       y: -8,
       transition: { type: "spring", stiffness: 300 },
     }}
-    style={{ "--card-color": color }}
+    style={{ "--stat-color": color }}
   >
-    <div className="stat-card-content">
-      <div className="stat-icon-wrapper">
-        <div className="stat-icon">{icon}</div>
-        <div className="stat-glow"></div>
+    <div className="stat-card__content">
+      <div className="stat-card__icon-container">
+        <div className="stat-card__icon">{icon}</div>
+        <div className="stat-card__glow"></div>
       </div>
 
-      <div className="stat-data">
-        <h3 className="stat-value">{value}</h3>
-        <span className="stat-label">{label}</span>
+      <div className="stat-card__data">
+        <h3 className="stat-card__value">{value}</h3>
+        <span className="stat-card__label">{label}</span>
       </div>
 
       {trend && (
-        <div className={`stat-trend ${trend.type}`}>
+        <div className={`stat-card__trend trend--${trend.type}`}>
           {trend.icon}
           <span>{trend.value}</span>
         </div>
       )}
     </div>
 
-    <div className="stat-progress">
+    <div className="stat-card__progress">
       <motion.div
-        className="progress-bar"
+        className="stat-card__progress-bar"
         initial={{ width: 0 }}
         animate={{ width: `${trend?.progress || 75}%` }}
         transition={{ delay: delay + 0.2, duration: 1 }}
       />
     </div>
 
-    <div className="stat-hover-effect"></div>
+    <div className="stat-card__hover-effect"></div>
   </motion.div>
 );
 
 // Composant de graphique placeholder
 const ChartPlaceholder = ({ title, type, data }) => (
   <motion.div
-    className="chart-container"
+    className="dashboard-chart"
     initial={{ opacity: 0 }}
     animate={{ opacity: 1 }}
     transition={{ delay: 0.4 }}
   >
-    <div className="chart-header">
-      <h3>{title}</h3>
-      <div className="chart-actions">
-        <button className="chart-action-btn">
+    <div className="chart__header">
+      <h3 className="chart__title">{title}</h3>
+      <div className="chart__actions">
+        <button className="chart__action-btn">
           <Filter size={16} />
         </button>
-        <button className="chart-action-btn">
+        <button className="chart__action-btn">
           <Download size={16} />
         </button>
-        <button className="chart-action-btn">
+        <button className="chart__action-btn">
           <MoreVertical size={16} />
         </button>
       </div>
     </div>
 
-    <div className="chart-content">
-      <div className="chart-visualization">
+    <div className="chart__content">
+      <div className="chart__visualization">
         {type === "bar" && (
-          <div className="bar-chart">
+          <div className="chart__bars">
             {[65, 80, 45, 90, 75, 85, 60].map((height, i) => (
               <motion.div
                 key={i}
-                className="bar"
+                className="chart__bar"
                 initial={{ height: 0 }}
                 animate={{ height: `${height}%` }}
                 transition={{ delay: 0.5 + i * 0.1, type: "spring" }}
@@ -107,25 +107,25 @@ const ChartPlaceholder = ({ title, type, data }) => (
         )}
 
         {type === "pie" && (
-          <div className="pie-chart">
-            <div className="pie-slice" style={{ "--percentage": 40 }}></div>
-            <div className="pie-slice" style={{ "--percentage": 30 }}></div>
-            <div className="pie-slice" style={{ "--percentage": 20 }}></div>
-            <div className="pie-slice" style={{ "--percentage": 10 }}></div>
-            <div className="pie-center"></div>
+          <div className="chart__pie">
+            <div className="pie__slice" style={{ "--percentage": 40 }}></div>
+            <div className="pie__slice" style={{ "--percentage": 30 }}></div>
+            <div className="pie__slice" style={{ "--percentage": 20 }}></div>
+            <div className="pie__slice" style={{ "--percentage": 10 }}></div>
+            <div className="pie__center"></div>
           </div>
         )}
       </div>
 
-      <div className="chart-legend">
+      <div className="chart__legend">
         {data.map((item, i) => (
-          <div key={i} className="legend-item">
+          <div key={i} className="legend__item">
             <div
-              className="legend-color"
+              className="legend__color"
               style={{ backgroundColor: item.color }}
             />
-            <span className="legend-label">{item.label}</span>
-            <span className="legend-value">{item.value}</span>
+            <span className="legend__label">{item.label}</span>
+            <span className="legend__value">{item.value}</span>
           </div>
         ))}
       </div>
@@ -136,19 +136,19 @@ const ChartPlaceholder = ({ title, type, data }) => (
 // Composant de tableau récent
 const RecentActivity = () => (
   <motion.div
-    className="recent-activity"
+    className="dashboard-activity"
     initial={{ opacity: 0, x: 20 }}
     animate={{ opacity: 1, x: 0 }}
     transition={{ delay: 0.6 }}
   >
-    <div className="activity-header">
-      <h3>Activité Récente</h3>
-      <button className="view-all">
+    <div className="activity__header">
+      <h3 className="activity__title">Activité Récente</h3>
+      <button className="activity__view-all">
         Tout voir <ChevronRight size={16} />
       </button>
     </div>
 
-    <div className="activity-list">
+    <div className="activity__list">
       {[
         {
           user: "Julie Martin",
@@ -188,24 +188,24 @@ const RecentActivity = () => (
       ].map((activity, i) => (
         <motion.div
           key={i}
-          className="activity-item"
+          className="activity__item"
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.7 + i * 0.1 }}
           whileHover={{ x: 4 }}
         >
           <div
-            className="activity-icon"
+            className="activity__icon"
             style={{ backgroundColor: activity.color }}
           >
             {activity.icon}
           </div>
-          <div className="activity-content">
-            <p>
-              <span className="activity-user">{activity.user}</span>{" "}
+          <div className="activity__content">
+            <p className="activity__text">
+              <span className="activity__user">{activity.user}</span>{" "}
               {activity.action}
             </p>
-            <span className="activity-time">
+            <span className="activity__time">
               <Clock size={12} /> {activity.time}
             </span>
           </div>
@@ -314,21 +314,22 @@ const AdminDashboard = () => {
   return (
     <>
       <Navbar />
-      <div className="admin-dashboard-container">
+      <div className="admin-dashboard">
         <Sidebar />
 
-        <main className="dashboard-main">
+        <main className="dashboard__main">
           {/* Header avec bienvenue et actions */}
-          <header className="dashboard-header">
+          <header className="dashboard__header">
             <motion.div
-              className="welcome-section"
+              className="dashboard__welcome"
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
             >
-              <h1 className="dashboard-title">
-                Bonjour, <span className="highlight">Administrateur</span>
+              <h1 className="dashboard__title">
+                Bonjour,{" "}
+                <span className="dashboard__highlight">Administrateur</span>
               </h1>
-              <p className="dashboard-subtitle">
+              <p className="dashboard__subtitle">
                 Voici un aperçu de votre plateforme aujourd'hui à{" "}
                 {time.toLocaleTimeString([], {
                   hour: "2-digit",
@@ -337,9 +338,9 @@ const AdminDashboard = () => {
               </p>
             </motion.div>
 
-            <div className="header-actions">
+            <div className="dashboard__actions">
               <button
-                className="action-btn refresh-btn"
+                className="dashboard-btn dashboard-btn--refresh"
                 onClick={handleRefresh}
               >
                 <RefreshCw
@@ -349,7 +350,7 @@ const AdminDashboard = () => {
                 Actualiser
               </button>
 
-              <button className="action-btn date-btn">
+              <button className="dashboard-btn dashboard-btn--date">
                 <Calendar size={18} />
                 {time.toLocaleDateString("fr-FR", {
                   weekday: "long",
@@ -358,15 +359,15 @@ const AdminDashboard = () => {
                 })}
               </button>
 
-              <button className="action-btn notification-btn">
+              <button className="dashboard-btn dashboard-btn--notification">
                 <Bell size={18} />
-                <span className="notification-dot"></span>
+                <span className="notification-badge"></span>
               </button>
             </div>
           </header>
 
           {/* Grille de statistiques */}
-          <section className="stats-grid">
+          <section className="dashboard__stats">
             {stats.map((stat, index) => (
               <StatCard
                 key={index}
@@ -381,8 +382,8 @@ const AdminDashboard = () => {
           </section>
 
           {/* Graphiques et données */}
-          <div className="charts-section">
-            <div className="main-chart">
+          <div className="dashboard__charts">
+            <div className="charts__main">
               <ChartPlaceholder
                 title="Évolution des Inscriptions"
                 type="bar"
@@ -390,40 +391,40 @@ const AdminDashboard = () => {
               />
             </div>
 
-            <div className="sidebar-charts">
+            <div className="charts__sidebar">
               <RecentActivity />
 
               <motion.div
-                className="quick-stats"
+                className="dashboard__quick-stats"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.8 }}
               >
-                <h3>Statistiques Rapides</h3>
-                <div className="quick-stats-grid">
+                <h3 className="quick-stats__title">Statistiques Rapides</h3>
+                <div className="quick-stats__grid">
                   <div className="quick-stat">
                     <div
-                      className="quick-stat-icon"
+                      className="quick-stat__icon"
                       style={{ background: "var(--primary-color)" }}
                     >
                       <Eye size={16} />
                     </div>
-                    <div className="quick-stat-data">
-                      <span className="quick-stat-value">24.5K</span>
-                      <span className="quick-stat-label">Vues</span>
+                    <div className="quick-stat__data">
+                      <span className="quick-stat__value">24.5K</span>
+                      <span className="quick-stat__label">Vues</span>
                     </div>
                   </div>
 
                   <div className="quick-stat">
                     <div
-                      className="quick-stat-icon"
+                      className="quick-stat__icon"
                       style={{ background: "var(--success-color)" }}
                     >
                       <Users size={16} />
                     </div>
-                    <div className="quick-stat-data">
-                      <span className="quick-stat-value">1.2K</span>
-                      <span className="quick-stat-label">Nouveaux</span>
+                    <div className="quick-stat__data">
+                      <span className="quick-stat__value">1.2K</span>
+                      <span className="quick-stat__label">Nouveaux</span>
                     </div>
                   </div>
                 </div>
@@ -433,23 +434,27 @@ const AdminDashboard = () => {
 
           {/* Alertes importantes */}
           <motion.div
-            className="alert-section"
+            className="dashboard__alert"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.9 }}
           >
-            <div className="alert-header">
+            <div className="alert__header">
               <AlertTriangle size={20} />
-              <h3>Alerte Sécurité</h3>
+              <h3 className="alert__title">Alerte Sécurité</h3>
             </div>
-            <div className="alert-content">
-              <p>
+            <div className="alert__content">
+              <p className="alert__message">
                 3 tentatives de connexion échouées détectées sur le compte
                 administrateur.
               </p>
-              <div className="alert-actions">
-                <button className="alert-btn primary">Vérifier</button>
-                <button className="alert-btn secondary">Ignorer</button>
+              <div className="alert__actions">
+                <button className="alert-btn alert-btn--primary">
+                  Vérifier
+                </button>
+                <button className="alert-btn alert-btn--secondary">
+                  Ignorer
+                </button>
               </div>
             </div>
           </motion.div>

@@ -73,7 +73,7 @@ const Sidebar = () => {
     {
       icon: <Users size={22} />,
       label: "Utilisateurs",
-      path: "/users",
+      path: "/usersManagement",
       badge: 5,
       color: "var(--gradient-info)",
     },
