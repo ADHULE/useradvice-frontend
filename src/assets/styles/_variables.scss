@@ -1,0 +1,237 @@
+// =========================================================================
+// DESIGN SYSTEM UNIFIE - Variables SCSS Globales
+// =========================================================================
+
+// =======================================================
+// 1. PALETTE DE COULEURS - Variables SCSS
+// =======================================================
+
+// Bleus - Couleurs principales
+$primary-color: #4361ee;
+$primary-light: #eef2ff;
+$primary-dark: #3a0ca3;
+$primary-soft: #00bfff;
+$primary-medium: #1e90ff;
+$primary-deep: #0077b6;
+$indigo-soft: #4682b4;
+$indigo-medium: #003049;
+
+// Verts - Succès & Croissance
+$success-color: #4cc9f0;
+$success-alternate: #10b981;
+$neo-green-soft: #39ff14;
+$neo-green-medium: #00c78c;
+$neo-green-deep: #00a388;
+$lime-soft: #7cfc00;
+$lime-medium: #32cd32;
+
+// Rouges & Roses - Alertes & Actions
+$danger-color: #ef4444;
+$danger-dark: #dc2626;
+$danger-alternate: #f72585;
+$warning-color: #ffa500;
+$accent-color: #ff006e;
+$accent-pink: #ff69b4;
+$accent-red: #ff4500;
+$accent-orange: #ffa500;
+$accent-yellow: #ffd700;
+
+// Violets & Pourpres - Secondaires
+$secondary-color: #7209b7;
+$secondary-dark: #3a0ca3;
+$purple: #8338ec;
+$purple-light: #8b5cf6;
+
+// Cyan & Turquoise - Fluide & Données
+$info-color: #3b82f6;
+$teal-soft: #00ffff;
+$teal-medium: #00ced1;
+$teal-deep: #008080;
+$cyan-soft: #40e0d0;
+$cyan-medium: #20b2aa;
+
+// =======================================================
+// 2. COULEURS NEUTRES - Variables SCSS
+// =======================================================
+
+// Gris - Échelle complète
+$gray-50: #f8f9fa;
+$gray-100: #f1f3f9;
+$gray-200: #e2e8f0;
+$gray-300: #cbd5e1;
+$gray-400: #9ca3af;
+$gray-500: #6b7280;
+$gray-600: #4b5563;
+$gray-700: #374151;
+$gray-800: #1f2937;
+$gray-900: #0f172a;
+
+// Neutres Froids
+$neutral-50: #f0f8ff;
+$neutral-100: #e6ebf0;
+$neutral-200: #c0d0e0;
+$neutral-300: #a9bccf;
+$neutral-400: #8799ab;
+$neutral-500: #66788a;
+$neutral-600: #4d5e6f;
+$neutral-700: #384553;
+$neutral-800: #202a35;
+$neutral-900: #0a141f;
+
+// Blancs & Noirs
+$white: #ffffff;
+$black: #000000;
+
+// =======================================================
+// 3. DÉGRADÉS - Mixins et Variables
+// =======================================================
+
+// Dégradés Tech
+$gradient-blue-tech: linear-gradient(135deg, #1e90ff 0%, #00bfff 100%);
+$gradient-blue-cyber: linear-gradient(135deg, #00bfff 0%, #1e90ff 50%, #0077b6 100%);
+$gradient-green-neo: linear-gradient(135deg, #7cfc00 0%, #39ff14 50%, #00c78c 100%);
+$gradient-teal-fresh: linear-gradient(135deg, #00ffff 0%, #40e0d0 50%, #00ced1 100%);
+$gradient-tech-fusion: linear-gradient(135deg, #1e90ff 0%, #40e0d0 33%, #39ff14 66%, #00bfff 100%);
+$gradient-glass-morph: linear-gradient(135deg, rgba(240, 248, 255, 0.2) 0%, rgba(240, 248, 255, 0.1) 100%);
+
+// Dégradés génériques
+$gradient-primary: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%);
+$gradient-success: linear-gradient(135deg, #10b981 0%, #059669 100%);
+$gradient-warning: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+$gradient-danger: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+$gradient-info: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+
+// Badges
+$badge-primary: linear-gradient(135deg, #3b82f6, #1d4ed8);
+$badge-success: linear-gradient(135deg, #10b981, #059669);
+$badge-warning: linear-gradient(135deg, #f59e0b, #d97706);
+$badge-danger: linear-gradient(135deg, #ef4444, #dc2626);
+
+// =======================================================
+// 4. TYPOGRAPHIE
+// =======================================================
+
+$font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+$font-heading-weight: 700;
+$base-line-height: 1.4;
+$text-color-dark: #1f2937;
+$text-color-light: #6b7280;
+
+// =======================================================
+// 5. ESPACEMENTS - Scale 8px
+// =======================================================
+
+$space-base: 8px;
+$space-xs: $space-base * 0.5; // 4px
+$space-sm: $space-base * 1; // 8px
+$space-md: $space-base * 2; // 16px
+$space-lg: $space-base * 3; // 24px
+$space-xl: $space-base * 4; // 32px
+$space-2xl: $space-base * 6; // 48px
+
+// =======================================================
+// 6. BORDRES & RAYONS
+// =======================================================
+
+$border-radius: 12px;
+$border-radius-sm: 8px;
+$border-radius-md: 10px;
+$border-radius-lg: 16px;
+$border-radius-xl: 20px;
+$border-radius-2xl: 24px;
+$border-radius-full: 9999px;
+
+$border-color: #e2e8f0;
+$border-color-light: #f1f5f9;
+
+// =======================================================
+// 7. OMBRES
+// =======================================================
+
+$shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+$shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+$shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+$shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+$shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+
+// =======================================================
+// 8. TRANSITIONS & ANIMATIONS
+// =======================================================
+
+$transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+$transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+$transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+
+// =======================================================
+// 9. Z-INDEX - Gestion des couches
+// =======================================================
+
+$z-index-dropdown: 1000;
+$z-index-sticky: 1020;
+$z-index-fixed: 1030;
+$z-index-modal-backdrop: 1040;
+$z-index-modal: 1050;
+$z-index-popover: 1060;
+$z-index-tooltip: 1070;
+$z-index-toast: 1080;
+
+// =======================================================
+// 10. MIXINS UTILITAIRES
+// =======================================================
+
+// Mixin pour le mode sombre
+@mixin dark-mode {
+    @content;
+}
+
+// Mixin pour les ombres de carte
+@mixin card-shadow {
+    box-shadow: $shadow-md;
+    transition: box-shadow $transition-base;
+
+    &:hover {
+        box-shadow: $shadow-lg;
+    }
+}
+
+// Mixin pour les boutons
+@mixin button-primary {
+    background: $gradient-primary;
+    color: $white;
+    border: none;
+    border-radius: $border-radius-md;
+    padding: $space-sm $space-md;
+    font-weight: 600;
+    transition: all $transition-base;
+    cursor: pointer;
+
+    &:hover {
+        background: $primary-dark;
+        transform: translateY(-2px);
+        box-shadow: $shadow-lg;
+    }
+
+    &:active {
+        transform: translateY(0);
+    }
+}
+
+// Mixin pour le glassmorphisme
+@mixin glass-effect {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+// Mixin pour les badges
+@mixin badge($bg-color, $text-color) {
+    display: inline-block;
+    padding: $space-xs $space-sm;
+    border-radius: $border-radius-full;
+    background-color: $bg-color;
+    color: $text-color;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1;
+}

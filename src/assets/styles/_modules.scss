@@ -1,0 +1,104 @@
+// =========================================================================
+// VARIABLES SPÉCIFIQUES PAR MODULE
+// =========================================================================
+
+// Analytics Module
+$analytics-primary: $primary-color;
+$analytics-secondary: $success-color;
+$analytics-accent: $secondary-color;
+$analytics-warning: $danger-alternate;
+$analytics-success: #4ade80;
+$analytics-bg: #f8fafc;
+$analytics-card-bg: $white;
+$analytics-border: $gray-200;
+$analytics-text: #1e293b;
+$analytics-text-light: #64748b;
+
+// Reports Module
+$reports-primary: $primary-color;
+$reports-secondary: $success-color;
+$reports-accent: $secondary-color;
+$reports-warning: $danger-alternate;
+$reports-success: #4ade80;
+$reports-danger: $danger-color;
+$reports-bg: #f8fafc;
+$reports-card-bg: $white;
+$reports-border: $gray-200;
+$reports-text: #1e293b;
+$reports-text-light: #64748b;
+
+// Reviews Module
+$reviews-primary: $purple-light;
+$reviews-primary-light: #a78bfa;
+$reviews-primary-dark: #7c3aed;
+$reviews-secondary: #ec4899;
+$reviews-success: $success-alternate;
+$reviews-warning: #f59e0b;
+$reviews-danger: $danger-color;
+$reviews-info: $info-color;
+
+// System Module
+$system-primary: #7c3aed;
+$system-primary-light: $purple-light;
+$system-primary-dark: #6d28d9;
+$system-secondary: #ec4899;
+$system-success: $success-alternate;
+$system-warning: #f59e0b;
+$system-danger: $danger-color;
+$system-info: $info-color;
+
+// Stats Module
+$stats-primary: $primary-color;
+$stats-primary-light: #4895ef;
+$stats-primary-dark: $primary-dark;
+$stats-secondary: $secondary-color;
+$stats-success: $success-color;
+$stats-warning: $danger-alternate;
+$stats-danger: $accent-color;
+$stats-info: #3a86ff;
+
+// Users Management Module
+$users-primary: #667eea;
+$users-primary-dark: #5a67d8;
+$users-primary-light: #a3bffa;
+$users-secondary: #764ba2;
+$users-success: $success-alternate;
+$users-danger: $danger-color;
+$users-warning: #f59e0b;
+$users-info: $info-color;
+
+// Authentication Module
+$auth-primary: $primary-medium;
+$auth-primary-dark: $primary-deep;
+$auth-success: $lime-medium;
+$auth-error: $accent-red;
+$auth-warning: $accent-orange;
+$auth-info: $primary-soft;
+$auth-bg: $neutral-50;
+$auth-card: $white;
+$auth-border: $neutral-200;
+$auth-border-light: $neutral-100;
+$auth-text: $neutral-700;
+$auth-text-light: $neutral-500;
+$auth-text-lighter: $neutral-300;
+
+// Sidebar Module
+$sidebar-gradient: linear-gradient(165deg,
+        rgba(15, 23, 42, 0.95) 0%,
+        rgba(30, 41, 59, 0.92) 50%,
+        rgba(15, 23, 42, 0.98) 100%);
+$sidebar-gradient-hover: linear-gradient(165deg,
+        rgba(99, 102, 241, 0.15) 0%,
+        rgba(139, 92, 246, 0.12) 50%,
+        rgba(99, 102, 241, 0.15) 100%);
+
+// Create Module
+$create-primary: $info-color;
+$create-success: $success-alternate;
+$create-warning: #f59e0b;
+$create-danger: $danger-color;
+$create-bg: #f8fafc;
+$create-card: $white;
+$create-border: $gray-200;
+$create-text: #1e293b;
+$create-text-light: #64748b;

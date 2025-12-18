@@ -1,0 +1,110 @@
+// Export des variables CSS pour utilisation globale
+:root {
+    // Export des variables principales
+    --primary-color: #{$primary-color};
+    --primary-light: #{$primary-light};
+    --primary-dark: #{$primary-dark};
+    --secondary-color: #{$secondary-color};
+    --success-color: #{$success-color};
+    --danger-color: #{$danger-color};
+    --warning-color: #{$warning-color};
+    --info-color: #{$info-color};
+
+    // Export des neutres
+    --gray-50: #{$gray-50};
+    --gray-100: #{$gray-100};
+    --gray-200: #{$gray-200};
+    --gray-300: #{$gray-300};
+    --gray-400: #{$gray-400};
+    --gray-500: #{$gray-500};
+    --gray-600: #{$gray-600};
+    --gray-700: #{$gray-700};
+    --gray-800: #{$gray-800};
+    --gray-900: #{$gray-900};
+
+    // Export des espacements
+    --space-xs: #{$space-xs};
+    --space-sm: #{$space-sm};
+    --space-md: #{$space-md};
+    --space-lg: #{$space-lg};
+    --space-xl: #{$space-xl};
+
+    // Export des rayons
+    --border-radius: #{$border-radius};
+    --border-radius-sm: #{$border-radius-sm};
+    --border-radius-md: #{$border-radius-md};
+    --border-radius-lg: #{$border-radius-lg};
+
+    // Export des ombres
+    --shadow-sm: #{$shadow-sm};
+    --shadow-md: #{$shadow-md};
+    --shadow-lg: #{$shadow-lg};
+    --shadow-xl: #{$shadow-xl};
+
+    // Export des transitions
+    --transition-fast: #{$transition-fast};
+    --transition-base: #{$transition-base};
+    --transition-slow: #{$transition-slow};
+}
+
+// Styles de base
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: $font-sans;
+    color: var(--color-text);
+    background-color: var(--color-bg);
+    line-height: $base-line-height;
+}
+
+// Classes globales pour les composants
+.card {
+    @include card-shadow;
+    background: var(--color-bg-secondary);
+    border-radius: $border-radius-lg;
+    padding: $space-lg;
+    border: 1px solid var(--color-border);
+}
+
+.btn {
+    @include button-primary;
+
+    &.btn-secondary {
+        background: $secondary-color;
+
+        &:hover {
+            background: darken($secondary-color, 10%);
+        }
+    }
+
+    &.btn-outline {
+        background: transparent;
+        border: 2px solid $primary-color;
+        color: $primary-color;
+
+        &:hover {
+            background: $primary-color;
+            color: $white;
+        }
+    }
+}
+
+.badge {
+    @include badge($gray-100, $gray-700);
+
+    &.badge-primary {
+        @include badge($primary-light, $primary-dark);
+    }
+
+    &.badge-success {
+        @include badge(rgba($success-alternate, 0.1), $success-alternate);
+    }
+
+    &.badge-danger {
+        @include badge(rgba($danger-color, 0.1), $danger-color);
+    }
+}

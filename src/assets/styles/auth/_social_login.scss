@@ -1,58 +1,324 @@
-.social-login {
-    margin-top: 25px;
-    text-align: center;
+// SocialLogin.scss
 
+.social-login {
+    margin-top: $space-xl;
+    text-align: center;
+    width: 100%;
 
     p {
-        color: $text-color;
-        margin-bottom: 12px;
-        font-size: 14px;
+        color: var(--color-text);
+        margin-bottom: $space-md;
+        font-size: 0.875rem;
+        font-weight: 500;
+        position: relative;
+
+        &::before,
+        &::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 30%;
+            height: 1px;
+            background: var(--color-border);
+        }
+
+        &::before {
+            left: 0;
+        }
+
+        &::after {
+            right: 0;
+        }
+
+        span {
+            background: var(--color-bg);
+            padding: 0 $space-sm;
+            position: relative;
+            z-index: 1;
+        }
     }
 
     .social-buttons {
         display: flex;
         flex-direction: column;
-        gap: 10px;
+        gap: $space-sm;
 
         .social-btn {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            padding: 10px;
-            border: 2px solid $primary-color;
+            gap: $space-md;
+            padding: $space-md $space-lg;
+            border: 2px solid var(--color-border);
             border-radius: $border-radius;
             cursor: pointer;
-            font-size: 14px;
-            font-weight: bold;
-            color: $primary-color;
-            background: transparent;
-            transition: all 0.3s ease;
+            font-size: 0.9375rem;
+            font-weight: 600;
+            color: var(--color-text);
+            background: var(--color-bg);
+            font-family: $font-sans;
+            transition: all $transition-base;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
 
             svg {
                 width: 20px;
-                height: 18px;
+                height: 20px;
+                transition: all $transition-base;
+                flex-shrink: 0;
             }
 
-            &.google:hover {
-                background: lighten(#db4437, 0%);
-                color: white;
-                border-color: #db4437;
+            // Effet de fond au hover
+            &::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: currentColor;
+                opacity: 0;
+                transition: opacity $transition-base;
+                z-index: 1;
             }
 
-            &.apple:hover {
-                background: #000000;
-                color: white;
-                border-color: #000000;
+            span {
+                position: relative;
+                z-index: 2;
+                transition: color $transition-base;
             }
 
-            &.facebook:hover {
-                background: #1877f2;
-                color: white;
-                border-color: #1877f2;
+            // Bouton Google
+            &.google {
+                border-color: rgba($danger-color, 0.3);
+                color: $danger-color;
+
+                &:hover {
+                    background: $danger-color;
+                    border-color: $danger-color;
+                    color: $white;
+                    transform: translateY(-2px);
+                    box-shadow: 0 4px 12px rgba($danger-color, 0.3);
+
+                    svg {
+                        transform: scale(1.1);
+                    }
+                }
+
+                &:active {
+                    transform: translateY(0);
+                }
+            }
+
+            // Bouton Apple
+            &.apple {
+                border-color: rgba($gray-800, 0.3);
+                color: $gray-800;
+
+                &:hover {
+                    background: $gray-800;
+                    border-color: $gray-800;
+                    color: $white;
+                    transform: translateY(-2px);
+                    box-shadow: 0 4px 12px rgba($gray-800, 0.3);
+
+                    svg {
+                        transform: scale(1.1);
+                    }
+                }
+
+                &:active {
+                    transform: translateY(0);
+                }
+            }
+
+            // Bouton GitHub
+            &.github {
+                border-color: rgba($gray-800, 0.3);
+                color: $gray-800;
+
+                &:hover {
+                    background: $gray-800;
+                    border-color: $gray-800;
+                    color: $white;
+                    transform: translateY(-2px);
+                    box-shadow: 0 4px 12px rgba($gray-800, 0.3);
+
+                    svg {
+                        transform: scale(1.1);
+                    }
+                }
+
+                &:active {
+                    transform: translateY(0);
+                }
+            }
+
+            // Bouton Facebook
+            &.facebook {
+                border-color: rgba($primary-color, 0.3);
+                color: $primary-color;
+
+                &:hover {
+                    background: $primary-color;
+                    border-color: $primary-color;
+                    color: $white;
+                    transform: translateY(-2px);
+                    box-shadow: 0 4px 12px rgba($primary-color, 0.3);
+
+                    svg {
+                        transform: scale(1.1);
+                    }
+                }
+
+                &:active {
+                    transform: translateY(0);
+                }
+            }
+
+            // État désactivé
+            &:disabled {
+                opacity: 0.5;
+                cursor: not-allowed;
+
+                &:hover {
+                    transform: none;
+                    background: var(--color-bg);
+                    border-color: var(--color-border);
+                    color: var(--color-text);
+                    box-shadow: none;
+
+                    svg {
+                        transform: none;
+                    }
+                }
+            }
+
+            // Animation de chargement
+            &.loading {
+                position: relative;
+                color: transparent;
+
+                &::after {
+                    content: '';
+                    position: absolute;
+                    width: 20px;
+                    height: 20px;
+                    border: 2px solid rgba(255, 255, 255, 0.3);
+                    border-top-color: white;
+                    border-radius: 50%;
+                    animation: spin $transition-slow linear infinite;
+                }
             }
         }
     }
 
+    // Version horizontale pour les grands écrans
+    @media (min-width: 768px) {
+        .social-buttons {
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: center;
 
+            .social-btn {
+                flex: 1;
+                min-width: 160px;
+                max-width: 200px;
+            }
+        }
+    }
+
+    // Version compacte pour mobile
+    @media (max-width: 480px) {
+        margin-top: $space-lg;
+
+        .social-buttons {
+            .social-btn {
+                padding: $space-sm $space-md;
+                font-size: 0.875rem;
+                gap: $space-sm;
+
+                svg {
+                    width: 18px;
+                    height: 18px;
+                }
+            }
+        }
+    }
+
+    // Mode sombre
+    [data-theme="dark"] & {
+        p {
+            color: var(--color-text);
+
+            &::before,
+            &::after {
+                background: var(--color-border);
+            }
+
+            span {
+                background: var(--color-bg);
+            }
+        }
+
+        .social-btn {
+            background: var(--color-bg-secondary);
+            border-color: var(--color-border);
+            color: var(--color-text);
+
+            &.google {
+                border-color: rgba($danger-color, 0.4);
+                color: lighten($danger-color, 10%);
+            }
+
+            &.apple {
+                border-color: rgba($white, 0.4);
+                color: $white;
+            }
+
+            &.github {
+                border-color: rgba($white, 0.4);
+                color: $white;
+            }
+
+            &.facebook {
+                border-color: rgba($primary-color, 0.4);
+                color: lighten($primary-color, 10%);
+            }
+
+            &:disabled:hover {
+                background: var(--color-bg-secondary);
+            }
+        }
+    }
+
+    // Accessibilité
+    .social-btn:focus-visible {
+        outline: 3px solid rgba($primary-color, 0.5);
+        outline-offset: 2px;
+        border-radius: calc(#{$border-radius} + 2px);
+    }
+
+    // Réduction des animations
+    @media (prefers-reduced-motion: reduce) {
+        .social-btn {
+            transition: none;
+
+            &:hover {
+                transform: none;
+
+                svg {
+                    transform: none;
+                }
+            }
+        }
+    }
+}
+
+// Animation de spin pour le chargement
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
 }

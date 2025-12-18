@@ -1,0 +1,420 @@
+// =========================================================================
+// CLASSES UTILITAIRES
+// =========================================================================
+
+// Couleurs de texte
+.text-primary {
+    color: $primary-color;
+}
+
+.text-success {
+    color: $success-color;
+}
+
+.text-danger {
+    color: $danger-color;
+}
+
+.text-warning {
+    color: $warning-color;
+}
+
+.text-info {
+    color: $info-color;
+}
+
+.text-secondary {
+    color: $secondary-color;
+}
+
+.text-white {
+    color: $white;
+}
+
+.text-gray-500 {
+    color: $gray-500;
+}
+
+.text-gray-700 {
+    color: $gray-700;
+}
+
+// Arrière-plans
+.bg-primary {
+    background-color: $primary-color;
+}
+
+.bg-success {
+    background-color: $success-color;
+}
+
+.bg-danger {
+    background-color: $danger-color;
+}
+
+.bg-warning {
+    background-color: $warning-color;
+}
+
+.bg-info {
+    background-color: $info-color;
+}
+
+.bg-secondary {
+    background-color: $secondary-color;
+}
+
+.bg-white {
+    background-color: $white;
+}
+
+.bg-gray-100 {
+    background-color: $gray-100;
+}
+
+.bg-gray-200 {
+    background-color: $gray-200;
+}
+
+// Dégradés
+.bg-gradient-primary {
+    background: $gradient-primary;
+}
+
+.bg-gradient-success {
+    background: $gradient-success;
+}
+
+.bg-gradient-danger {
+    background: $gradient-danger;
+}
+
+.bg-gradient-warning {
+    background: $gradient-warning;
+}
+
+.bg-gradient-info {
+    background: $gradient-info;
+}
+
+// Bordures
+.border {
+    border: 1px solid $border-color;
+}
+
+.border-primary {
+    border-color: $primary-color;
+}
+
+.border-success {
+    border-color: $success-color;
+}
+
+.border-danger {
+    border-color: $danger-color;
+}
+
+.border-warning {
+    border-color: $warning-color;
+}
+
+.border-info {
+    border-color: $info-color;
+}
+
+.border-light {
+    border-color: $border-color-light;
+}
+
+// Rayons de bordure
+.rounded-sm {
+    border-radius: $border-radius-sm;
+}
+
+.rounded {
+    border-radius: $border-radius;
+}
+
+.rounded-md {
+    border-radius: $border-radius-md;
+}
+
+.rounded-lg {
+    border-radius: $border-radius-lg;
+}
+
+.rounded-xl {
+    border-radius: $border-radius-xl;
+}
+
+.rounded-full {
+    border-radius: $border-radius-full;
+}
+
+// Ombres
+.shadow-sm {
+    box-shadow: $shadow-sm;
+}
+
+.shadow {
+    box-shadow: $shadow-md;
+}
+
+.shadow-md {
+    box-shadow: $shadow-md;
+}
+
+.shadow-lg {
+    box-shadow: $shadow-lg;
+}
+
+.shadow-xl {
+    box-shadow: $shadow-xl;
+}
+
+.shadow-none {
+    box-shadow: none;
+}
+
+// Espacements - Padding
+.p-0 {
+    padding: 0;
+}
+
+.p-xs {
+    padding: $space-xs;
+}
+
+.p-sm {
+    padding: $space-sm;
+}
+
+.p-md {
+    padding: $space-md;
+}
+
+.p-lg {
+    padding: $space-lg;
+}
+
+.p-xl {
+    padding: $space-xl;
+}
+
+.px-xs {
+    padding-left: $space-xs;
+    padding-right: $space-xs;
+}
+
+.px-sm {
+    padding-left: $space-sm;
+    padding-right: $space-sm;
+}
+
+.px-md {
+    padding-left: $space-md;
+    padding-right: $space-md;
+}
+
+.px-lg {
+    padding-left: $space-lg;
+    padding-right: $space-lg;
+}
+
+.py-xs {
+    padding-top: $space-xs;
+    padding-bottom: $space-xs;
+}
+
+.py-sm {
+    padding-top: $space-sm;
+    padding-bottom: $space-sm;
+}
+
+.py-md {
+    padding-top: $space-md;
+    padding-bottom: $space-md;
+}
+
+.py-lg {
+    padding-top: $space-lg;
+    padding-bottom: $space-lg;
+}
+
+// Espacements - Margin
+.m-0 {
+    margin: 0;
+}
+
+.m-xs {
+    margin: $space-xs;
+}
+
+.m-sm {
+    margin: $space-sm;
+}
+
+.m-md {
+    margin: $space-md;
+}
+
+.m-lg {
+    margin: $space-lg;
+}
+
+.m-xl {
+    margin: $space-xl;
+}
+
+.mx-auto {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+// Flexbox
+.flex {
+    display: flex;
+}
+
+.flex-col {
+    flex-direction: column;
+}
+
+.items-center {
+    align-items: center;
+}
+
+.justify-center {
+    justify-content: center;
+}
+
+.justify-between {
+    justify-content: space-between;
+}
+
+.gap-xs {
+    gap: $space-xs;
+}
+
+.gap-sm {
+    gap: $space-sm;
+}
+
+.gap-md {
+    gap: $space-md;
+}
+
+.gap-lg {
+    gap: $space-lg;
+}
+
+// Display
+.hidden {
+    display: none;
+}
+
+.block {
+    display: block;
+}
+
+.inline-block {
+    display: inline-block;
+}
+
+// Text
+.text-center {
+    text-align: center;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.font-bold {
+    font-weight: 700;
+}
+
+.font-semibold {
+    font-weight: 600;
+}
+
+.text-sm {
+    font-size: 14px;
+}
+
+.text-base {
+    font-size: 16px;
+}
+
+.text-lg {
+    font-size: 18px;
+}
+
+.text-xl {
+    font-size: 20px;
+}
+
+// Width & Height
+.w-full {
+    width: 100%;
+}
+
+.h-full {
+    height: 100%;
+}
+
+.min-h-screen {
+    min-height: 100vh;
+}
+
+// Position
+.relative {
+    position: relative;
+}
+
+.absolute {
+    position: absolute;
+}
+
+.fixed {
+    position: fixed;
+}
+
+.sticky {
+    position: sticky;
+}
+
+// Overflow
+.overflow-hidden {
+    overflow: hidden;
+}
+
+.overflow-auto {
+    overflow: auto;
+}
+
+// Cursor
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.cursor-not-allowed {
+    cursor: not-allowed;
+}
+
+// Transitions
+.transition-all {
+    transition: all $transition-base;
+}
+
+.transition-colors {
+    transition: color $transition-base, background-color $transition-base;
+}
+
+.transition-transform {
+    transition: transform $transition-base;
+}

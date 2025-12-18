@@ -34,6 +34,8 @@ import Reviews from "../pages/Admin/Reviews";
 import Stats from "../pages/Admin/Stats";
 import Settings from "../pages/Admin/Settings";
 import UsersManagement from "../pages/Admin/UsersManagement";
+import Analytics from "../pages/Admin/Analytics";
+import Reports from "../pages/Admin/Reports";
 
 /**
  * Main router component that defines all application routes.
@@ -75,6 +77,8 @@ const AppRouter = () => {
         <Route path="/usersManagement" element={<UsersManagement />} />
         <Route path="/stats" element={<Stats />} />
         <Route path="/settings" element={<Settings />} />
+        <Route path="/analytics" element={<Analytics />} />
+        <Route path="/reports" element={<Reports />} />
       </Routes>
     </BrowserRouter>
   );

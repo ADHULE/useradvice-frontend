@@ -1,173 +1,15 @@
-// home-styles.scss
-// Design Tech & Cyber - Couleurs Énergiques et Professionnelles
-// Palette inspirée du Cyberpunk et de l'Esthétique Logicielle - Tons vifs et froids
-
 // ==========================================================================
-// Variables SCSS - Design System Tech
+// Mixins réutilisables (utilisant les variables globales)
 // ==========================================================================
 
-// Palette de couleurs - Tons Tech & Énergiques
-$colors: (
-    // Bleus Cyber & Tech - Vitesse, Connexion, Fiabilité (Internet)
-    'primary-soft': #00BFFF,
-    // Bleu Ciel Vif
-    'primary-medium': #1E90FF,
-    // Bleu Dodger
-    'primary-deep': #0077B6,
-    // Bleu Profond Tech
-    'indigo-soft': #4682B4,
-    // Bleu Acier Tech
-    'indigo-medium': #003049,
-    // Bleu Marine Sombre
 
-    // Verts Néo & Teals - Innovation, Croissance, Logiciel
-    'neo-green-soft': #39FF14,
-    // Vert Néo Vif
-    'neo-green-medium': #00C78C,
-    // Vert Émeraude
-    'neo-green-deep': #00A388,
-    // Vert Teal Profond
-    'lime-soft': #7CFC00,
-    // Vert Citron Tech
-    'lime-medium': #32CD32,
-    // Vert Lime Énergique
-
-    // Cyan et Turquoise - Fluidité, Données, Avenir
-    'teal-soft': #00FFFF,
-    // Cyan Pur
-    'teal-medium': #00CED1,
-    // Turquoise Froid
-    'teal-deep': #008080,
-    // Teal Sombre
-    'cyan-soft': #40E0D0,
-    // Turquoise Claire
-    'cyan-medium': #20B2AA,
-    // Vert Mer Clair
-
-    // Accents Énergétiques
-    'accent-red': #FF4500,
-    // Rouge Vif Énergique
-    'accent-orange': #FFA500,
-    // Orange Alerte
-    'accent-yellow': #FFD700,
-    // Jaune Or (pour réussite)
-    'accent-pink': #FF69B4,
-    // Rose Vif (Énergie)
-
-    // Neutres Froids et Cyber - Base Solide
-    'neutral-50': #F0F8FF,
-    // Fond Très Clair (AliceBlue)
-    'neutral-100': #E6EBF0,
-    // Fond Léger Froid
-    'neutral-200': #C0D0E0,
-    // Bordures Légères Froid
-    'neutral-300': #A9BCCF,
-    // Texte Secondaire Clair Froid
-    'neutral-400': #8799AB,
-    // Texte Tertiaire Froid
-    'neutral-500': #66788A,
-    // Texte Secondaire Froid
-    'neutral-600': #4D5E6F,
-    // Texte Principal Froid
-    'neutral-700': #384553,
-    // Titres Foncés
-    'neutral-800': #202A35,
-    // Titres Importants (Presque Noir Froid)
-    'neutral-900': #0A141F,
-    // Fond Très Sombre Cyber
-
-    // Effets de transparence (adapté au nouveau Primary et Neo-Green)
-    'glass-white': rgba(240, 248, 255, 0.9),
-    // AliceBlue Léger
-    'glass-dark': rgba(10, 20, 31, 0.9),
-    // Neutral-900 Léger
-    'glass-blue': rgba(30, 144, 255, 0.15),
-    // DodgerBlue
-    'glass-green': rgba(57, 255, 20, 0.15),
-    // Neo-Green
-);
-
-// Dégradés Tech & Cyber
-$gradients: (
-    // Bleus pour l'Internet/Connexion
-    'blue-tech': linear-gradient(135deg, #1E90FF 0%, #00BFFF 100%),
-    // Bleu Ciel à Dodger
-    'blue-cyber': linear-gradient(135deg, #00BFFF 0%, #1E90FF 50%, #0077B6 100%),
-    // Bleu Vif à Profond
-    // Verts pour le Logiciel/Innovation
-    'green-neo': linear-gradient(135deg, #7CFC00 0%, #39FF14 50%, #00C78C 100%),
-    // Lime à Néo-Vert
-    'teal-fresh': linear-gradient(135deg, #00FFFF 0%, #40E0D0 50%, #00CED1 100%),
-    // Cyan Pur à Turquoise Froid
-    // Fusion des thèmes
-    'tech-fusion': linear-gradient(135deg,
-        #1E90FF 0%, // Bleu
-        #40E0D0 33%, // Turquoise
-        #39FF14 66%, // Néo-Vert
-        #00BFFF 100%),
-    // Retour au Bleu
-    'glass-morph': linear-gradient(135deg,
-        rgba(240, 248, 255, 0.2) 0%,
-        rgba(240, 248, 255, 0.1) 100%),
-);
-
-// Variables thématiques
-:root {
-    // Thème clair
-    --color-primary: #{map-get($colors, 'primary-medium')};
-    --color-primary-medium: #{map-get($colors, 'primary-soft')};
-    --color-primary-deep: #{map-get($colors, 'primary-deep')};
-    --color-accent-a: #{map-get($colors, 'neo-green-medium')};
-    --color-accent-b: #{map-get($colors, 'teal-medium')};
-
-    // Dégradés
-    --gradient-primary: #{map-get($gradients, 'blue-tech')};
-    --gradient-vibrant: #{map-get($gradients, 'blue-cyber')};
-    --gradient-secondary: #{map-get($gradients, 'green-neo')};
-    --gradient-accent: #{map-get($gradients, 'teal-fresh')};
-
-    // Neutres
-    --color-bg: #{map-get($colors, 'neutral-50')};
-    --color-bg-secondary: #{map-get($colors, 'neutral-100')};
-    --color-border: #{map-get($colors, 'neutral-200')};
-    --color-text: #{map-get($colors, 'neutral-700')};
-    --color-text-secondary: #{map-get($colors, 'neutral-500')};
-    --color-text-light: #{map-get($colors, 'neutral-400')};
-
-    // Verre (Glass morphism)
-    --glass-bg: #{map-get($colors, 'glass-white')};
-    --glass-border: rgba(30, 144, 255, 0.2);
-}
-
-// Mode sombre (plus Cyber)
-.dark {
-    --color-primary: #{map-get($colors, 'primary-soft')};
-    --color-primary-medium: #{map-get($colors, 'primary-medium')};
-    --color-primary-deep: #{map-get($colors, 'indigo-soft')};
-    --color-accent-a: #{map-get($colors, 'neo-green-soft')};
-    --color-accent-b: #{map-get($colors, 'teal-soft')};
-
-    --color-bg: #{map-get($colors, 'neutral-900')};
-    --color-bg-secondary: #{map-get($colors, 'neutral-800')};
-    --color-border: #{map-get($colors, 'neutral-700')};
-    --color-text: #{map-get($colors, 'neutral-200')};
-    --color-text-secondary: #{map-get($colors, 'neutral-400')};
-    --color-text-light: #{map-get($colors, 'neutral-500')};
-
-    --glass-bg: #{map-get($colors, 'glass-dark')};
-    --glass-border: rgba(57, 255, 20, 0.2);
-}
-
-// ==========================================================================
-// Mixins réutilisables
-// ==========================================================================
 
 // Glass morphism effect
 @mixin glass-morphism {
-    background: var(--glass-bg);
+    background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    border: 1px solid var(--glass-border);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     box-shadow:
         0 8px 32px rgba(0, 0, 0, 0.08),
         inset 0 1px 0 rgba(255, 255, 255, 0.1);
@@ -184,7 +26,7 @@ $gradients: (
 
 // Hover lift effect
 @mixin hover-lift {
-    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition: transform $transition-base;
 
     &:hover {
         transform: translateY(-8px);
@@ -194,10 +36,10 @@ $gradients: (
 // Smooth shadow
 @mixin smooth-shadow($level: 'md') {
     $shadows: (
-        'sm': 0 4px 6px -1px rgba(0, 0, 0, 0.05),
-        'md': 0 10px 15px -3px rgba(0, 0, 0, 0.08),
-        'lg': 0 20px 25px -5px rgba(0, 0, 0, 0.1),
-        'xl': 0 25px 50px -12px rgba(0, 0, 0, 0.15),
+        'sm': $shadow-sm,
+        'md': $shadow-md,
+        'lg': $shadow-lg,
+        'xl': $shadow-xl,
         '2xl': 0 35px 60px -15px rgba(0, 0, 0, 0.2),
     );
 
@@ -231,8 +73,8 @@ box-shadow: map-get($shadows, $level);
     min-height: 100vh;
     background: var(--color-bg);
     color: var(--color-text);
-    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    transition: all $transition-slow cubic-bezier(0.4, 0, 0.2, 1);
+    font-family: $font-sans;
 
     // Amélioration du rendu du texte
     -webkit-font-smoothing: antialiased;
@@ -246,23 +88,23 @@ box-shadow: map-get($shadows, $level);
 
 .hero-section {
     position: relative;
-    padding: 8rem 1.5rem;
+    padding: 8rem $space-md;
     overflow: hidden;
     min-height: 90vh;
     display: flex;
     align-items: center;
     background: linear-gradient(165deg,
             var(--color-bg) 0%,
-            lighten(map-get($colors, 'neutral-100'), 1%) 100%);
+            lighten($neutral-100, 1%) 100%);
 
-    .dark & {
+    [data-theme="dark"] & {
         background: linear-gradient(165deg,
                 var(--color-bg) 0%,
-                lighten(map-get($colors, 'neutral-800'), 5%) 100%);
+                lighten($neutral-800, 5%) 100%);
     }
 
     @media (max-width: 768px) {
-        padding: 4rem 1rem;
+        padding: 4rem $space-sm;
         min-height: 80vh;
     }
 }
@@ -275,7 +117,7 @@ box-shadow: map-get($shadows, $level);
     bottom: 0;
     z-index: 0;
 
-    // Effets de particules Tech (Mis à jour)
+    // Effets de particules Tech
     &::before {
         content: '';
         position: absolute;
@@ -285,13 +127,13 @@ box-shadow: map-get($shadows, $level);
         bottom: 0;
         background:
             radial-gradient(circle at 20% 80%,
-                rgba(map-get($colors, 'primary-medium'), 0.15) 0%,
+                rgba($primary-medium, 0.15) 0%,
                 transparent 50%),
             radial-gradient(circle at 80% 20%,
-                rgba(map-get($colors, 'neo-green-soft'), 0.1) 0%,
+                rgba($neo-green-soft, 0.1) 0%,
                 transparent 50%),
             radial-gradient(circle at 40% 40%,
-                rgba(map-get($colors, 'teal-medium'), 0.08) 0%,
+                rgba($teal-medium, 0.08) 0%,
                 transparent 50%);
     }
 }
@@ -309,17 +151,17 @@ box-shadow: map-get($shadows, $level);
     @include glass-morphism;
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: $space-sm;
     color: var(--color-primary);
     padding: 0.75rem 1.5rem;
     border-radius: 2rem;
     font-size: 0.875rem;
     font-weight: 600;
     margin-bottom: 2rem;
-    transition: all 0.3s ease;
+    transition: all $transition-base;
 
     &:hover {
-        background: rgba(var(--color-primary), 0.1);
+        background: rgba($primary-color, 0.1);
         transform: scale(1.05);
     }
 }
@@ -332,7 +174,7 @@ box-shadow: map-get($shadows, $level);
     letter-spacing: -0.02em;
 
     span {
-        @include gradient-text(map-get($gradients, 'blue-cyber'));
+        @include gradient-text($gradient-blue-cyber);
         position: relative;
 
         &::after {
@@ -342,7 +184,7 @@ box-shadow: map-get($shadows, $level);
             left: 0;
             width: 100%;
             height: 4px;
-            background: map-get($gradients, 'blue-cyber');
+            background: $gradient-blue-cyber;
             border-radius: 2px;
             opacity: 0.5;
         }
@@ -364,7 +206,7 @@ box-shadow: map-get($shadows, $level);
 
 .hero-actions {
     display: flex;
-    gap: 1rem;
+    gap: $space-md;
     justify-content: center;
     margin-bottom: 4rem;
     flex-wrap: wrap;
@@ -381,7 +223,7 @@ box-shadow: map-get($shadows, $level);
 .stats-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1.5rem;
+    gap: $space-lg;
     max-width: 900px;
     margin: 0 auto;
 
@@ -396,12 +238,12 @@ box-shadow: map-get($shadows, $level);
 
 .stat-item {
     @include glass-morphism;
-    padding: 1.5rem;
-    border-radius: 1.25rem;
+    padding: $space-lg;
+    border-radius: $border-radius-lg;
     display: flex;
     align-items: center;
-    gap: 1rem;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    gap: $space-md;
+    transition: all $transition-slow cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     overflow: hidden;
 
@@ -414,9 +256,9 @@ box-shadow: map-get($shadows, $level);
         left: 0;
         width: 100%;
         height: 3px;
-        background: map-get($gradients, 'tech-fusion');
+        background: $gradient-tech-fusion;
         transform: scaleX(0);
-        transition: transform 0.3s ease;
+        transition: transform $transition-base;
     }
 
     &:hover {
@@ -431,20 +273,20 @@ box-shadow: map-get($shadows, $level);
 .stat-icon {
     width: 56px;
     height: 56px;
-    border-radius: 1rem;
+    border-radius: $border-radius-md;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    background: map-get($gradients, 'blue-tech');
-    color: white;
+    background: $gradient-blue-tech;
+    color: $white;
     position: relative;
 
     &::after {
         content: '';
         position: absolute;
         inset: -2px;
-        background: map-get($gradients, 'blue-tech');
+        background: $gradient-blue-tech;
         border-radius: inherit;
         z-index: -1;
         opacity: 0.5;
@@ -478,7 +320,7 @@ box-shadow: map-get($shadows, $level);
 // ==========================================================================
 
 .features-section {
-    padding: 6rem 1.5rem;
+    padding: 6rem $space-md;
     background: var(--color-bg-secondary);
     position: relative;
 
@@ -510,7 +352,7 @@ box-shadow: map-get($shadows, $level);
         transform: translateX(-50%);
         width: 80px;
         height: 4px;
-        background: map-get($gradients, 'teal-fresh');
+        background: $gradient-teal-fresh;
         border-radius: 2px;
     }
 }
@@ -518,11 +360,11 @@ box-shadow: map-get($shadows, $level);
 .section-title {
     font-size: clamp(2rem, 4vw, 3rem);
     font-weight: 700;
-    margin-bottom: 1rem;
+    margin-bottom: $space-md;
     color: var(--color-text);
 
     .text-gradient {
-        @include gradient-text(map-get($gradients, 'green-neo'));
+        @include gradient-text($gradient-green-neo);
         position: relative;
     }
 }
@@ -545,11 +387,11 @@ box-shadow: map-get($shadows, $level);
 
 .feature-card {
     @include glass-morphism;
-    border-radius: 1.5rem;
+    border-radius: $border-radius-xl;
     padding: 2rem;
     position: relative;
     overflow: hidden;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all $transition-slow cubic-bezier(0.4, 0, 0.2, 1);
 
     @include hover-lift;
 
@@ -557,9 +399,9 @@ box-shadow: map-get($shadows, $level);
         content: '';
         position: absolute;
         inset: 0;
-        background: map-get($gradients, 'glass-morph');
+        background: $gradient-glass-morph;
         opacity: 0;
-        transition: opacity 0.3s ease;
+        transition: opacity $transition-base;
     }
 
     &:hover {
@@ -583,14 +425,14 @@ box-shadow: map-get($shadows, $level);
 .icon-container {
     width: 72px;
     height: 72px;
-    border-radius: 1.25rem;
+    border-radius: $border-radius-lg;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
+    color: $white;
     margin-bottom: 1.5rem;
     position: relative;
-    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition: transform $transition-slow cubic-bezier(0.34, 1.56, 0.64, 1);
 
     &::after {
         content: '';
@@ -600,24 +442,24 @@ box-shadow: map-get($shadows, $level);
         border-radius: inherit;
         opacity: 0.3;
         filter: blur(8px);
-        transition: all 0.4s ease;
+        transition: all $transition-slow;
     }
 
-    // Couleurs des icônes (Mises à jour)
+    // Couleurs des icônes
     &.blue {
-        background: map-get($gradients, 'blue-tech');
+        background: $gradient-blue-tech;
     }
 
     &.purple {
-        background: map-get($gradients, 'green-neo');
+        background: $gradient-green-neo;
     }
 
     &.green {
-        background: map-get($gradients, 'teal-fresh');
+        background: $gradient-teal-fresh;
     }
 
     &.orange {
-        background: map-get($colors, 'accent-orange');
+        background: $accent-orange;
     }
 }
 
@@ -640,7 +482,7 @@ box-shadow: map-get($shadows, $level);
 // ==========================================================================
 
 .cta-section {
-    padding: 6rem 1.5rem;
+    padding: 6rem $space-md;
     position: relative;
     overflow: hidden;
 
@@ -648,7 +490,7 @@ box-shadow: map-get($shadows, $level);
         content: '';
         position: absolute;
         inset: 0;
-        background: map-get($gradients, 'blue-cyber');
+        background: $gradient-blue-cyber;
         opacity: 0.9;
         z-index: 1;
     }
@@ -668,7 +510,7 @@ box-shadow: map-get($shadows, $level);
     position: relative;
     z-index: 3;
     @include glass-morphism;
-    border-radius: 2rem;
+    border-radius: $border-radius-xl;
     padding: 4rem;
     display: grid;
     grid-template-columns: 1.5fr 1fr;
@@ -698,7 +540,7 @@ box-shadow: map-get($shadows, $level);
     line-height: 1.2;
 
     .text-gradient {
-        @include gradient-text(map-get($colors, 'accent-yellow'));
+        @include gradient-text($accent-yellow);
     }
 }
 
@@ -712,20 +554,20 @@ box-shadow: map-get($shadows, $level);
 .cta-actions {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: $space-md;
 }
 
 .cta-link {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: $space-sm;
     color: var(--color-primary);
     font-weight: 600;
     background: none;
     border: none;
     cursor: pointer;
-    transition: all 0.3s ease;
-    padding: 0.5rem 0;
+    transition: all $transition-base;
+    padding: $space-sm 0;
     font-size: 1rem;
 
     &:hover {
@@ -744,7 +586,7 @@ box-shadow: map-get($shadows, $level);
 .visual-element {
     width: 100%;
     height: 300px;
-    border-radius: 1.5rem;
+    border-radius: $border-radius-xl;
     position: relative;
     overflow: hidden;
 
@@ -757,10 +599,10 @@ box-shadow: map-get($shadows, $level);
                 rgba(255, 255, 255, 0.3) 0%,
                 transparent 70%),
             conic-gradient(from 0deg,
-                rgba(map-get($colors, 'primary-medium'), 0.2),
-                rgba(map-get($colors, 'teal-medium'), 0.2),
-                rgba(map-get($colors, 'neo-green-medium'), 0.2),
-                rgba(map-get($colors, 'primary-medium'), 0.2));
+                rgba($primary-medium, 0.2),
+                rgba($teal-medium, 0.2),
+                rgba($neo-green-medium, 0.2),
+                rgba($primary-medium, 0.2));
         animation: rotate 20s linear infinite;
     }
 
@@ -780,7 +622,7 @@ box-shadow: map-get($shadows, $level);
 // ==========================================================================
 
 .about-section {
-    padding: 6rem 1.5rem;
+    padding: 6rem $space-md;
     background: var(--color-bg);
     position: relative;
 }
@@ -824,19 +666,19 @@ box-shadow: map-get($shadows, $level);
 .about-values {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: $space-md;
 }
 
 .value-item {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: $space-md;
     padding: 0.75rem;
-    border-radius: 0.75rem;
-    transition: all 0.3s ease;
+    border-radius: $border-radius-md;
+    transition: all $transition-base;
 
     &:hover {
-        background: rgba(var(--color-primary), 0.05);
+        background: rgba($primary-color, 0.05);
         transform: translateX(8px);
     }
 }
@@ -844,8 +686,8 @@ box-shadow: map-get($shadows, $level);
 .value-icon {
     width: 40px;
     height: 40px;
-    background: map-get($gradients, 'teal-fresh');
-    color: white;
+    background: $gradient-teal-fresh;
+    color: $white;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -869,7 +711,7 @@ box-shadow: map-get($shadows, $level);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
+    color: $white;
     position: relative;
     @include subtle-pulse;
 
@@ -877,7 +719,7 @@ box-shadow: map-get($shadows, $level);
         content: '';
         position: absolute;
         inset: 0;
-        background: map-get($gradients, 'tech-fusion');
+        background: $gradient-tech-fusion;
         border-radius: inherit;
         z-index: 1;
     }
@@ -886,7 +728,7 @@ box-shadow: map-get($shadows, $level);
         content: '';
         position: absolute;
         inset: -4px;
-        background: map-get($gradients, 'tech-fusion');
+        background: $gradient-tech-fusion;
         border-radius: inherit;
         filter: blur(20px);
         opacity: 0.5;
@@ -907,7 +749,7 @@ box-shadow: map-get($shadows, $level);
 
 @media (max-width: 1024px) {
     .hero-section {
-        padding: 6rem 1.5rem;
+        padding: 6rem $space-md;
     }
 
     .cta-card {
@@ -947,7 +789,7 @@ box-shadow: map-get($shadows, $level);
 
 @media (max-width: 640px) {
     .hero-section {
-        padding: 4rem 1rem;
+        padding: 4rem $space-sm;
     }
 
     .hero-title {
@@ -983,9 +825,9 @@ box-shadow: map-get($shadows, $level);
 // Focus visible amélioré
 button:focus-visible,
 a:focus-visible {
-    outline: 3px solid rgba(var(--color-primary), 0.5);
+    outline: 3px solid rgba($primary-color, 0.5);
     outline-offset: 3px;
-    border-radius: 0.5rem;
+    border-radius: $border-radius-sm;
 }
 
 // Réduction des animations pour accessibilité
@@ -1017,17 +859,17 @@ a:focus-visible {
 
 // Amélioration de la lisibilité
 ::selection {
-    background: rgba(map-get($colors, 'primary-soft'), 0.3);
+    background: rgba($primary-soft, 0.3);
     color: var(--color-text);
 }
 
 // Transitions globales fluides
 * {
     transition:
-        background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-        border-color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-        color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-        transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        background-color $transition-slow cubic-bezier(0.4, 0, 0.2, 1),
+        border-color $transition-slow cubic-bezier(0.4, 0, 0.2, 1),
+        color $transition-slow cubic-bezier(0.4, 0, 0.2, 1),
+        transform $transition-slow cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 // Correction du z-index pour les éléments superposés
