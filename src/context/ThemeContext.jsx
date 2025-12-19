@@ -1,5 +1,5 @@
 /**
- * ThemeContext.jsx
+ *
  * Context for managing theme state across the application (light/dark mode).
  * Provides theme and toggleTheme function to all descendant components.
  */

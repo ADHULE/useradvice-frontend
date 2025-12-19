@@ -1,59 +1,10 @@
 /* SystemSettings.css - Feuille de Style Unique */
 
-/* Variables */
-:root {
-    --system-primary: #7c3aed;
-    --system-primary-light: #8b5cf6;
-    --system-primary-dark: #6d28d9;
-    --system-secondary: #ec4899;
-    --system-success: #10b981;
-    --system-warning: #f59e0b;
-    --system-danger: #ef4444;
-    --system-info: #3b82f6;
-    --system-purple: #8b5cf6;
-    --system-pink: #ec4899;
-    --system-cyan: #06b6d4;
-    --system-white: #ffffff;
-    --system-gray-50: #f9fafb;
-    --system-gray-100: #f3f4f6;
-    --system-gray-200: #e5e7eb;
-    --system-gray-300: #d1d5db;
-    --system-gray-400: #9ca3af;
-    --system-gray-500: #6b7280;
-    --system-gray-600: #4b5563;
-    --system-gray-700: #374151;
-    --system-gray-800: #1f2937;
-    --system-gray-900: #111827;
-    --system-space-xs: 0.25rem;
-    --system-space-sm: 0.5rem;
-    --system-space-md: 1rem;
-    --system-space-lg: 1.5rem;
-    --system-space-xl: 2rem;
-    --system-space-2xl: 3rem;
-    --system-radius-sm: 0.5rem;
-    --system-radius-md: 0.75rem;
-    --system-radius-lg: 1rem;
-    --system-radius-xl: 1.5rem;
-    --system-radius-full: 9999px;
-    --system-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
-    --system-shadow-md: 0 4px 16px rgba(0, 0, 0, 0.12);
-    --system-shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.16);
-    --system-shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.2);
-    --system-gradient-primary: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
-    --system-gradient-success: linear-gradient(135deg, #10b981 0%, #059669 100%);
-    --system-gradient-warning: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-    --system-gradient-danger: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-    --system-gradient-info: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-    --system-transition-fast: 200ms cubic-bezier(0.4, 0, 0.2, 1);
-    --system-transition-base: 300ms cubic-bezier(0.4, 0, 0.2, 1);
-    --system-transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
-}
-
 /* Reset & Base Styles */
 .system-settings-container {
     min-height: 100vh;
-    background: linear-gradient(135deg, #f5f3ff 0%, #f0f9ff 100%);
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: $gradient-glass-morph;
+    font-family: $font-sans;
 }
 
 .system-settings-layout {
@@ -65,7 +16,7 @@
 .system-settings-main {
     flex: 1;
     margin-left: 250px;
-    padding: var(--system-space-xl);
+    padding: $space-xl;
 }
 
 .system-settings-content {
@@ -75,12 +26,12 @@
 
 /* En-tête */
 .system-settings-header {
-    background: var(--system-white);
-    border-radius: var(--system-radius-xl);
-    padding: var(--system-space-xl);
-    margin-bottom: var(--system-space-xl);
-    box-shadow: var(--system-shadow-md);
-    border: 1px solid var(--system-gray-200);
+    background: $white;
+    border-radius: $border-radius-xl;
+    padding: $space-xl;
+    margin-bottom: $space-xl;
+    box-shadow: $shadow-md;
+    border: 1px solid $border-color;
     position: relative;
     overflow: hidden;
 }
@@ -92,7 +43,7 @@
     left: 0;
     right: 0;
     height: 4px;
-    background: var(--system-gradient-primary);
+    background: $gradient-primary;
 }
 
 .system-header-content {
@@ -100,7 +51,7 @@
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    gap: var(--system-space-xl);
+    gap: $space-xl;
 }
 
 .system-header-text {
@@ -110,20 +61,20 @@
 
 .system-settings-title {
     font-size: 2.25rem;
-    font-weight: 800;
-    color: var(--system-gray-900);
-    margin-bottom: var(--system-space-sm);
+    font-weight: $font-heading-weight;
+    color: var(--color-text);
+    margin-bottom: $space-sm;
     display: flex;
     align-items: center;
-    gap: var(--system-space-md);
-    background: var(--system-gradient-primary);
+    gap: $space-md;
+    background: $gradient-primary;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
 }
 
 .system-title-icon {
-    background: var(--system-gradient-primary);
+    background: $gradient-primary;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -131,62 +82,62 @@
 
 .system-settings-subtitle {
     font-size: 1.125rem;
-    color: var(--system-gray-600);
+    color: var(--color-text-light);
     margin: 0;
     display: flex;
     align-items: center;
-    gap: var(--system-space-sm);
+    gap: $space-sm;
 }
 
 .system-subtitle-icon {
-    color: var(--system-primary);
+    color: var(--color-primary);
     opacity: 0.8;
 }
 
 .system-header-stats {
     display: flex;
-    gap: var(--system-space-xl);
+    gap: $space-xl;
 }
 
 .system-stat-item {
     display: flex;
     align-items: center;
-    gap: var(--system-space-md);
-    padding: var(--system-space-md);
-    background: var(--system-gray-50);
-    border-radius: var(--system-radius-lg);
-    border: 1px solid var(--system-gray-200);
+    gap: $space-md;
+    padding: $space-md;
+    background: $gray-50;
+    border-radius: $border-radius-lg;
+    border: 1px solid $border-color;
     min-width: 160px;
 }
 
 .system-stat-icon {
     width: 40px;
     height: 40px;
-    border-radius: var(--system-radius-md);
+    border-radius: $border-radius-md;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
 .system-stat-item:first-child .system-stat-icon {
-    background: linear-gradient(135deg, rgba(124, 58, 237, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
-    color: var(--system-primary);
+    background: linear-gradient(135deg, rgba($primary-dark, 0.1) 0%, rgba($purple-light, 0.1) 100%);
+    color: var(--color-primary);
 }
 
 .system-stat-item:last-child .system-stat-icon {
-    background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(5, 150, 105, 0.1) 100%);
-    color: var(--system-success);
+    background: linear-gradient(135deg, rgba($success-color, 0.1) 0%, rgba($success-alternate, 0.1) 100%);
+    color: $success-color;
 }
 
 .system-stat-content {
     display: flex;
     flex-direction: column;
-    gap: var(--system-space-xs);
+    gap: $space-xs;
 }
 
 .system-stat-label {
     font-size: 0.75rem;
-    color: var(--system-gray-600);
+    color: var(--color-text-light);
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.05em;
@@ -195,22 +146,22 @@
 .system-stat-value {
     font-size: 1.25rem;
     font-weight: 700;
-    color: var(--system-gray-900);
+    color: var(--color-text);
 }
 
 /* Navigation par onglets */
 .system-settings-tabs {
-    margin-bottom: var(--system-space-xl);
+    margin-bottom: $space-xl;
 }
 
 .system-tabs-container {
     display: flex;
-    gap: var(--system-space-sm);
-    padding: var(--system-space-sm);
-    background: var(--system-white);
-    border-radius: var(--system-radius-lg);
-    box-shadow: var(--system-shadow-sm);
-    border: 1px solid var(--system-gray-200);
+    gap: $space-sm;
+    padding: $space-sm;
+    background: $white;
+    border-radius: $border-radius-lg;
+    box-shadow: $shadow-sm;
+    border: 1px solid $border-color;
     overflow-x: auto;
     scrollbar-width: none;
     -ms-overflow-style: none;
@@ -223,33 +174,33 @@
 .system-tab-btn {
     display: flex;
     align-items: center;
-    gap: var(--system-space-sm);
+    gap: $space-sm;
     padding: 0.75rem 1.5rem;
     background: transparent;
     border: none;
-    border-radius: var(--system-radius-md);
-    color: var(--system-gray-600);
+    border-radius: $border-radius-md;
+    color: $gray-600;
     font-size: 0.875rem;
     font-weight: 600;
     cursor: pointer;
-    transition: all var(--system-transition-base);
+    transition: all $transition-base;
     white-space: nowrap;
     position: relative;
 }
 
 .system-tab-btn:hover {
-    background: var(--system-gray-50);
-    color: var(--system-gray-800);
+    background: $gray-50;
+    color: $gray-800;
 }
 
 .system-tab-btn.active {
-    background: var(--system-gradient-primary);
-    color: var(--system-white);
-    box-shadow: var(--system-shadow-sm);
+    background: $gradient-primary;
+    color: $white;
+    box-shadow: $shadow-sm;
 }
 
 .system-tab-icon {
-    transition: transform var(--system-transition-base);
+    transition: transform $transition-base;
 }
 
 .system-tab-btn.active .system-tab-icon {
@@ -263,108 +214,108 @@
     transform: translateX(-50%);
     width: 20px;
     height: 3px;
-    background: var(--system-white);
-    border-radius: var(--system-radius-full);
+    background: $white;
+    border-radius: $border-radius-full;
 }
 
 /* Sections de Réglages */
 .system-settings-sections {
     display: flex;
     flex-direction: column;
-    gap: var(--system-space-xl);
+    gap: $space-xl;
 }
 
 .system-settings-tab-content {
     display: flex;
     flex-direction: column;
-    gap: var(--system-space-xl);
+    gap: $space-xl;
 }
 
 .settings-section-container {
-    background: var(--system-white);
-    border-radius: var(--system-radius-xl);
-    padding: var(--system-space-xl);
-    box-shadow: var(--system-shadow-md);
-    border: 1px solid var(--system-gray-200);
+    background: $white;
+    border-radius: $border-radius-xl;
+    padding: $space-xl;
+    box-shadow: $shadow-md;
+    border: 1px solid $border-color;
 }
 
 .settings-section-primary {
-    border-top: 4px solid var(--system-primary);
+    border-top: 4px solid var(--color-primary);
 }
 
 .settings-section-success {
-    border-top: 4px solid var(--system-success);
+    border-top: 4px solid $success-color;
 }
 
 .settings-section-warning {
-    border-top: 4px solid var(--system-warning);
+    border-top: 4px solid $warning-color;
 }
 
 .settings-section-danger {
-    border-top: 4px solid var(--system-danger);
+    border-top: 4px solid $danger-color;
 }
 
 .settings-section-info {
-    border-top: 4px solid var(--system-info);
+    border-top: 4px solid $info-color;
 }
 
 .settings-section-purple {
-    border-top: 4px solid var(--system-purple);
+    border-top: 4px solid $purple;
 }
 
 .settings-section-pink {
-    border-top: 4px solid var(--system-pink);
+    border-top: 4px solid $accent-pink;
 }
 
 .settings-section-header {
     display: flex;
     align-items: flex-start;
-    gap: var(--system-space-lg);
-    margin-bottom: var(--system-space-xl);
+    gap: $space-lg;
+    margin-bottom: $space-xl;
 }
 
 .settings-section-icon-wrapper {
     width: 56px;
     height: 56px;
-    border-radius: var(--system-radius-lg);
+    border-radius: $border-radius-lg;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
 .settings-section-primary .settings-section-icon-wrapper {
-    background: linear-gradient(135deg, rgba(124, 58, 237, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
-    color: var(--system-primary);
+    background: linear-gradient(135deg, rgba($primary-dark, 0.1) 0%, rgba($purple-light, 0.1) 100%);
+    color: var(--color-primary);
 }
 
 .settings-section-success .settings-section-icon-wrapper {
-    background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(5, 150, 105, 0.1) 100%);
-    color: var(--system-success);
+    background: linear-gradient(135deg, rgba($success-color, 0.1) 0%, rgba($success-alternate, 0.1) 100%);
+    color: $success-color;
 }
 
 .settings-section-warning .settings-section-icon-wrapper {
-    background: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(217, 119, 6, 0.1) 100%);
-    color: var(--system-warning);
+    background: linear-gradient(135deg, rgba($warning-color, 0.1) 0%, rgba($accent-orange, 0.1) 100%);
+    color: $warning-color;
 }
 
 .settings-section-danger .settings-section-icon-wrapper {
-    background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(220, 38, 38, 0.1) 100%);
-    color: var(--system-danger);
+    background: linear-gradient(135deg, rgba($danger-color, 0.1) 0%, rgba($danger-dark, 0.1) 100%);
+    color: $danger-color;
 }
 
 .settings-section-info .settings-section-icon-wrapper {
-    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(37, 99, 235, 0.1) 100%);
-    color: var(--system-info);
+    background: linear-gradient(135deg, rgba($info-color, 0.1) 0%, rgba($primary-medium, 0.1) 100%);
+    color: $info-color;
 }
 
 .settings-section-purple .settings-section-icon-wrapper {
-    background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(124, 58, 237, 0.1) 100%);
-    color: var(--system-purple);
+    background: linear-gradient(135deg, rgba($purple, 0.1) 0%, rgba($primary-dark, 0.1) 100%);
+    color: $purple;
 }
 
 .settings-section-pink .settings-section-icon-wrapper {
-    background: linear-gradient(135deg, rgba(236, 72, 153, 0.1) 0%, rgba(219, 39, 119, 0.1) 100%);
-    color: var(--system-pink);
+    background: linear-gradient(135deg, rgba($accent-pink, 0.1) 0%, rgba($danger-alternate, 0.1) 100%);
+    color: $accent-pink;
 }
 
 .settings-section-title-wrapper {
@@ -374,13 +325,13 @@
 .settings-section-title {
     font-size: 1.5rem;
     font-weight: 700;
-    color: var(--system-gray-900);
-    margin: 0 0 var(--system-space-xs) 0;
+    color: var(--color-text);
+    margin: 0 0 $space-xs 0;
 }
 
 .settings-section-description {
     font-size: 0.875rem;
-    color: var(--system-gray-600);
+    color: var(--color-text-light);
     margin: 0;
     line-height: 1.6;
 }
@@ -388,7 +339,7 @@
 .settings-section-content {
     display: flex;
     flex-direction: column;
-    gap: var(--system-space-lg);
+    gap: $space-lg;
 }
 
 /* Composants de Réglage */
@@ -398,18 +349,18 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: var(--system-space-lg);
-    background: var(--system-gray-50);
-    border-radius: var(--system-radius-lg);
-    border: 1px solid var(--system-gray-200);
-    transition: all var(--system-transition-base);
+    padding: $space-lg;
+    background: $gray-50;
+    border-radius: $border-radius-lg;
+    border: 1px solid $border-color;
+    transition: all $transition-base;
 }
 
 .settings-switch-container:hover,
 .settings-input-container:hover,
 .settings-select-container:hover {
-    border-color: var(--system-gray-300);
-    box-shadow: var(--system-shadow-sm);
+    border-color: $gray-300;
+    box-shadow: $shadow-sm;
 }
 
 .settings-switch-info,
@@ -423,7 +374,7 @@
 .settings-select-header {
     display: flex;
     align-items: flex-start;
-    gap: var(--system-space-md);
+    gap: $space-md;
 }
 
 .settings-switch-icon,
@@ -431,7 +382,7 @@
 .settings-select-icon {
     width: 40px;
     height: 40px;
-    border-radius: var(--system-radius-md);
+    border-radius: $border-radius-md;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -439,38 +390,38 @@
 }
 
 .settings-icon-primary {
-    background: linear-gradient(135deg, rgba(124, 58, 237, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
-    color: var(--system-primary);
+    background: linear-gradient(135deg, rgba($primary-dark, 0.1) 0%, rgba($purple-light, 0.1) 100%);
+    color: var(--color-primary);
 }
 
 .settings-icon-success {
-    background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(5, 150, 105, 0.1) 100%);
-    color: var(--system-success);
+    background: linear-gradient(135deg, rgba($success-color, 0.1) 0%, rgba($success-alternate, 0.1) 100%);
+    color: $success-color;
 }
 
 .settings-icon-warning {
-    background: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(217, 119, 6, 0.1) 100%);
-    color: var(--system-warning);
+    background: linear-gradient(135deg, rgba($warning-color, 0.1) 0%, rgba($accent-orange, 0.1) 100%);
+    color: $warning-color;
 }
 
 .settings-icon-danger {
-    background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(220, 38, 38, 0.1) 100%);
-    color: var(--system-danger);
+    background: linear-gradient(135deg, rgba($danger-color, 0.1) 0%, rgba($danger-dark, 0.1) 100%);
+    color: $danger-color;
 }
 
 .settings-icon-info {
-    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(37, 99, 235, 0.1) 100%);
-    color: var(--system-info);
+    background: linear-gradient(135deg, rgba($info-color, 0.1) 0%, rgba($primary-medium, 0.1) 100%);
+    color: $info-color;
 }
 
 .settings-icon-purple {
-    background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(124, 58, 237, 0.1) 100%);
-    color: var(--system-purple);
+    background: linear-gradient(135deg, rgba($purple, 0.1) 0%, rgba($primary-dark, 0.1) 100%);
+    color: $purple;
 }
 
 .settings-icon-pink {
-    background: linear-gradient(135deg, rgba(236, 72, 153, 0.1) 0%, rgba(219, 39, 119, 0.1) 100%);
-    color: var(--system-pink);
+    background: linear-gradient(135deg, rgba($accent-pink, 0.1) 0%, rgba($danger-alternate, 0.1) 100%);
+    color: $accent-pink;
 }
 
 .settings-switch-text,
@@ -484,15 +435,15 @@
 .settings-select-label {
     font-size: 0.875rem;
     font-weight: 600;
-    color: var(--system-gray-900);
-    margin: 0 0 var(--system-space-xs) 0;
+    color: var(--color-text);
+    margin: 0 0 $space-xs 0;
 }
 
 .settings-switch-description,
 .settings-input-description,
 .settings-select-description {
     font-size: 0.75rem;
-    color: var(--system-gray-600);
+    color: var(--color-text-light);
     margin: 0;
     line-height: 1.5;
 }
@@ -519,9 +470,9 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: var(--system-gray-300);
-    transition: var(--system-transition-base);
-    border-radius: var(--system-radius-full);
+    background-color: $gray-300;
+    transition: $transition-base;
+    border-radius: $border-radius-full;
 }
 
 .settings-switch-slider:before {
@@ -531,13 +482,13 @@
     width: 20px;
     left: 4px;
     bottom: 4px;
-    background-color: var(--system-white);
-    transition: var(--system-transition-base);
+    background-color: $white;
+    transition: $transition-base;
     border-radius: 50%;
 }
 
 .settings-switch-input:checked+.settings-switch-slider {
-    background-color: var(--system-primary);
+    background-color: var(--color-primary);
 }
 
 .settings-switch-input:checked+.settings-switch-slider:before {
@@ -560,18 +511,18 @@
     width: 100%;
     padding: 0.75rem 1rem;
     font-size: 0.875rem;
-    color: var(--system-gray-700);
-    background: var(--system-white);
-    border: 2px solid var(--system-gray-300);
-    border-radius: var(--system-radius-md);
-    transition: all var(--system-transition-base);
+    color: var(--color-text);
+    background: $white;
+    border: 2px solid $border-color;
+    border-radius: $border-radius-md;
+    transition: all $transition-base;
 }
 
 .settings-input-field:focus,
 .settings-select-field:focus {
     outline: none;
-    border-color: var(--system-primary);
-    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba($primary-dark, 0.1);
 }
 
 .settings-select-field {
@@ -584,106 +535,106 @@
     right: 1rem;
     top: 50%;
     transform: translateY(-50%);
-    color: var(--system-gray-400);
+    color: $gray-400;
     pointer-events: none;
     font-size: 0.75rem;
 }
 
 /* Password Toggle */
 .settings-password-toggle {
-    margin-top: var(--system-space-sm);
+    margin-top: $space-sm;
 }
 
 .settings-toggle-btn {
     display: inline-flex;
     align-items: center;
-    gap: var(--system-space-xs);
+    gap: $space-xs;
     padding: 0.5rem 0.75rem;
-    background: var(--system-gray-100);
-    border: 1px solid var(--system-gray-300);
-    border-radius: var(--system-radius-sm);
-    color: var(--system-gray-700);
+    background: $gray-100;
+    border: 1px solid $border-color;
+    border-radius: $border-radius-sm;
+    color: var(--color-text);
     font-size: 0.75rem;
     font-weight: 500;
     cursor: pointer;
-    transition: all var(--system-transition-fast);
+    transition: all $transition-fast;
 }
 
 .settings-toggle-btn:hover {
-    background: var(--system-gray-200);
+    background: $gray-200;
 }
 
 /* Action Buttons */
 .settings-action-buttons {
     display: flex;
-    gap: var(--system-space-md);
-    margin-top: var(--system-space-lg);
+    gap: $space-md;
+    margin-top: $space-lg;
 }
 
 .settings-action-btn {
     display: inline-flex;
     align-items: center;
-    gap: var(--system-space-sm);
+    gap: $space-sm;
     padding: 0.625rem 1.25rem;
     border: 2px solid transparent;
-    border-radius: var(--system-radius-md);
+    border-radius: $border-radius-md;
     font-size: 0.875rem;
     font-weight: 600;
     cursor: pointer;
-    transition: all var(--system-transition-base);
+    transition: all $transition-base;
 }
 
 .settings-action-btn.warning {
-    background: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(217, 119, 6, 0.1) 100%);
-    color: var(--system-warning);
-    border-color: rgba(245, 158, 11, 0.2);
+    background: linear-gradient(135deg, rgba($warning-color, 0.1) 0%, rgba($accent-orange, 0.1) 100%);
+    color: $warning-color;
+    border-color: rgba($warning-color, 0.2);
 }
 
 .settings-action-btn.warning:hover {
-    background: linear-gradient(135deg, rgba(245, 158, 11, 0.2) 0%, rgba(217, 119, 6, 0.2) 100%);
+    background: linear-gradient(135deg, rgba($warning-color, 0.2) 0%, rgba($accent-orange, 0.2) 100%);
 }
 
 .settings-action-btn.danger {
-    background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(220, 38, 38, 0.1) 100%);
-    color: var(--system-danger);
-    border-color: rgba(239, 68, 68, 0.2);
+    background: linear-gradient(135deg, rgba($danger-color, 0.1) 0%, rgba($danger-dark, 0.1) 100%);
+    color: $danger-color;
+    border-color: rgba($danger-color, 0.2);
 }
 
 .settings-action-btn.danger:hover {
-    background: linear-gradient(135deg, rgba(239, 68, 68, 0.2) 0%, rgba(220, 38, 38, 0.2) 100%);
+    background: linear-gradient(135deg, rgba($danger-color, 0.2) 0%, rgba($danger-dark, 0.2) 100%);
 }
 
 /* Save Button & Confirmation */
 .system-settings-footer {
-    margin-top: var(--system-space-xl);
+    margin-top: $space-xl;
 }
 
 .settings-save-container {
     display: flex;
     align-items: center;
-    gap: var(--system-space-lg);
+    gap: $space-lg;
     flex-wrap: wrap;
 }
 
 .settings-save-btn {
     display: inline-flex;
     align-items: center;
-    gap: var(--system-space-sm);
+    gap: $space-sm;
     padding: 1rem 2rem;
-    background: var(--system-gradient-primary);
-    color: var(--system-white);
+    background: $gradient-primary;
+    color: $white;
     border: none;
-    border-radius: var(--system-radius-lg);
+    border-radius: $border-radius-lg;
     font-size: 1rem;
     font-weight: 700;
     cursor: pointer;
-    transition: all var(--system-transition-base);
-    box-shadow: var(--system-shadow-md);
+    transition: all $transition-base;
+    box-shadow: $shadow-md;
 }
 
 .settings-save-btn:hover:not(:disabled) {
     transform: translateY(-2px);
-    box-shadow: var(--system-shadow-lg);
+    box-shadow: $shadow-lg;
 }
 
 .settings-save-btn:disabled {
@@ -712,12 +663,12 @@
 .settings-confirmation {
     display: inline-flex;
     align-items: center;
-    gap: var(--system-space-sm);
+    gap: $space-sm;
     padding: 0.75rem 1.5rem;
-    background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(5, 150, 105, 0.1) 100%);
-    border: 1px solid rgba(16, 185, 129, 0.2);
-    border-radius: var(--system-radius-lg);
-    color: var(--system-success);
+    background: linear-gradient(135deg, rgba($success-color, 0.1) 0%, rgba($success-alternate, 0.1) 100%);
+    border: 1px solid rgba($success-color, 0.2);
+    border-radius: $border-radius-lg;
+    color: $success-color;
     font-size: 0.875rem;
     font-weight: 600;
 }
@@ -725,30 +676,30 @@
 /* Info Messages */
 .system-settings-info {
     display: flex;
-    gap: var(--system-space-lg);
-    margin-top: var(--system-space-lg);
+    gap: $space-lg;
+    margin-top: $space-lg;
     flex-wrap: wrap;
 }
 
 .system-info-item {
     display: flex;
     align-items: center;
-    gap: var(--system-space-sm);
+    gap: $space-sm;
     padding: 0.75rem 1rem;
-    background: var(--system-gray-50);
-    border-radius: var(--system-radius-md);
-    color: var(--system-gray-600);
+    background: $gray-50;
+    border-radius: $border-radius-md;
+    color: var(--color-text-light);
     font-size: 0.875rem;
 }
 
 .system-info-item:first-child {
-    background: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(217, 119, 6, 0.1) 100%);
-    color: var(--system-warning);
+    background: linear-gradient(135deg, rgba($warning-color, 0.1) 0%, rgba($accent-orange, 0.1) 100%);
+    color: $warning-color;
 }
 
 .system-info-item:last-child {
-    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(37, 99, 235, 0.1) 100%);
-    color: var(--system-info);
+    background: linear-gradient(135deg, rgba($info-color, 0.1) 0%, rgba($primary-medium, 0.1) 100%);
+    color: $info-color;
 }
 
 /* Responsive */
@@ -770,7 +721,7 @@
 
 @media (max-width: 768px) {
     .system-settings-main {
-        padding: var(--system-space-md);
+        padding: $space-md;
     }
 
     .system-settings-title {
@@ -779,7 +730,7 @@
 
     .system-tabs-container {
         overflow-x: auto;
-        padding: var(--system-space-sm);
+        padding: $space-sm;
     }
 
     .system-tab-btn {
@@ -792,7 +743,7 @@
     .settings-select-container {
         flex-direction: column;
         align-items: flex-start;
-        gap: var(--system-space-md);
+        gap: $space-md;
     }
 
     .settings-input-wrapper,
@@ -824,13 +775,13 @@
     }
 
     .settings-section-container {
-        padding: var(--system-space-lg);
+        padding: $space-lg;
     }
 
     .settings-section-header {
         flex-direction: column;
         align-items: flex-start;
-        gap: var(--system-space-md);
+        gap: $space-md;
     }
 
     .settings-save-btn {

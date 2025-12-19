@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import {
   Bell,
   Palette,
@@ -58,10 +58,14 @@ import {
   Video,
   Music,
   Volume2,
+  Image,
+  Keyboard,
+  WifiOff,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Sidebar from "../../components/common/Sidebar";
 import Footer from "../../components/common/Footer";
+import useTheme from "../../hooks/useTheme"; // Import du hook useTheme
 
 // Composant Section de Réglage
 const SettingSection = ({
@@ -255,10 +259,12 @@ const SaveButton = ({ onClick, isLoading }) => {
 };
 
 export default function SystemSettings() {
+  // Utilisez le hook useTheme
+  const { theme, toggleTheme } = useTheme();
+
   // États pour les paramètres
   const [settings, setSettings] = useState({
-    // Apparence
-    darkMode: false,
+    // Apparence - darkMode est maintenant géré par useTheme
     themeColor: "violet",
     fontSize: "medium",
     animations: true,
@@ -306,6 +312,13 @@ export default function SystemSettings() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
+  // Effet pour synchroniser le darkMode avec le thème du hook
+  useEffect(() => {
+    // Si vous souhaitez garder la propriété darkMode dans settings pour d'autres usages
+    // vous pouvez la synchroniser ici
+    // Note: Le hook useTheme gère déjà le thème globalement
+  }, [theme]);
+
   // Gestionnaire de changement générique
   const handleSettingChange = useCallback((key, value) => {
     setSettings((prev) => ({
@@ -320,14 +333,21 @@ export default function SystemSettings() {
     try {
       // Simulation d'un appel API
       await new Promise((resolve) => setTimeout(resolve, 1500));
-      console.log("Paramètres sauvegardés:", settings);
+
+      // Inclure le thème actuel dans les paramètres sauvegardés
+      const settingsToSave = {
+        ...settings,
+        darkMode: theme === "dark", // Ajouter le thème actuel
+      };
+
+      console.log("Paramètres sauvegardés:", settingsToSave);
       // Ici, vous feriez un appel API réel
     } catch (error) {
       console.error("Erreur lors de la sauvegarde:", error);
     } finally {
       setIsSaving(false);
     }
-  }, [settings]);
+  }, [settings, theme]);
 
   // Options pour les sélecteurs
   const themeOptions = [
@@ -372,7 +392,7 @@ export default function SystemSettings() {
 
   return (
     <>
-      <div className="system-settings-container">
+      <div className="system-settings-container" data-theme={theme}>
         <Sidebar />
 
         <div className="system-settings-layout">
@@ -395,6 +415,9 @@ export default function SystemSettings() {
                       <ShieldCheck size={18} className="system-subtitle-icon" />
                       Configurez et personnalisez votre expérience sur la
                       plateforme
+                      <span className="theme-indicator">
+                        {theme === "dark" ? " (Mode Sombre)" : " (Mode Clair)"}
+                      </span>
                     </p>
                   </div>
 
@@ -420,6 +443,17 @@ export default function SystemSettings() {
                       <div className="system-stat-content">
                         <span className="system-stat-label">Sécurité</span>
                         <span className="system-stat-value">100%</span>
+                      </div>
+                    </div>
+                    <div className="system-stat-item">
+                      <div className="system-stat-icon">
+                        <Palette size={20} />
+                      </div>
+                      <div className="system-stat-content">
+                        <span className="system-stat-label">Thème</span>
+                        <span className="system-stat-value">
+                          {theme === "dark" ? "Sombre" : "Clair"}
+                        </span>
                       </div>
                     </div>
                   </motion.div>
@@ -478,14 +512,9 @@ export default function SystemSettings() {
                           <SettingSwitch
                             label="Mode Sombre"
                             description="Interface à faible luminosité pour une utilisation nocturne"
-                            value={settings.darkMode}
-                            onChange={() =>
-                              handleSettingChange(
-                                "darkMode",
-                                !settings.darkMode
-                              )
-                            }
-                            icon={settings.darkMode ? Moon : Sun}
+                            value={theme === "dark"}
+                            onChange={toggleTheme}
+                            icon={theme === "dark" ? Moon : Sun}
                             color="primary"
                           />
 
@@ -972,6 +1001,13 @@ export default function SystemSettings() {
                     <div className="system-info-item">
                       <RefreshCw size={16} />
                       <span>Dernière sauvegarde : Il y a 2h</span>
+                    </div>
+                    <div className="system-info-item theme-info">
+                      <Palette size={16} />
+                      <span>
+                        Thème actuel :{" "}
+                        <strong>{theme === "dark" ? "Sombre" : "Clair"}</strong>
+                      </span>
                     </div>
                   </div>
                 </div>
