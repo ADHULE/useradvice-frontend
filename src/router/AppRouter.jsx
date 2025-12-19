@@ -28,14 +28,15 @@ import ActivateAccount from "../pages/Auth/ActivateAccount";
 import ResendActivationCode from "../pages/Auth/ResendActivationCode";
 import CreateReviewPage from "../pages/Advices/CreateReviewPage";
 import MyAdvices from "../pages/Advices/MyAdvices";
-import AdminDashboard from "../pages/Admin/AdminDashboard";
 
-import Reviews from "../pages/Admin/Reviews";
 import Stats from "../pages/Admin/Stats";
-import Settings from "../pages/Admin/Settings";
+
 import UsersManagement from "../pages/Admin/UsersManagement";
-import Analytics from "../pages/Admin/Analytics";
-import Reports from "../pages/Admin/Reports";
+import Analytics from "../pages/Admin/Config/Analytics";
+import SystemSettings from "../pages/Admin/Config/SystemSettings";
+import AdminDashboard from "../pages/Admin/Config/AdminDashboard";
+import ReviewsDashboard from "../pages/Admin/Config/ ReviewsDashboard";
+import Reports from "../pages/Admin/Config/Reports";
 
 /**
  * Main router component that defines all application routes.
@@ -73,10 +74,10 @@ const AppRouter = () => {
 
         {/* ===== ADMIN ROUTES ===== */}
         <Route path="/adminDashBoard" element={<AdminDashboard />} />
-        <Route path="/reviews" element={<Reviews />} />
+        <Route path="/ReviewsDashboard" element={<ReviewsDashboard />} />
         <Route path="/usersManagement" element={<UsersManagement />} />
         <Route path="/stats" element={<Stats />} />
-        <Route path="/settings" element={<Settings />} />
+        <Route path="/SystemSettings" element={<SystemSettings />} />
         <Route path="/analytics" element={<Analytics />} />
         <Route path="/reports" element={<Reports />} />
       </Routes>

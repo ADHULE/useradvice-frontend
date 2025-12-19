@@ -66,7 +66,7 @@ const Sidebar = () => {
     {
       icon: <MessageSquare size={22} />,
       label: "Avis Clients",
-      path: "/reviews",
+      path: "/ReviewsDashboard",
       badge: 12,
       color: "var(--gradient-success)",
     },
@@ -94,7 +94,7 @@ const Sidebar = () => {
     {
       icon: <Settings size={22} />,
       label: "Réglages",
-      path: "/settings",
+      path: "/SystemSettings",
       badge: null,
       color: "var(--gradient-gray)",
     },
