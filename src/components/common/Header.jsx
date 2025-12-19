@@ -1,8 +1,9 @@
 /**
- * Header.jsx - Version moderne
+ * Header.jsx - Version moderne avec support multi-langues
  * - Design épuré avec transitions fluides
  * - Responsive et accessible
  * - Utilise UNE SEULE source de vérité : useAuth
+ * - Support multi-langues avec useLanguage
  */
 
 import React, { useState, useEffect } from "react";
@@ -15,11 +16,15 @@ import {
   Menu,
   X,
   Home,
+  Globe,
+  ChevronDown,
+  Check,
 } from "lucide-react";
 
 import { goToPath } from "../navigation/goToPath";
 import { useThemeGlobal } from "../../context/ThemeContext";
 import useAuth from "../../hooks/useAuth";
+import useLanguage from "../../hooks/useLanguage";
 
 // Bouton réutilisable amélioré
 const Button = ({
@@ -51,6 +56,77 @@ const UserBadge = ({ user }) => (
     </div>
   </div>
 );
+
+// Composant pour le sélecteur de langue
+const LanguageSelector = () => {
+  const { language, setLanguage, availableLanguages, currentLanguageInfo, t } =
+    useLanguage();
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleLanguageChange = (langCode) => {
+    setLanguage(langCode);
+    setIsOpen(false);
+  };
+
+  return (
+    <div className="language-selector-wrapper">
+      <button
+        className="language-selector"
+        onClick={() => setIsOpen(!isOpen)}
+        aria-label="Changer la langue"
+        aria-expanded={isOpen}
+      >
+        <Globe size={18} className="language-icon" />
+        <span className="language-code">
+          {currentLanguageInfo?.code.toUpperCase()}
+        </span>
+        <span className="language-name">{currentLanguageInfo?.nativeName}</span>
+        <ChevronDown size={16} className={`chevron ${isOpen ? "open" : ""}`} />
+      </button>
+
+      {isOpen && (
+        <>
+          <div
+            className="language-dropdown-overlay"
+            onClick={() => setIsOpen(false)}
+            aria-hidden="true"
+          />
+          <div className="language-dropdown">
+            <div className="language-dropdown-header">
+              <Globe size={16} />
+              <span>{t("language.select", "Langue")}</span>
+            </div>
+            <div className="language-list">
+              {availableLanguages.map((lang) => (
+                <button
+                  key={lang.code}
+                  className={`language-option ${
+                    language === lang.code ? "selected" : ""
+                  }`}
+                  onClick={() => handleLanguageChange(lang.code)}
+                  aria-label={`Changer en ${lang.nativeName}`}
+                >
+                  <span className="language-flag">{lang.flag}</span>
+                  <div className="language-option-info">
+                    <span className="language-option-name">
+                      {lang.nativeName}
+                    </span>
+                    <span className="language-option-country">
+                      {lang.country}
+                    </span>
+                  </div>
+                  {language === lang.code && (
+                    <Check size={16} className="check-icon" />
+                  )}
+                </button>
+              ))}
+            </div>
+          </div>
+        </>
+      )}
+    </div>
+  );
+};
 
 const Header = () => {
   const { theme, toggleTheme } = useThemeGlobal();
@@ -108,6 +184,11 @@ const Header = () => {
         {/* Navigation desktop */}
         <nav className={`header-nav ${isMenuOpen ? "mobile-open" : ""}`}>
           <div className="nav-content">
+            {/* LANGUAGE SELECTOR */}
+            <div className="language-section">
+              <LanguageSelector />
+            </div>
+
             {/* THEME TOGGLE */}
             <div className="theme-section">
               <button

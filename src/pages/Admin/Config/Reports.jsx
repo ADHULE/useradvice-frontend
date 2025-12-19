@@ -2,17 +2,18 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import Navbar from "../../../components/common/Navbar";
 import Sidebar from "../../../components/common/Sidebar";
-// import ReportsStats from "../reports/ ReportsStats";
 import Footer from "../../../components/common/Footer";
 
 // Composants reports
-// import ReportsHeader from "../reports/ReportsHeader";
-
-// import ReportsList from "../reports/ReportsList";
-// import ReportChart from "../reports/ReportChart";
-// import ReportsActivity from "../reports/ReportsActivity";
-// import ReportsFilter from "../reports/ReportsFilter";
-// import ExportSection from "../reports/ExportSection";
+import {
+  ReportsHeader,
+  ReportsStats,
+  ReportsFilter,
+  ReportsList,
+  ReportChart,
+  ReportsActivity,
+  ExportSection,
+} from "../reports";
 
 const Reports = () => {
   const [reports, setReports] = useState([]);

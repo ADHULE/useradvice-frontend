@@ -9,17 +9,17 @@ import Sidebar from "../../../components/common/Sidebar";
 import Navbar from "../../../components/common/Navbar";
 import Footer from "../../../components/common/Footer";
 
-// // Composants reviews depuis l'index
-// import {
-//   ReviewsHeader,
-//   // EmptyState,
-//   ReviewsStats,
-//   ReviewsToolbar,
-//   ReviewsContent,
-//   LoadingState,
-//   ErrorState,
-//   ReviewModal,
-// } from "../reviews";
+// Composants reviews depuis l'index
+import {
+  ReviewsHeader,
+  ReviewsStats,
+  ReviewsToolbar,
+  ReviewsContent,
+  ReviewModal,
+  LoadingState,
+  ErrorState,
+  EmptyState,
+} from "../../Admin/reviews";
 
 // Utilitaires
 const useReviews = () => {
