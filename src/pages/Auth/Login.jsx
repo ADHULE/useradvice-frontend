@@ -1,4 +1,4 @@
-// pages/Auth/Login.jsx - Version Modernisée
+// pages/Auth/Login.jsx - Version Corrigée
 
 import React, { useState } from "react";
 import {
@@ -12,6 +12,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 import Input from "../../components/ui/Input";
 import Footer from "../../components/common/Footer";
@@ -19,14 +20,17 @@ import Alert from "../../components/ui/Alert";
 import SocialLogin from "./SocialLogin";
 
 import { login as loginApi } from "../../api/userApi";
-import { goToPath } from "../../components/navigation/goToPath";
 import useAuth from "../../hooks/useAuth";
-import { ACCOUNT_NOT_ACTIVATED_MESSAGE } from "../../utils/constants";
+
+// Définir la constante manquante
+const ACCOUNT_NOT_ACTIVATED_MESSAGE = "ACCOUNT_NOT_ACTIVATED";
 
 /**
- * Page de connexion - Design Moderne
+ * Page de connexion - Version Corrigée
  */
 const Login = () => {
+  const navigate = useNavigate();
+
   // États du formulaire
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -40,6 +44,15 @@ const Login = () => {
 
   // Auth global
   const { login } = useAuth();
+
+  // Helper pour la navigation
+  const goToPath = (path, options = {}) => {
+    if (options.replace) {
+      navigate(path, { replace: true });
+    } else {
+      navigate(path);
+    }
+  };
 
   // Validation du formulaire
   const validateForm = () => {
@@ -83,19 +96,22 @@ const Login = () => {
       // Redirection selon rôle
       const isAdmin = user.roles?.some((role) => role.name === "ROLE_ADMIN");
 
-      goToPath(isAdmin ? "/adminDashboard" : "/createReviewPage", {
-        replace: true,
-      });
+      goToPath(isAdmin ? "/adminDashboard" : "/createReviewPage");
     } catch (err) {
       console.error("❌ Erreur login :", err);
 
       const message = err.response?.data?.message;
+      const errorCode = err.response?.data?.errorCode;
 
       // Cas compte non activé
-      if (message === ACCOUNT_NOT_ACTIVATED_MESSAGE) {
+      if (
+        message === ACCOUNT_NOT_ACTIVATED_MESSAGE ||
+        errorCode === "ACCOUNT_NOT_ACTIVATED"
+      ) {
         setNeedsActivation(true);
         setError(
-          err.response?.data?.details || "Votre compte n'est pas encore activé."
+          err.response?.data?.details ||
+            "Votre compte n'est pas encore activé. Veuillez vérifier vos emails."
         );
       } else if (err.response?.status === 401) {
         setError("Email ou mot de passe incorrect");
@@ -119,6 +135,13 @@ const Login = () => {
   // Réinitialisation mot de passe
   const handleForgotPassword = () => {
     goToPath("/forgot-password");
+  };
+
+  // Gestion des connexions sociales
+  const handleSocialLogin = (provider) => {
+    setLoading(true);
+    // Redirection directe vers l'endpoint OAuth
+    window.location.href = `/auth/${provider}`;
   };
 
   return (
@@ -206,6 +229,7 @@ const Login = () => {
                   type="button"
                   onClick={handleForgotPassword}
                   className="forgot-password"
+                  disabled={loading}
                 >
                   Mot de passe oublié ?
                 </button>
@@ -229,6 +253,7 @@ const Login = () => {
                   type="button"
                   className="password-toggle"
                   onClick={() => setShowPassword(!showPassword)}
+                  disabled={loading}
                   aria-label={
                     showPassword
                       ? "Masquer le mot de passe"
@@ -282,6 +307,7 @@ const Login = () => {
                   type="button"
                   className="activation-btn"
                   onClick={handleOpenActivationPage}
+                  disabled={loading}
                 >
                   Activer mon compte
                 </button>
@@ -296,9 +322,11 @@ const Login = () => {
 
           {/* Login social */}
           <SocialLogin
-            onGoogle={() => goToPath("/auth/google")}
-            onGithub={() => goToPath("/auth/github")}
-            onFacebook={() => goToPath("/auth/facebook")}
+            onGoogle={() => handleSocialLogin("google")}
+            onGithub={() => handleSocialLogin("github")}
+            onFacebook={() => handleSocialLogin("facebook")}
+            isLoading={loading}
+            loadingProvider={loading ? "social" : null}
             text=""
           />
 
@@ -306,7 +334,11 @@ const Login = () => {
           <div className="auth-footer">
             <p>
               Pas encore de compte ?{" "}
-              <button onClick={() => goToPath("/signup")} className="auth-link">
+              <button
+                onClick={() => goToPath("/signup")}
+                className="auth-link"
+                disabled={loading}
+              >
                 S'inscrire
               </button>
             </p>

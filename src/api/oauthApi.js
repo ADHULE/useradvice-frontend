@@ -1,12 +1,22 @@
-// /api/oauthApi.js
-import apiInstance from "./useAxios";
+import apiInstance from "./apiInstance";
 
-// Social login
-export const loginWithGoogle = (token) =>
-  apiInstance.post("/auth/google", { token });
+export const loginWithGoogle = () => apiInstance.get("/auth/google");
+export const loginWithGithub = () => apiInstance.get("/auth/github");
+export const loginWithFacebook = () => apiInstance.get("/auth/facebook");
 
-export const loginWithGithub = (code) =>
-  apiInstance.post("/auth/github", { code });
+export const oauth2Redirect = (provider) =>
+  apiInstance.get(`/oauth2/authorization/${provider}`);
 
-export const loginWithFacebook = (accessToken) =>
-  apiInstance.post("/auth/facebook", { accessToken });
+// Fonction utilitaire pour gérer la redirection
+export const handleOAuthRedirect = (provider) => {
+  switch (provider) {
+    case "google":
+      return loginWithGoogle();
+    case "github":
+      return loginWithGithub();
+    case "facebook":
+      return loginWithFacebook();
+    default:
+      return oauth2Redirect(provider);
+  }
+};

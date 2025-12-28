@@ -1,150 +1,175 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
+import ReviewCard from "./ReviewCard";
+import ReviewModal from "./ReviewModal";
 import {
-  Star,
-  Calendar,
-  ThumbsUp,
-  ThumbsDown,
-  TrendingUp,
-  Shield,
-  CheckCircle,
-  Eye,
-  ChevronRight,
-  MoreVertical,
+  Filter,
+  Search,
+  ChevronDown,
+  AlertCircle,
+  RefreshCw,
 } from "lucide-react";
 
-const ReviewCard = ({ review, onClick, index }) => {
-  const getSentimentColor = (rating) => {
-    if (rating >= 4) return "success";
-    if (rating >= 3) return "warning";
-    return "danger";
+const ReviewsDashboard = () => {
+  const [selectedReview, setSelectedReview] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // Exemple de données (vous pouvez les adapter à vos besoins)
+  const reviews = [
+    {
+      id: 1,
+      user: "Jean Dupont",
+      initial: "J",
+      date: "15 Mars 2024",
+      rating: 4,
+      message:
+        "Excellent service, je recommande vivement ! Le support client est très réactif et les produits sont de qualité. J'ai été particulièrement impressionné par la rapidité de livraison.",
+      fullReview: {
+        userDto: {
+          roleDto: {
+            name: "USER",
+          },
+        },
+        companyName: "TechCorp",
+        category: "Service Client",
+        verified: true,
+        helpfulCount: 12,
+      },
+    },
+    {
+      id: 2,
+      user: "Marie Martin",
+      initial: "M",
+      date: "14 Mars 2024",
+      rating: 5,
+      message:
+        "Expérience exceptionnelle du début à la fin. Je reviendrai certainement pour mes futurs besoins. L'équipe est professionnelle et les conseils pertinents.",
+      fullReview: {
+        userDto: {
+          roleDto: {
+            name: "ADMIN",
+          },
+        },
+        companyName: "InnovStore",
+        category: "Expérience",
+        verified: false,
+        helpfulCount: 8,
+      },
+    },
+    // ... ajoutez d'autres avis
+  ];
+
+  const handleViewReview = (review) => {
+    setSelectedReview(review);
+    setIsModalOpen(true);
   };
 
-  const getSentimentIcon = (rating) => {
-    if (rating >= 4) return <ThumbsUp size={14} />;
-    if (rating >= 3) return <TrendingUp size={14} />;
-    return <ThumbsDown size={14} />;
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedReview(null);
+  };
+
+  const handleApprove = () => {
+    if (selectedReview) {
+      console.log("Approuver l'avis:", selectedReview.id);
+      // Ici vous pouvez ajouter la logique pour approuver l'avis
+      handleCloseModal();
+    }
+  };
+
+  const handleReport = () => {
+    if (selectedReview) {
+      console.log("Signaler l'avis:", selectedReview.id);
+      // Ici vous pouvez ajouter la logique pour signaler l'avis
+      handleCloseModal();
+    }
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.05 }}
-      whileHover={{ y: -4, transition: { duration: 0.2 } }}
-      className={`reviews-dashboard-card reviews-card-${getSentimentColor(
-        review.rating
-      )}`}
-      onClick={() => onClick(review)}
-    >
-      <div className="reviews-card-header">
-        <div className="reviews-user-avatar">
-          <div className="reviews-avatar-circle">{review.initial}</div>
-          {review.fullReview?.userDto?.roleDto?.name?.includes("ADMIN") && (
-            <div className="reviews-user-badge">
-              <Shield size={10} />
-            </div>
-          )}
+    <div className="reviews-dashboard">
+      {/* Header du dashboard */}
+      <div className="reviews-header">
+        <div className="reviews-header-left">
+          <h1>Gestion des Avis</h1>
+          <p className="reviews-subtitle">
+            Gérez et modérez les avis des utilisateurs
+          </p>
         </div>
 
-        <div className="reviews-user-info">
-          <h3 className="reviews-user-name">{review.user}</h3>
-          <div className="reviews-user-meta">
-            <span className="reviews-meta-item">
-              <Calendar size={12} />
-              {review.date}
-            </span>
-            {review.fullReview?.companyName && (
-              <span className="reviews-meta-item">
-                <span>•</span>
-                {review.fullReview.companyName}
-              </span>
-            )}
+        <div className="reviews-header-actions">
+          <div className="reviews-search">
+            <Search size={18} />
+            <input
+              type="text"
+              placeholder="Rechercher un avis..."
+              className="reviews-search-input"
+            />
+          </div>
+
+          <div className="reviews-filters">
+            <button className="reviews-filter-btn">
+              <Filter size={16} />
+              Filtrer
+              <ChevronDown size={14} />
+            </button>
+            <button className="reviews-refresh-btn">
+              <RefreshCw size={16} />
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Statistiques */}
+      <div className="reviews-stats-grid">
+        <div className="reviews-stat-card">
+          <div className="reviews-stat-content">
+            <h3>Total Avis</h3>
+            <p className="reviews-stat-number">156</p>
+          </div>
+          <div className="reviews-stat-icon primary">
+            <AlertCircle size={24} />
           </div>
         </div>
 
-        <button
-          className="reviews-card-action"
-          onClick={(e) => {
-            e.stopPropagation();
-            console.log("Actions supplémentaires", review.id);
-          }}
-        >
-          <MoreVertical size={18} />
-        </button>
-      </div>
-
-      <div className="reviews-card-rating">
-        <div className="reviews-stars-row">
-          {Array.from({ length: 5 }).map((_, index) => (
-            <Star
-              key={index}
-              size={16}
-              fill={index < review.rating ? "#fbbf24" : "none"}
-              color={index < review.rating ? "#fbbf24" : "#e5e7eb"}
-              className="reviews-star-icon"
-            />
-          ))}
+        <div className="reviews-stat-card">
+          <div className="reviews-stat-content">
+            <h3>À Modérer</h3>
+            <p className="reviews-stat-number">23</p>
+          </div>
+          <div className="reviews-stat-icon warning">
+            <AlertCircle size={24} />
+          </div>
         </div>
 
-        <div
-          className={`reviews-sentiment-tag ${getSentimentColor(
-            review.rating
-          )}`}
-        >
-          {getSentimentIcon(review.rating)}
-          <span>{review.rating.toFixed(1)}/5</span>
+        <div className="reviews-stat-card">
+          <div className="reviews-stat-content">
+            <h3>Signalés</h3>
+            <p className="reviews-stat-number">7</p>
+          </div>
+          <div className="reviews-stat-icon danger">
+            <AlertCircle size={24} />
+          </div>
         </div>
       </div>
 
-      <div className="reviews-card-content">
-        <p className="reviews-message-preview">
-          "{review.message.substring(0, 120)}..."
-        </p>
-        <div className="reviews-content-footer">
-          <span className="reviews-read-more">
-            Lire plus <ChevronRight size={12} />
-          </span>
-          {review.fullReview?.category && (
-            <span className="reviews-category-tag">
-              {review.fullReview.category}
-            </span>
-          )}
-        </div>
+      {/* Liste des avis */}
+      <div className="reviews-grid">
+        {reviews.map((review, index) => (
+          <ReviewCard
+            key={review.id}
+            review={review}
+            onClick={handleViewReview}
+            index={index}
+          />
+        ))}
       </div>
 
-      <div className="reviews-card-footer">
-        <div className="reviews-action-buttons">
-          <button
-            className="reviews-action-btn primary"
-            onClick={(e) => {
-              e.stopPropagation();
-              onClick(review);
-            }}
-          >
-            <Eye size={16} />
-            Consulter
-          </button>
-
-          {review.fullReview?.verified && (
-            <div className="reviews-verified-badge">
-              <CheckCircle size={14} />
-              <span>Vérifié</span>
-            </div>
-          )}
-        </div>
-
-        <div className="reviews-stats">
-          {review.fullReview?.helpfulCount !== undefined && (
-            <div className="reviews-stat-item">
-              <ThumbsUp size={12} />
-              <span>{review.fullReview.helpfulCount}</span>
-            </div>
-          )}
-        </div>
-      </div>
-    </motion.div>
+      {/* Modal */}
+      {isModalOpen && (
+        <ReviewModal review={selectedReview} onClose={handleCloseModal} />
+      )}
+    </div>
   );
 };
 
-export default ReviewCard;
+export default ReviewsDashboard;

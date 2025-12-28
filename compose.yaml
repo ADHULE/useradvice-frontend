@@ -1,0 +1,21 @@
+
+services:
+  useradvice-frontend:                        # Service frontend Vite/React
+    build:                    # Construction de l’image
+      context: .              # Contexte de build (répertoire courant)
+      dockerfile: Dockerfile  # Fichier Dockerfile utilisé
+    env_file:                 # Charge les variables depuis .env
+      - .env
+    environment:              # Variables supplémentaires
+      NODE_ENV: ${NODE_ENV}   # Définit le mode Node.js (pris depuis .env)
+    ports:                    # Mapping des ports
+      - "${HOST_PORT}:${CONTAINER_PORT}"   # Utilise les variables définies dans .env
+    volumes:                  # Volumes partagés
+      - .:/app                # Monte le projet local dans /app
+      - node_modules:/app/node_modules  # Volume nommé pour node_modules
+    command: ["npm", "run", "dev", "--", "--host", "0.0.0.0"]  
+                              # Commande de démarrage : Vite en mode dev
+                              # "--host 0.0.0.0" rend le serveur accessible
+
+volumes:
+  node_modules:               # Déclare un volume nommé pour node_modules

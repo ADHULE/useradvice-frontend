@@ -1,23 +1,23 @@
 // =========================================================================
-// THÈMES - Light & Dark Modes
+// THÈMES - Light & Dark Modes (Version Optimisée)
 // =========================================================================
 
 // Variables CSS pour le thème clair
 :root {
-    // Couleurs principales
+    // Couleurs principales (Tirées du système SCSS)
     --color-primary: #{$primary-color};
     --color-primary-dark: #{$primary-dark};
     --color-secondary: #{$secondary-color};
-    --color-success: #{$success-color};
+    --color-success: #{$success-alternate}; // Utilisation du vert plus lisible
     --color-danger: #{$danger-color};
     --color-warning: #{$warning-color};
 
-    // Neutres
-    --color-text: #1a1a1a;
-    --color-text-light: #6c757d;
-    --color-bg: #ffffff;
-    --color-bg-secondary: #f8f9fa;
-    --color-border: #e9ecef;
+    // Neutres (Mode Clair)
+    --color-text: #{$gray-900};
+    --color-text-light: #{$gray-500};
+    --color-bg: #{$white};
+    --color-bg-secondary: #{$gray-50};
+    --color-border: #{$gray-200};
 
     // Dégradés
     --gradient-primary: #{$gradient-primary};
@@ -28,39 +28,40 @@
     --shadow-sm: #{$shadow-sm};
     --shadow-md: #{$shadow-md};
     --shadow-lg: #{$shadow-lg};
-    --radius-sm: 6px;
-    --radius-md: 10px;
-    --radius-lg: 16px;
+    --radius-sm: #{$border-radius-sm};
+    --radius-md: #{$border-radius-md};
+    --radius-lg: #{$border-radius-lg};
 
     // Transitions
-    --transition-fast: 150ms ease;
-    --transition-base: 250ms ease;
-    --transition-slow: 350ms ease;
+    --transition-fast: #{$transition-fast};
+    --transition-base: #{$transition-base};
+    --transition-slow: #{$transition-slow};
 }
 
 // Thème sombre
 [data-theme="dark"] {
-    --color-primary: #5a7dff;
-    --color-primary-dark: #4361ee;
-    --color-secondary: #9d4edd;
-    --color-success: #4cc9f0;
-    --color-danger: #ff5773;
-    --color-warning: #ffb74d;
+    // Couleurs principales adaptées au fond sombre (plus vibrantes)
+    --color-primary: #{$indigo-soft};
+    --color-primary-dark: #{$primary-color};
+    --color-secondary: #{$purple-light};
+    --color-success: #{$neo-green-soft};
+    --color-danger: #{$danger-alternate};
+    --color-warning: #{$accent-yellow};
 
-    // Neutres sombres
-    --color-text: #f8f9fa;
-    --color-text-light: #adb5bd;
-    --color-bg: #121212;
-    --color-bg-secondary: #1e1e1e;
-    --color-border: #2d2d2d;
+    // Neutres sombres (Basés sur le Slate 900/800)
+    --color-text: #{$gray-50};
+    --color-text-light: #{$gray-400};
+    --color-bg: #{$gray-900}; // Fond bleu-nuit profond
+    --color-bg-secondary: #{$gray-800}; // Cartes et sections
+    --color-border: #{$gray-700};
 
-    // Effets sombres
-    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.2);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
-    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+    // Effets sombres (Opacité réduite pour les ombres sur fond noir)
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5);
+    --shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.6);
 }
 
-// Mixin pour appliquer le thème sombre
+// Mixin pour appliquer le thème sombre (Support système + manuel)
 @mixin dark-theme {
     @media (prefers-color-scheme: dark) {
         :root:not([data-theme="light"]) {
@@ -73,13 +74,17 @@
     }
 }
 
-// Classes utilitaires pour le thème
+// Classes utilitaires pour forcer un thème sur un composant spécifique
 .theme-light {
-    --color-bg: #ffffff;
-    --color-text: #1a1a1a;
+    --color-bg: #{$white};
+    --color-text: #{$gray-900};
+    --color-bg-secondary: #{$gray-50};
+    --color-border: #{$gray-200};
 }
 
 .theme-dark {
-    --color-bg: #121212;
-    --color-text: #f8f9fa;
+    --color-bg: #{$gray-900};
+    --color-text: #{$gray-50};
+    --color-bg-secondary: #{$gray-800};
+    --color-border: #{$gray-700};
 }

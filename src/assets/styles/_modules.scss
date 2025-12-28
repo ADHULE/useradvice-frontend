@@ -1,73 +1,73 @@
 // =========================================================================
-// VARIABLES SPÉCIFIQUES PAR MODULE
+// VARIABLES SPÉCIFIQUES PAR MODULE (Optimisées Light/Dark)
 // =========================================================================
 
-// Analytics Module
+// Analytics Module - Teintes Froides et Data-viz
 $analytics-primary: $primary-color;
 $analytics-secondary: $success-color;
 $analytics-accent: $secondary-color;
 $analytics-warning: $danger-alternate;
-$analytics-success: #4ade80;
-$analytics-bg: #f8fafc;
+$analytics-success: $neo-green-medium;
+$analytics-bg: $gray-50;
 $analytics-card-bg: $white;
 $analytics-border: $gray-200;
-$analytics-text: #1e293b;
-$analytics-text-light: #64748b;
+$analytics-text: $gray-800;
+$analytics-text-light: $gray-500;
 
-// Reports Module
+// Reports Module - Professionnel et Clair
 $reports-primary: $primary-color;
 $reports-secondary: $success-color;
 $reports-accent: $secondary-color;
 $reports-warning: $danger-alternate;
-$reports-success: #4ade80;
+$reports-success: $neo-green-medium;
 $reports-danger: $danger-color;
-$reports-bg: #f8fafc;
+$reports-bg: $gray-50;
 $reports-card-bg: $white;
 $reports-border: $gray-200;
-$reports-text: #1e293b;
-$reports-text-light: #64748b;
+$reports-text: $gray-800;
+$reports-text-light: $gray-500;
 
-// Reviews Module
+// Reviews Module - Teintes Violets/Roses
 $reviews-primary: $purple-light;
-$reviews-primary-light: #a78bfa;
-$reviews-primary-dark: #7c3aed;
-$reviews-secondary: #ec4899;
+$reviews-primary-light: #a78bfa; // Ajusté pour le contraste
+$reviews-primary-dark: $secondary-dark;
+$reviews-secondary: $accent-color;
 $reviews-success: $success-alternate;
-$reviews-warning: #f59e0b;
+$reviews-warning: $warning-color;
 $reviews-danger: $danger-color;
 $reviews-info: $info-color;
 
-// System Module
-$system-primary: #7c3aed;
+// System Module - Teintes Indigo/Deep Purple
+$system-primary: $secondary-color;
 $system-primary-light: $purple-light;
-$system-primary-dark: #6d28d9;
-$system-secondary: #ec4899;
+$system-primary-dark: $indigo-medium;
+$system-secondary: $accent-color;
 $system-success: $success-alternate;
-$system-warning: #f59e0b;
+$system-warning: $warning-color;
 $system-danger: $danger-color;
 $system-info: $info-color;
 
-// Stats Module
+// Stats Module - Vibrations Élevées
 $stats-primary: $primary-color;
-$stats-primary-light: #4895ef;
+$stats-primary-light: $indigo-soft;
 $stats-primary-dark: $primary-dark;
 $stats-secondary: $secondary-color;
 $stats-success: $success-color;
 $stats-warning: $danger-alternate;
-$stats-danger: $accent-color;
-$stats-info: #3a86ff;
+$stats-danger: $accent-red;
+$stats-info: $primary-medium;
 
-// Users Management Module
-$users-primary: #667eea;
-$users-primary-dark: #5a67d8;
-$users-primary-light: #a3bffa;
-$users-secondary: #764ba2;
+// Users Management Module - Soft Tech
+$users-primary: $indigo-soft;
+$users-primary-dark: $primary-color;
+$users-primary-light: $primary-light;
+$users-secondary: $secondary-color;
 $users-success: $success-alternate;
 $users-danger: $danger-color;
-$users-warning: #f59e0b;
+$users-warning: $warning-color;
 $users-info: $info-color;
 
-// Authentication Module
+// Authentication Module - Neutre et Sécurisant
 $auth-primary: $primary-medium;
 $auth-primary-dark: $primary-deep;
 $auth-success: $lime-medium;
@@ -78,27 +78,28 @@ $auth-bg: $neutral-50;
 $auth-card: $white;
 $auth-border: $neutral-200;
 $auth-border-light: $neutral-100;
-$auth-text: $neutral-700;
+$auth-text: $neutral-800;
 $auth-text-light: $neutral-500;
-$auth-text-lighter: $neutral-300;
+$auth-text-lighter: $neutral-400;
 
-// Sidebar Module
+// Sidebar Module - Profondeur et Glassmorphisme
+// Utilisation de dégradés plus profonds pour le mode sombre par défaut
 $sidebar-gradient: linear-gradient(165deg,
-        rgba(15, 23, 42, 0.95) 0%,
-        rgba(30, 41, 59, 0.92) 50%,
-        rgba(15, 23, 42, 0.98) 100%);
+                rgba($gray-900, 0.98) 0%,
+                rgba($gray-800, 0.95) 50%,
+                rgba($gray-900, 1) 100%);
 $sidebar-gradient-hover: linear-gradient(165deg,
-        rgba(99, 102, 241, 0.15) 0%,
-        rgba(139, 92, 246, 0.12) 50%,
-        rgba(99, 102, 241, 0.15) 100%);
+                rgba($primary-color, 0.15) 0%,
+                rgba($secondary-color, 0.12) 50%,
+                rgba($primary-color, 0.15) 100%);
 
-// Create Module
+// Create Module - Interface de saisie
 $create-primary: $info-color;
 $create-success: $success-alternate;
-$create-warning: #f59e0b;
+$create-warning: $warning-color;
 $create-danger: $danger-color;
-$create-bg: #f8fafc;
+$create-bg: $gray-50;
 $create-card: $white;
 $create-border: $gray-200;
-$create-text: #1e293b;
-$create-text-light: #64748b;
+$create-text: $gray-800;
+$create-text-light: $gray-500;

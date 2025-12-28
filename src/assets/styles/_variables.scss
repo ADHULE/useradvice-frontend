@@ -1,5 +1,5 @@
 // =========================================================================
-// DESIGN SYSTEM UNIFIE - Variables SCSS Globales
+// DESIGN SYSTEM UNIFIE - Variables SCSS Globales (Optimisé Light/Dark)
 // =========================================================================
 
 // =======================================================
@@ -7,115 +7,115 @@
 // =======================================================
 
 // Bleus - Couleurs principales
-$primary-color: #4361ee;
+$primary-color: #4f46e5; // Indigo moderne vibrante
 $primary-light: #eef2ff;
-$primary-dark: #3a0ca3;
-$primary-soft: #00bfff;
-$primary-medium: #1e90ff;
-$primary-deep: #0077b6;
-$indigo-soft: #4682b4;
-$indigo-medium: #003049;
+$primary-dark: #3730a3;
+$primary-soft: #0ea5e9; // Cyan/Sky blue
+$primary-medium: #2563eb;
+$primary-deep: #1e40af;
+$indigo-soft: #6366f1;
+$indigo-medium: #312e81;
 
 // Verts - Succès & Croissance
-$success-color: #4cc9f0;
+$success-color: #06b6d4;
 $success-alternate: #10b981;
-$neo-green-soft: #39ff14;
-$neo-green-medium: #00c78c;
-$neo-green-deep: #00a388;
-$lime-soft: #7cfc00;
-$lime-medium: #32cd32;
+$neo-green-soft: #4ade80;
+$neo-green-medium: #22c55e;
+$neo-green-deep: #15803d;
+$lime-soft: #bef264;
+$lime-medium: #84cc16;
 
 // Rouges & Roses - Alertes & Actions
 $danger-color: #ef4444;
-$danger-dark: #dc2626;
-$danger-alternate: #f72585;
-$warning-color: #ffa500;
-$accent-color: #ff006e;
-$accent-pink: #ff69b4;
-$accent-red: #ff4500;
-$accent-orange: #ffa500;
-$accent-yellow: #ffd700;
+$danger-dark: #b91c1c;
+$danger-alternate: #f43f5e;
+$warning-color: #f59e0b;
+$accent-color: #db2777;
+$accent-pink: #f472b6;
+$accent-red: #e11d48;
+$accent-orange: #f97316;
+$accent-yellow: #facc15;
 
 // Violets & Pourpres - Secondaires
-$secondary-color: #7209b7;
-$secondary-dark: #3a0ca3;
-$purple: #8338ec;
-$purple-light: #8b5cf6;
+$secondary-color: #7c3aed;
+$secondary-dark: #5b21b6;
+$purple: #8b5cf6;
+$purple-light: #ddd6fe;
 
 // Cyan & Turquoise - Fluide & Données
 $info-color: #3b82f6;
-$teal-soft: #00ffff;
-$teal-medium: #00ced1;
-$teal-deep: #008080;
-$cyan-soft: #40e0d0;
-$cyan-medium: #20b2aa;
+$teal-soft: #2dd4bf;
+$teal-medium: #14b8a6;
+$teal-deep: #0f766e;
+$cyan-soft: #22d3ee;
+$cyan-medium: #0891b2;
 
 // =======================================================
-// 2. COULEURS NEUTRES - Variables SCSS
+// 2. COULEURS NEUTRES - (Optimisées pour le contraste Slate/Zinc)
 // =======================================================
 
-// Gris - Échelle complète
-$gray-50: #f8f9fa;
-$gray-100: #f1f3f9;
+// Gris - Échelle complète (Slate)
+$gray-50: #f8fafc;
+$gray-100: #f1f5f9;
 $gray-200: #e2e8f0;
 $gray-300: #cbd5e1;
-$gray-400: #9ca3af;
-$gray-500: #6b7280;
-$gray-600: #4b5563;
-$gray-700: #374151;
-$gray-800: #1f2937;
+$gray-400: #94a3b8;
+$gray-500: #64748b;
+$gray-600: #475569;
+$gray-700: #334155;
+$gray-800: #1e293b;
 $gray-900: #0f172a;
 
-// Neutres Froids
-$neutral-50: #f0f8ff;
-$neutral-100: #e6ebf0;
-$neutral-200: #c0d0e0;
-$neutral-300: #a9bccf;
-$neutral-400: #8799ab;
-$neutral-500: #66788a;
-$neutral-600: #4d5e6f;
-$neutral-700: #384553;
-$neutral-800: #202a35;
-$neutral-900: #0a141f;
+// Neutres Froids (Zinc)
+$neutral-50: #fafafa;
+$neutral-100: #f4f4f5;
+$neutral-200: #e4e4e7;
+$neutral-300: #d4d4d8;
+$neutral-400: #a1a1aa;
+$neutral-500: #71717a;
+$neutral-600: #52525b;
+$neutral-700: #3f3f46;
+$neutral-800: #27272a;
+$neutral-900: #18181b;
 
 // Blancs & Noirs
 $white: #ffffff;
-$black: #000000;
+$black: #020617; // Noir bleuté premium
 
 // =======================================================
 // 3. DÉGRADÉS - Mixins et Variables
 // =======================================================
 
 // Dégradés Tech
-$gradient-blue-tech: linear-gradient(135deg, #1e90ff 0%, #00bfff 100%);
-$gradient-blue-cyber: linear-gradient(135deg, #00bfff 0%, #1e90ff 50%, #0077b6 100%);
-$gradient-green-neo: linear-gradient(135deg, #7cfc00 0%, #39ff14 50%, #00c78c 100%);
-$gradient-teal-fresh: linear-gradient(135deg, #00ffff 0%, #40e0d0 50%, #00ced1 100%);
-$gradient-tech-fusion: linear-gradient(135deg, #1e90ff 0%, #40e0d0 33%, #39ff14 66%, #00bfff 100%);
-$gradient-glass-morph: linear-gradient(135deg, rgba(240, 248, 255, 0.2) 0%, rgba(240, 248, 255, 0.1) 100%);
+$gradient-blue-tech: linear-gradient(135deg, #3b82f6 0%, #0ea5e9 100%);
+$gradient-blue-cyber: linear-gradient(135deg, #0ea5e9 0%, #4f46e5 50%, #312e81 100%);
+$gradient-green-neo: linear-gradient(135deg, #84cc16 0%, #22c55e 50%, #06b6d4 100%);
+$gradient-teal-fresh: linear-gradient(135deg, #2dd4bf 0%, #0891b2 100%);
+$gradient-tech-fusion: linear-gradient(135deg, #6366f1 0%, #22d3ee 50%, #4ade80 100%);
+$gradient-glass-morph: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
 
 // Dégradés génériques
-$gradient-primary: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%);
+$gradient-primary: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
 $gradient-success: linear-gradient(135deg, #10b981 0%, #059669 100%);
 $gradient-warning: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
 $gradient-danger: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-$gradient-info: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+$gradient-info: linear-gradient(135deg, #0ea5e9 0%, #2563eb 100%);
 
 // Badges
-$badge-primary: linear-gradient(135deg, #3b82f6, #1d4ed8);
-$badge-success: linear-gradient(135deg, #10b981, #059669);
-$badge-warning: linear-gradient(135deg, #f59e0b, #d97706);
-$badge-danger: linear-gradient(135deg, #ef4444, #dc2626);
+$badge-primary: linear-gradient(135deg, #6366f1, #4f46e5);
+$badge-success: linear-gradient(135deg, #34d399, #10b981);
+$badge-warning: linear-gradient(135deg, #fbbf24, #f59e0b);
+$badge-danger: linear-gradient(135deg, #fb7185, #f43f5e);
 
 // =======================================================
 // 4. TYPOGRAPHIE
 // =======================================================
 
-$font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+$font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 $font-heading-weight: 700;
-$base-line-height: 1.4;
-$text-color-dark: #1f2937;
-$text-color-light: #6b7280;
+$base-line-height: 1.5;
+$text-color-dark: #1e293b;
+$text-color-light: #64748b;
 
 // =======================================================
 // 5. ESPACEMENTS - Scale 8px
@@ -141,18 +141,18 @@ $border-radius-xl: 20px;
 $border-radius-2xl: 24px;
 $border-radius-full: 9999px;
 
-$border-color: #e2e8f0;
-$border-color-light: #f1f5f9;
+$border-color: rgba(0, 0, 0, 0.08);
+$border-color-light: rgba(0, 0, 0, 0.04);
 
 // =======================================================
-// 7. OMBRES
+// 7. OMBRES (Plus subtiles pour le modernisme)
 // =======================================================
 
-$shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
-$shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-$shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-$shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-$shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+$shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+$shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+$shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+$shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+$shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
 
 // =======================================================
 // 8. TRANSITIONS & ANIMATIONS
@@ -163,7 +163,7 @@ $transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
 $transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
 
 // =======================================================
-// 9. Z-INDEX - Gestion des couches
+// 9. Z-INDEX
 // =======================================================
 
 $z-index-dropdown: 1000;
@@ -179,18 +179,28 @@ $z-index-toast: 1080;
 // 10. MIXINS UTILITAIRES
 // =======================================================
 
-// Mixin pour le mode sombre
+// Mixin pour le mode sombre (Supporte media query et classe data-theme)
 @mixin dark-mode {
-    @content;
+    @media (prefers-color-scheme: dark) {
+        @content;
+    }
+
+    [data-theme="dark"] & {
+        @content;
+    }
 }
 
-// Mixin pour les ombres de carte
+// Mixin pour les ombres de carte (Adaptatives)
 @mixin card-shadow {
     box-shadow: $shadow-md;
-    transition: box-shadow $transition-base;
+    transition: box-shadow $transition-base, transform $transition-base;
 
     &:hover {
         box-shadow: $shadow-lg;
+
+        @include dark-mode {
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+        }
     }
 }
 
@@ -204,11 +214,14 @@ $z-index-toast: 1080;
     font-weight: 600;
     transition: all $transition-base;
     cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 
     &:hover {
-        background: $primary-dark;
-        transform: translateY(-2px);
-        box-shadow: $shadow-lg;
+        filter: brightness(1.1);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
     }
 
     &:active {
@@ -216,22 +229,29 @@ $z-index-toast: 1080;
     }
 }
 
-// Mixin pour le glassmorphisme
+// Mixin pour le glassmorphisme (Dynamique Light/Dark)
 @mixin glass-effect {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+
+    @include dark-mode {
+        background: rgba(15, 23, 42, 0.7);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
 }
 
 // Mixin pour les badges
 @mixin badge($bg-color, $text-color) {
     display: inline-block;
-    padding: $space-xs $space-sm;
+    padding: 4px 12px;
     border-radius: $border-radius-full;
-    background-color: $bg-color;
+    background: $bg-color;
     color: $text-color;
     font-size: 12px;
     font-weight: 600;
     line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
 }
